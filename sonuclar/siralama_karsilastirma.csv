@@ -1,0 +1,22 @@
+test_yil,model_a,model_b,RMSE_a,RMSE_b,RMSE_fark_W,RMSE_fark_kapasite_yuzde,RMSE_fark_bagil_yuzde,DM,p,anlamli,fark_GA_alt,fark_GA_ust
+2017,Linear Regression,Polynomial Ridge,138.81,133.93,4.8747,0.4875,3.6397,8.246,0.0,True,3.76,5.94
+2017,Linear Regression,Hist Gradient Boosting,138.81,135.12,3.687,0.3687,2.7287,5.559,0.0,True,2.36,5.01
+2017,Polynomial Ridge,Hist Gradient Boosting,133.93,135.12,-1.1878,-0.1188,-0.879,-1.581,0.1138,False,-2.32,-0.07
+2018,Linear Regression,Polynomial Ridge,142.61,139.43,3.1834,0.3183,2.2831,2.755,0.0059,True,1.28,4.78
+2018,Linear Regression,Hist Gradient Boosting,142.61,139.0,3.6164,0.3616,2.6018,6.271,0.0,True,2.37,4.85
+2018,Polynomial Ridge,Hist Gradient Boosting,139.43,139.0,0.433,0.0433,0.3115,0.844,0.3986,False,-0.84,2.06
+2019,Linear Regression,Polynomial Ridge,141.34,136.5,4.8407,0.4841,3.5462,10.096,0.0,True,3.82,5.88
+2019,Linear Regression,Hist Gradient Boosting,141.34,137.17,4.1747,0.4175,3.0435,6.857,0.0,True,2.91,5.55
+2019,Polynomial Ridge,Hist Gradient Boosting,136.5,137.17,-0.666,-0.0666,-0.4856,-1.246,0.2127,False,-1.44,0.14
+2020,Linear Regression,Polynomial Ridge,140.9,136.38,4.5239,0.4524,3.3172,8.791,0.0,True,3.39,5.66
+2020,Linear Regression,Hist Gradient Boosting,140.9,136.8,4.099,0.4099,2.9963,6.807,0.0,True,2.86,5.33
+2020,Polynomial Ridge,Hist Gradient Boosting,136.38,136.8,-0.4249,-0.0425,-0.3106,-1.006,0.3142,False,-1.22,0.35
+2021,Linear Regression,Polynomial Ridge,141.37,136.83,4.5424,0.4542,3.3198,9.337,0.0,True,3.55,5.66
+2021,Linear Regression,Hist Gradient Boosting,141.37,137.1,4.2697,0.427,3.1143,7.846,0.0,True,3.12,5.44
+2021,Polynomial Ridge,Hist Gradient Boosting,136.83,137.1,-0.2727,-0.0273,-0.1989,-0.784,0.433,False,-1.02,0.42
+2022,Linear Regression,Polynomial Ridge,143.95,139.76,4.1942,0.4194,3.0011,8.593,0.0,True,3.2,5.24
+2022,Linear Regression,Hist Gradient Boosting,143.95,140.22,3.7273,0.3727,2.6581,6.566,0.0,True,2.53,4.87
+2022,Polynomial Ridge,Hist Gradient Boosting,139.76,140.22,-0.4669,-0.0467,-0.333,-1.102,0.2705,False,-1.2,0.22
+2023,Linear Regression,Polynomial Ridge,137.84,132.61,5.2252,0.5225,3.9401,10.169,0.0,True,4.17,6.28
+2023,Linear Regression,Hist Gradient Boosting,137.84,133.4,4.4357,0.4436,3.325,6.831,0.0,True,3.09,5.7
+2023,Polynomial Ridge,Hist Gradient Boosting,132.61,133.4,-0.7895,-0.0789,-0.5918,-2.074,0.038,True,-1.51,-0.1
