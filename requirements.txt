@@ -1,0 +1,7 @@
+# Sabitlenmis surumler - makalenin "Reproducibility" bolumunde bunlari bildirin.
+# Python 3.14 ile test edildi.
+pandas==3.0.5
+numpy==2.5.1
+scikit-learn==1.9.0
+pyarrow==25.0.0
+requests==2.34.2

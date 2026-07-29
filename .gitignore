@@ -1,0 +1,17 @@
+# --- veri: commit EDILMEZ, pvgis_pipeline.py ile yeniden uretilir ---
+ham/
+veri/
+*.parquet
+
+# --- ortam ---
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.idea/
+.DS_Store
+
+# --- sonuclar: CSV loglari commit EDILIR (kucuk ve dogrulanabilir) ---
+# sonuclar/ klasorunu yok saymiyoruz; yalnizca gecici ciktilar haric
+sonuclar/*.tmp
+sonuclar/*.log
