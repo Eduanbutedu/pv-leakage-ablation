@@ -56,3 +56,44 @@ SIZINTI_VARYANTLARI = {
 
 # Eszaman varyantinda eklenen sizdiran oznitelikler
 ESZAMAN_DEGISKEN = ("G_i", "T2m", "WS10m")
+
+# ----------------------------------------------------------------------------
+# Faz 4 - veri hacmi doygunlugu
+#
+# Egitim penceresi test yilindan GERIYE dogru sayilir. 10 yillik pencere
+# uygulanabilir degil: bir test yili ayrildiginda geriye en fazla 9 yil kalir.
+# "tum" = BASLANGIC_YIL'dan test yilina kadar her sey (5-9 yil arasi degisir).
+#
+# K=5 seviyesinin var olabilmesi icin test yili >= BASLANGIC_YIL + 5 olmali;
+# test yili kumesi bu yuzden 2019'da basliyor.
+# ----------------------------------------------------------------------------
+EGITIM_PENCERELERI = (1, 2, 3, 5, "tum")
+DOYGUNLUK_TEST_YILLARI = (2019, 2020, 2021, 2022, 2023)
+
+# Iki kol:
+#   kaydirmali   : test yilindan onceki son K yil (makalenin anlatisi)
+#   altornekleme : TUM gecmisten, ayni satir sayisini tutturacak kadar
+#                  gun-blogu cekilir. Yil kompozisyonunu sabit tutup yalnizca
+#                  hacmi degistirir - "etki hacimden mi, yil cesitliliginden mi"
+#                  sorusunu ayirir.
+DOYGUNLUK_KOLLARI = ("kaydirmali", "altornekleme")
+
+# Altornekleme kolu uc tohumla tekrarlanir. Tohum YALNIZCA hangi gunlerin
+# cekildigini degistirir; model random_state'leri SEED'de sabit kalir. Ikisi
+# birlikte oynatilirsa olculen sey ornekleme tesadufu ile model baslatma
+# tesadufunun karisimi olur.
+ORNEKLEME_TOHUMLARI = (11, 22, 33)
+KAYDIRMALI_TOHUM = 0  # deterministik kol; loga 0 yazilir, NaN DEGIL - devam
+                      # anahtarinda NaN != NaN yuzunden hucre asla eslesmezdi
+
+# Genis kosu: yalnizca K=tum seviyesinde, 11 modelin tamami.
+# SVR O(n^2) kernel ile 260-470 bin satirda pratikte imkansiz.
+GENIS_KOSU_HARIC = ("Support Vector Regression",)
+
+# HistGradientBoosting OpenMP kullanir; thread sayisi degisirse toplama sirasi
+# degisir ve bit duzeyi tekrarlanabilirlik bozulur. Kosu basinda sabitlenir.
+OMP_THREAD_SAYISI = 8
+
+# Invaryant karsilastirmalarinda bagil tolerans. Bit duzeyi esitlik BEKLENMEZ
+# (yukaridaki OpenMP notu); gercek fark her zaman tam hassasiyette loglanir.
+INVARYANT_TOLERANS = 1e-6
