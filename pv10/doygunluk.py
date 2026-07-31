@@ -186,3 +186,98 @@ def hucre_kos(onbellek: PencereOnbellegi, kol: str, pencere, test_yil: int,
             nRMSE_ortalama=km["nRMSE_ortalama"], nRMSE_kapasite=km["nRMSE_kapasite"]))
 
     return ana, konum_satirlari
+
+
+# --------------------------------------------------------------------------- #
+# izgara
+# --------------------------------------------------------------------------- #
+ANAHTAR = ["kol", "pencere", "test_yil", "model", "tohum"]
+
+
+def izgara_hucreleri(kollar, pencereler, yillar, model_adlari, tohumlar):
+    """Hucre anahtarlarini uretir.
+
+    Sira (yil -> kol -> pencere) kasitli: pencere onbellegi tek hucrelik, bu
+    sirada her dilim tam bir kez uretilir. Kaydirmali koldaki 'tum' seviyesi
+    ile altornekleme kolunun havuzu ayni dilimdir (BASLANGIC_YIL..test_yil),
+    o yuzden 'tum' pencere listesinin sonunda birakilirsa dilim paylasilir.
+
+    Altornekleme kolunda 'tum' seviyesi URETILMEZ: havuzun tamamini cekmek
+    kaydirmali 'tum' hucresinin ta kendisidir. Egri o noktada birlesir.
+    """
+    for yil in yillar:
+        for kol in kollar:
+            for pencere in pencereler:
+                if kol == "altornekleme" and str(pencere) == "tum":
+                    continue
+                tohum_listesi = ([KAYDIRMALI_TOHUM] if kol == "kaydirmali"
+                                 else list(tohumlar))
+                for tohum in tohum_listesi:
+                    for model_ad in model_adlari:
+                        yield (kol, pencere, yil, model_ad, tohum)
+
+
+def _tamamlananlar(log_yolu) -> set[tuple]:
+    """Yalnizca durum=='tamam' olan hucreler tamamlanmis sayilir.
+
+    Basarisiz hucreler dosyada KAYIT olarak kalir (kural 5: sessiz basarisizlik
+    yok) ama devam kosusunda yeniden denenir.
+    """
+    if not log_yolu.exists():
+        return set()
+    d = pd.read_csv(log_yolu)
+    if "durum" not in d.columns:
+        raise ValueError(f"{log_yolu} 'durum' sutunu tasimiyor - eski surum?")
+    d = d[d.durum == "tamam"]
+    return set(zip(d.kol, d.pencere.astype(str), d.test_yil, d.model, d.tohum))
+
+
+def izgara_kos(ham: pd.DataFrame, kollar, pencereler, yillar, model_adlari,
+               tohumlar, log_yolu, konum_log_yolu, bootstrap: bool = True,
+               ilerleme=print) -> pd.DataFrame:
+    """Izgarayi kosar; her hucre aninda diske yazilir, kesilirse devam eder."""
+    onbellek = PencereOnbellegi(ham)
+    tamam = _tamamlananlar(log_yolu)
+    if tamam:
+        ilerleme(f"{len(tamam)} hucre daha once tamamlanmis, atlaniyor")
+
+    hucreler = list(izgara_hucreleri(kollar, pencereler, yillar, model_adlari,
+                                     tohumlar))
+    toplam, sayac, hata_sayisi = len(hucreler), 0, 0
+
+    for kol, pencere, yil, model_ad, tohum in hucreler:
+        sayac += 1
+        anahtar = (kol, str(pencere), yil, model_ad, tohum)
+        if anahtar in tamam:
+            continue
+
+        etiket = (f"[{sayac}/{toplam}] {kol[:4]} K={pencere} {yil} "
+                  f"{model_ad[:22]} t{tohum}")
+        try:
+            ana, konumlar = hucre_kos(onbellek, kol, pencere, yil, model_ad,
+                                      tohum, bootstrap=bootstrap)
+        except Exception as e:
+            # Kural 5: basarisiz hucre de DISKE yazilir. Yoksa kosu "bitti"
+            # der ama CSV'de eksik hucre olur ve bunu soyleyen hicbir sey
+            # olmaz.
+            hata_sayisi += 1
+            ilerleme(f"{etiket} -> HATA: {type(e).__name__}: {e}")
+            pd.DataFrame([dict(kol=kol, pencere=str(pencere), test_yil=yil,
+                               model=model_ad, tohum=tohum, durum="hata",
+                               hata=f"{type(e).__name__}: {e}")]).to_csv(
+                log_yolu, mode="a", header=not log_yolu.exists(), index=False)
+            continue
+
+        pd.DataFrame([ana]).to_csv(log_yolu, mode="a",
+                                   header=not log_yolu.exists(), index=False)
+        pd.DataFrame(konumlar).to_csv(konum_log_yolu, mode="a",
+                                      header=not konum_log_yolu.exists(),
+                                      index=False)
+        ilerleme(f"{etiket} -> RMSE {ana['RMSE']:7.2f}  n={ana['egitim_n']:>6}  "
+                 f"({ana['egitim_sn']}+{ana['bootstrap_sn']} sn)")
+
+    if hata_sayisi:
+        ilerleme(f"\nDIKKAT: {hata_sayisi} hucre basarisiz oldu, loga "
+                 f"durum='hata' ile yazildi. Ozet bunlari DISLAR.")
+
+    return pd.read_csv(log_yolu)

@@ -34,10 +34,19 @@ for _ad in THREAD_DEGISKENLERI:
 import argparse  # noqa: E402
 import time  # noqa: E402
 
+import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
-from pv10.config import VERI  # noqa: E402
+from pv10.config import (DOYGUNLUK_KOLLARI, DOYGUNLUK_TEST_YILLARI,  # noqa: E402
+                         EGITIM_PENCERELERI, GENIS_KOSU_HARIC,
+                         ORNEKLEME_TOHUMLARI, SONUC, VERI)
 from pv10.dogrulama import tum_invaryantlar  # noqa: E402
+from pv10.doygunluk import (PencereOnbellegi, hucre_kos,  # noqa: E402
+                            izgara_hucreleri, izgara_kos, pencere_basi)
+from pv10.models import ABLASYON_ALTKUMESI, HIZLI_ALTKUME, modeller  # noqa: E402
+
+LOG = SONUC / "doygunluk.csv"
+KONUM_LOG = SONUC / "doygunluk_konum.csv"
 
 
 def thread_durumu() -> str:
@@ -80,11 +89,93 @@ def dogrula(ham: pd.DataFrame) -> bool:
     return hepsi
 
 
+def tahmin_et(ham: pd.DataFrame, kollar, pencereler, yillar, model_adlari,
+              tohumlar) -> None:
+    """Iki uctan olcup izgaranin tamamina yayar.
+
+    Egitim suresi satir sayisiyla kabaca lineer; bootstrap ise egitim
+    boyutundan BAGIMSIZ (test seti her yil ~25.8 bin gunduz satiri), o yuzden
+    ayri olculup her hucreye sabit eklenir.
+    """
+    onbellek = PencereOnbellegi(ham)
+    hucreler = list(izgara_hucreleri(kollar, pencereler, yillar, model_adlari,
+                                     tohumlar))
+
+    # --- her hucrenin egitim_n'i: yalnizca (pencere, test_yil)'e bagli ---
+    yil_s = ham["time_utc"].dt.year
+    konum_s = ham.konum.nunique()
+    isinma_toplam = None
+
+    def egitim_n(pencere, test_yil):
+        nonlocal isinma_toplam
+        basla = pencere_basi(test_yil, pencere)
+        ham_n = int(((yil_s >= basla) & (yil_s <= test_yil - 1)).sum())
+        if isinma_toplam is None:
+            _, _, isinma = onbellek.al(basla, test_yil)
+            isinma_toplam = isinma * konum_s
+        return ham_n - isinma_toplam
+
+    # anahtar ORIJINAL pencere degeri (int veya 'tum'); izgara_hucreleri de
+    # ayni tipi uretiyor, stringe cevirmek pencere_basi'ni kirar
+    boyut = {(p, y): egitim_n(p, y) for p in pencereler for y in yillar}
+
+    print(f"\nIzgara: {len(hucreler)} hucre")
+    print(f"  egitim boyutu araligi: {min(boyut.values()):,} - "
+          f"{max(boyut.values()):,} satir\n")
+
+    # --- iki uctan olc ---
+    kucuk = min(boyut, key=boyut.get)
+    buyuk = max(boyut, key=boyut.get)
+    print(f"Sonda hucreleri olculuyor (bootstrap DAHIL):")
+    olcum = {}
+    for etiket, (pen, yil) in (("kucuk", kucuk), ("buyuk", buyuk)):
+        for model_ad in model_adlari:
+            t0 = time.time()
+            ana, _ = hucre_kos(onbellek, "kaydirmali", pen, yil, model_ad, 0,
+                               bootstrap=True)
+            sure = time.time() - t0
+            olcum[(etiket, model_ad)] = (ana["egitim_n"], ana["egitim_sn"],
+                                         ana["bootstrap_sn"], sure)
+            print(f"  {etiket:6} K={str(pen):4} {yil} {model_ad:24} "
+                  f"n={ana['egitim_n']:>7,}  fit {ana['egitim_sn']:>6.1f} sn  "
+                  f"boot {ana['bootstrap_sn']:>5.1f} sn")
+
+    # --- lineer yayma: fit ~ a + b*n, bootstrap sabit ---
+    boot_ort = float(np.mean([v[2] for v in olcum.values()]))
+    toplam = 0.0
+    model_toplam = {}
+    for model_ad in model_adlari:
+        n1, f1, _, _ = olcum[("kucuk", model_ad)]
+        n2, f2, _, _ = olcum[("buyuk", model_ad)]
+        b = (f2 - f1) / (n2 - n1) if n2 != n1 else 0.0
+        a = f1 - b * n1
+        s = sum(max(a + b * boyut[(p, y)], 0.0) + boot_ort
+                for (kol, p, y, m, t) in hucreler if m == model_ad)
+        model_toplam[model_ad] = s
+        toplam += s
+
+    print(f"\n  bootstrap ortalamasi: {boot_ort:.1f} sn/hucre "
+          f"x {len(hucreler)} = {boot_ort * len(hucreler) / 60:.0f} dakika")
+    print(f"\nMODEL BAZINDA TAHMIN:")
+    for model_ad, s in sorted(model_toplam.items(), key=lambda x: -x[1]):
+        print(f"  {model_ad:24} {s / 60:>7.0f} dakika")
+    print(f"\n  KABA TOPLAM: {toplam / 60:.0f} dakika ({toplam / 3600:.1f} saat)")
+    print("  (lineer yayma; agir modeller ve bellek baskisi bu tahmini asabilir)")
+
+
 def main():
     ap = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dogrula", action="store_true",
-                    help="dort invaryant kapisini kos ve cik")
+                    help="bes invaryant kapisini kos ve cik")
+    ap.add_argument("--tahmin", action="store_true",
+                    help="maliyeti tahmin et, izgarayi kosma")
+    ap.add_argument("--modeller", default="hizli",
+                    choices=["hizli", "ablasyon", "tumu"])
+    ap.add_argument("--yillar", default=",".join(str(y) for y in DOYGUNLUK_TEST_YILLARI))
+    ap.add_argument("--kol", default=",".join(DOYGUNLUK_KOLLARI))
+    ap.add_argument("--hizli-bootstrap", action="store_true",
+                    help="gun-blogu bootstrap GA'sini atla")
     a = ap.parse_args()
 
     ham = pd.read_parquet(VERI)
@@ -92,7 +183,29 @@ def main():
     if a.dogrula:
         raise SystemExit(0 if dogrula(ham) else 1)
 
-    raise SystemExit("ana izgara henuz baglanmadi - once --dogrula")
+    kollar = a.kol.split(",")
+    bilinmeyen = [k for k in kollar if k not in DOYGUNLUK_KOLLARI]
+    if bilinmeyen:
+        raise SystemExit(f"bilinmeyen kol: {bilinmeyen}")
+    yillar = [int(y) for y in a.yillar.split(",")]
+    havuz = list(modeller())
+    model_adlari = {"hizli": list(HIZLI_ALTKUME),
+                    "ablasyon": list(ABLASYON_ALTKUMESI),
+                    "tumu": [m for m in havuz if m not in GENIS_KOSU_HARIC]}[a.modeller]
+
+    if a.tahmin:
+        tahmin_et(ham, kollar, EGITIM_PENCERELERI, yillar, model_adlari,
+                  ORNEKLEME_TOHUMLARI)
+        return
+
+    print(f"  {thread_durumu()}")
+    print(f"  veri: {len(ham):,} satir, {ham.konum.nunique()} konum")
+    print(f"  log : {LOG}\n")
+    t0 = time.time()
+    izgara_kos(ham, kollar, EGITIM_PENCERELERI, yillar, model_adlari,
+               ORNEKLEME_TOHUMLARI, LOG, KONUM_LOG,
+               bootstrap=not a.hizli_bootstrap)
+    print(f"\nToplam sure: {(time.time() - t0) / 60:.1f} dakika")
 
 
 if __name__ == "__main__":
