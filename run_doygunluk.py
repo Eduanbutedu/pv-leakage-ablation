@@ -2,9 +2,10 @@
 """Faz 4 - veri hacmi doygunlugu.
 
 Kullanim:
-    python run_doygunluk.py --dogrula      # dort invaryant kapisi (ONCE BU)
+    python run_doygunluk.py --dogrula      # bes invaryant kapisi, 18 kontrol (ONCE BU)
     python run_doygunluk.py --tahmin       # hucre maliyeti, kosmadan
-    python run_doygunluk.py                # ana izgara
+    python run_doygunluk.py                # ana izgara, sonunda ozet
+    python run_doygunluk.py --ozet         # mevcut CSV'lerden ozet, izgara kosmadan
 
 Ana izgaraya invaryant kapisi gecmeden gecilmez.
 """
@@ -40,9 +41,14 @@ import pandas as pd  # noqa: E402
 from pv10.config import (DOYGUNLUK_KOLLARI, DOYGUNLUK_TEST_YILLARI,  # noqa: E402
                          EGITIM_PENCERELERI, GENIS_KOSU_HARIC,
                          ORNEKLEME_TOHUMLARI, SONUC, VERI)
+from pv10 import ozet  # noqa: E402
 from pv10.dogrulama import tum_invaryantlar  # noqa: E402
-from pv10.doygunluk import (PencereOnbellegi, hucre_kos,  # noqa: E402
-                            izgara_hucreleri, izgara_kos, pencere_basi)
+# _tamamlananlar ozel ad ama kasitli olarak yeniden yazilmiyor: "tamamlanmis
+# hucre" tanimi (durum == 'tamam') tek yerde kalmali, yoksa devam mantigi ile
+# ozetin eksik hucre sayimi birbirinden kayar.
+from pv10.doygunluk import (PencereOnbellegi, _tamamlananlar,  # noqa: E402
+                            hucre_kos, izgara_hucreleri, izgara_kos,
+                            pencere_basi)
 from pv10.models import ABLASYON_ALTKUMESI, HIZLI_ALTKUME, modeller  # noqa: E402
 
 LOG = SONUC / "doygunluk.csv"
@@ -163,13 +169,109 @@ def tahmin_et(ham: pd.DataFrame, kollar, pencereler, yillar, model_adlari,
     print("  (lineer yayma; agir modeller ve bellek baskisi bu tahmini asabilir)")
 
 
+def _baslik(s: str) -> None:
+    print(f"\n{'-' * 78}\n{s}\n{'-' * 78}")
+
+
+def ozetle(kollar, pencereler, yillar, model_adlari, tohumlar) -> None:
+    """Faz 4 ozet tablolari.
+
+    ozet.py sonuclar gorulmeden yazildi; burada yalnizca CAGRILIR. Tablo
+    tanimlari, metrik secimleri ve esikler bu dosyadan degistirilmez.
+
+    Eksiklik tespiti tahminle degil, izgara_hucreleri'nin urettigi beklenen
+    kume ile logdaki tamamlanmis kumenin farkindan gelir.
+    """
+    if not LOG.exists():
+        raise SystemExit(f"{LOG} yok - once izgarayi kosun.")
+
+    ham_log = pd.read_csv(LOG)
+    tamam = _tamamlananlar(LOG)
+    beklenen = {(kol, str(p), y, m, t) for kol, p, y, m, t
+                in izgara_hucreleri(kollar, pencereler, yillar, model_adlari,
+                                    tohumlar)}
+    eksik = sorted(beklenen - tamam)
+    hatali = ham_log[ham_log.durum == "hata"]
+
+    print(f"\n{'=' * 78}")
+    print(f"FAZ 4 OZET - {len(tamam)}/{len(beklenen)} beklenen hucre tamam")
+    print(f"{'=' * 78}")
+
+    # Kural 5: eksik ve basarisiz hucreler ACIKCA listelenir, kirpilmadan.
+    if len(hatali):
+        _baslik(f"BASARISIZ HUCRELER ({len(hatali)})")
+        with pd.option_context("display.max_rows", None, "display.width", 200):
+            print(hatali[["kol", "pencere", "test_yil", "model", "tohum",
+                          "hata"]].to_string(index=False))
+
+    if eksik:
+        _baslik(f"EKSIK HUCRELER ({len(eksik)})")
+        e = pd.DataFrame(eksik, columns=["kol", "pencere", "test_yil", "model",
+                                         "tohum"])
+        with pd.option_context("display.max_rows", None, "display.width", 200):
+            print(e.to_string(index=False))
+        print("\nUYARI: izgara EKSIK. Asagidaki tablolar yalnizca tamamlanan "
+              "hucrelerden hesaplandi.")
+
+    d = ham_log[ham_log.durum == "tamam"]
+    if d.empty:
+        raise SystemExit("tamamlanmis hucre yok - ozet uretilemez.")
+    dk = pd.read_csv(KONUM_LOG) if KONUM_LOG.exists() else pd.DataFrame()
+
+    egri = ozet.egri_tablosu(d)
+    _baslik("1) OGRENME EGRISI - iki kol")
+    print(egri.to_string(index=False))
+    _baslik("1b) MARJINAL KAZANC - doygunluk nerede?")
+    print(ozet.marjinal_kazanc(egri).to_string(index=False))
+
+    _baslik("2) ANA ORAN - saf hacim vs uygulamali hacim")
+    print(ozet.hacim_orani(d).to_string(index=False))
+
+    _baslik("3) TOHUM YAYILIMI - (K, yil, model) bazinda")
+    t3 = ozet.tohum_yayilimi(d)
+    print("altornekleme hucresi yok" if t3.empty else t3.to_string(index=False))
+
+    _baslik("4) MODEL x PENCERE ETKILESIMI")
+    e4 = ozet.model_pencere_etkilesimi(d)
+    if not e4:
+        print("kaydirmali hucre yok")
+    else:
+        print(f"kazanan degisiyor mu: {e4['kazanan_degisiyor_mu']}  "
+              f"({e4['farkli_kazanan_sayisi']} farkli kazanan, "
+              f"{e4['kazanan_dagilimi']})\n")
+        print(e4["pencere_bazinda"].to_string(index=False))
+        print()
+        print(e4["pencere_yil_bazinda"].to_string(index=False))
+
+    _baslik("5) VARYANS AYRISTIRMASI")
+    try:
+        v = ozet.varyans_ayristirmasi(d)
+        print("hizli altkume bos" if v.empty else v.to_string(index=False))
+    except ValueError as e:
+        # Eksik izgarada dengesiz tasarim BEKLENEN durumdur. Izgara TAMSA ayni
+        # hata gercek bir kusurdur ve yutulmaz.
+        if not eksik:
+            raise
+        print(f"ATLANDI - izgara {len(eksik)} hucre eksik, tasarim dengeli "
+              f"degil.\n  {e}")
+
+    _baslik("6) KONUM BAZINDA - nRMSE_ortalama")
+    if dk.empty:
+        print(f"{KONUM_LOG} yok")
+    else:
+        t6 = ozet.konum_tablosu(dk)
+        print("kaydirmali konum satiri yok" if t6.empty else t6.to_string())
+
+
 def main():
     ap = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--dogrula", action="store_true",
-                    help="bes invaryant kapisini kos ve cik")
+                    help="bes invaryant kapisini (18 kontrol) kos ve cik")
     ap.add_argument("--tahmin", action="store_true",
                     help="maliyeti tahmin et, izgarayi kosma")
+    ap.add_argument("--ozet", action="store_true",
+                    help="mevcut CSV'lerden ozet tablolari bas, izgarayi kosma")
     ap.add_argument("--modeller", default="hizli",
                     choices=["hizli", "ablasyon", "tumu"])
     ap.add_argument("--yillar", default=",".join(str(y) for y in DOYGUNLUK_TEST_YILLARI))
@@ -193,6 +295,11 @@ def main():
                     "ablasyon": list(ABLASYON_ALTKUMESI),
                     "tumu": [m for m in havuz if m not in GENIS_KOSU_HARIC]}[a.modeller]
 
+    if a.ozet:
+        ozetle(kollar, EGITIM_PENCERELERI, yillar, model_adlari,
+               ORNEKLEME_TOHUMLARI)
+        return
+
     if a.tahmin:
         tahmin_et(ham, kollar, EGITIM_PENCERELERI, yillar, model_adlari,
                   ORNEKLEME_TOHUMLARI)
@@ -206,6 +313,9 @@ def main():
                ORNEKLEME_TOHUMLARI, LOG, KONUM_LOG,
                bootstrap=not a.hizli_bootstrap)
     print(f"\nToplam sure: {(time.time() - t0) / 60:.1f} dakika")
+
+    ozetle(kollar, EGITIM_PENCERELERI, yillar, model_adlari,
+           ORNEKLEME_TOHUMLARI)
 
 
 if __name__ == "__main__":
