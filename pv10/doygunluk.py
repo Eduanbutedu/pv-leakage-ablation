@@ -106,13 +106,18 @@ class PencereOnbellegi:
 
 
 # --------------------------------------------------------------------------- #
-# tek hucre
+# egitim/test bolmesi - TEK KOD YOLU
 # --------------------------------------------------------------------------- #
-def hucre_kos(onbellek: PencereOnbellegi, kol: str, pencere, test_yil: int,
-              model_ad: str, tohum: int, bootstrap: bool = True) -> tuple[dict, list[dict]]:
-    """Tek bir hucreyi kosar.
+def egitim_test_bolme(onbellek: PencereOnbellegi, kol: str, pencere,
+                      test_yil: int, tohum: int) -> tuple:
+    """Bir hucrenin egitim/test satir indeksleri.
 
-    Donen: (ana satir, konum bazinda satirlar)
+    Bolme mantigi burada TEK nusha durur; hucre_kos da dogrulama.py de ayni
+    fonksiyondan gecer. Invaryantin kendi kopyasini tasimasi, kopyayi
+    dogrulayip uretimi dogrulamamis olmak demekti: kopya dogru sirada
+    oldugu surece uretim ters sirada olsa bile kapi yesil yanardi.
+
+    Donen: (o, X, tr, te, isinma, basla)
     """
     basla = pencere_basi(test_yil, pencere)
 
@@ -138,6 +143,21 @@ def hucre_kos(onbellek: PencereOnbellegi, kol: str, pencere, test_yil: int,
     te = np.flatnonzero(yil == test_yil)
     if len(tr) == 0 or len(te) == 0:
         raise ValueError(f"bos bolme: egitim {len(tr)}, test {len(te)}")
+
+    return o, X, tr, te, isinma, basla
+
+
+# --------------------------------------------------------------------------- #
+# tek hucre
+# --------------------------------------------------------------------------- #
+def hucre_kos(onbellek: PencereOnbellegi, kol: str, pencere, test_yil: int,
+              model_ad: str, tohum: int, bootstrap: bool = True) -> tuple[dict, list[dict]]:
+    """Tek bir hucreyi kosar.
+
+    Donen: (ana satir, konum bazinda satirlar)
+    """
+    o, X, tr, te, isinma, basla = egitim_test_bolme(
+        onbellek, kol, pencere, test_yil, tohum)
 
     Xtr, ytr = o.iloc[tr][X], o.iloc[tr]["y"].to_numpy()
     test_satirlari = o.iloc[te]
