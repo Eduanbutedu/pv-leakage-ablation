@@ -1,0 +1,4 @@
+etki,RMSE_fark_W,makaleye_giren,aciklama,Faz3_medyan_W,Faz3_payda_kumesi,oran_algoritma_farkina
+"saf hacim (altornekleme, K=1 -> tum)",2.204968456422023,True,yil kompozisyonu sabit; degisen tek sey satir sayisi,0.4669,"5 yil (2019-2023, Faz 4 ile eslesen dilim)",4.722571121058092
+"uygulamali hacim (kaydirmali, K=1 -> tum)",3.3265184052980885,False,hacim + guncellik ic ice; tek basina yorumlanamaz,0.4669,"5 yil (2019-2023, Faz 4 ile eslesen dilim)",7.1246913799487865
+guncellik / yil cesitliligi (fark),1.1215499488760656,False,iki kolun farki,0.4669,"5 yil (2019-2023, Faz 4 ile eslesen dilim)",2.4021202588906956

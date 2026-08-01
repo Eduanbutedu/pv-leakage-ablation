@@ -1,0 +1,32 @@
+FAZ 4 OZET KUNYESI
+============================================================
+
+kosu tarihi         : 2026-08-02 01:24:23
+izgara tamam        : evet
+hucre               : 255/255
+eksik hucre         : 0
+basarisiz hucre     : 0
+veri dosyasi        : pvgis_10yil.parquet
+veri sha256_16      : f722a717bac502c2
+beklenen sha256_16  : f722a717bac502c2
+thread sabiti       : 8
+
+model x pencere:
+  kazanan degisiyor mu : False
+  farkli kazanan       : 1
+  kazanan dagilimi     : {'Polynomial Ridge': 5}
+
+varyans ayristirmasi:
+  deger                : nRMSE_kapasite
+  kol                  : kaydirmali
+  model sayisi         : 3
+
+yazilan tablolar (8):
+  egri                 doygunluk_ozet_egri.csv (10 satir)
+  marjinal             doygunluk_ozet_marjinal.csv (8 satir)
+  hacim_orani          doygunluk_ozet_hacim_orani.csv (3 satir)
+  tohum_yayilimi       doygunluk_ozet_tohum_yayilimi.csv (60 satir)
+  model_pencere        doygunluk_ozet_model_pencere.csv (5 satir)
+  model_pencere_yil    doygunluk_ozet_model_pencere_yil.csv (25 satir)
+  varyans              doygunluk_ozet_varyans.csv (7 satir)
+  konum                doygunluk_ozet_konum.csv (6 satir)
