@@ -43,7 +43,7 @@ import pandas as pd  # noqa: E402
 from pv10.config import (DOYGUNLUK_KOLLARI, DOYGUNLUK_TEST_YILLARI,  # noqa: E402
                          EGITIM_PENCERELERI, GENIS_KOSU_HARIC,
                          ORNEKLEME_TOHUMLARI, SONUC, VERI, VERI_SHA16)
-from pv10 import ozet  # noqa: E402
+from pv10 import ozet, ozet_sonrasi  # noqa: E402
 from pv10.dogrulama import tum_invaryantlar  # noqa: E402
 # _tamamlananlar ozel ad ama kasitli olarak yeniden yazilmiyor: "tamamlanmis
 # hucre" tanimi (durum == 'tamam') tek yerde kalmali, yoksa devam mantigi ile
@@ -186,7 +186,11 @@ OZET_DOSYA = {
     "model_pencere_yil": "doygunluk_ozet_model_pencere_yil.csv",
     "varyans": "doygunluk_ozet_varyans.csv",
     "konum": "doygunluk_ozet_konum.csv",
+    # --- sonuclar GORULDUKTEN SONRA eklendi, bkz. pv10/ozet_sonrasi.py ---
+    "algoritma_span": "doygunluk_ozet_algoritma_span.csv",
+    "ga": "doygunluk_ozet_ga.csv",
 }
+SONRADAN_EKLENEN = ("algoritma_span", "ga")
 KUNYE = SONUC / "doygunluk_ozet_kunye.txt"
 
 
@@ -331,6 +335,28 @@ def ozetle(kollar, pencereler, yillar, model_adlari, tohumlar) -> None:
             print(t6.to_string())
             yaz(t6, "konum", indeks=True)
 
+    # ----------------------------------------------------------------- #
+    # Buradan asagisi sonuclar GORULDUKTEN SONRA eklendi (ozet_sonrasi.py).
+    # ozet.py'nin on-kayitliligini bozmamak icin ayri modulde duruyorlar.
+    # ----------------------------------------------------------------- #
+    _baslik("7) ALGORITMA SPAN'I vs HACIM SPAN'I  [sonradan eklendi]")
+    t7 = ozet_sonrasi.algoritma_span(d)
+    if t7.empty:
+        print("kaydirmali hucre yok")
+        atla("algoritma_span", "kaydirmali hucre yok")
+    else:
+        print(t7.to_string(index=False))
+        yaz(t7, "algoritma_span")
+
+    _baslik("8) EGRININ IKI UCUNDA %95 GA  [sonradan eklendi]")
+    t8 = ozet_sonrasi.ga_uclari(d)
+    if t8.empty:
+        print("GA sutunu yok veya uc hucreleri eksik")
+        atla("ga", "GA sutunu yok veya uc hucreleri eksik")
+    else:
+        print(t8.to_string(index=False))
+        yaz(t8, "ga")
+
     _kunye_yaz(len(tamam), len(beklenen), eksik, hatali, e4, varyans_attrs,
                yazilan, atlanan)
 
@@ -353,6 +379,12 @@ def _kunye_yaz(n_tamam, n_beklenen, eksik, hatali, e4, varyans_attrs,
         f"beklenen sha256_16  : {VERI_SHA16}"
         f"{'' if h == VERI_SHA16 else '   <-- UYUSMUYOR, VERI DEGISMIS'}",
         f"thread sabiti       : {OMP_THREAD_SAYISI}",
+        "",
+        "on-kayit durumu     : 1-6 arasi tablolar izgara kosulmadan once",
+        "                      yazildi (pv10/ozet.py, dokunulmadi).",
+        f"                      {', '.join(SONRADAN_EKLENEN)} tablolari",
+        "                      sonuclar goruldukten SONRA eklendi",
+        "                      (pv10/ozet_sonrasi.py).",
     ]
 
     if e4:
@@ -367,7 +399,9 @@ def _kunye_yaz(n_tamam, n_beklenen, eksik, hatali, e4, varyans_attrs,
               f"  model sayisi         : {varyans_attrs.get('model_sayisi')}"]
 
     s += ["", f"yazilan tablolar ({len(yazilan)}):"]
-    s += [f"  {k:20} {v}" for k, v in yazilan.items()] or ["  (yok)"]
+    s += [f"  {k:20} {v}"
+          + ("   [sonradan eklendi]" if k in SONRADAN_EKLENEN else "")
+          for k, v in yazilan.items()] or ["  (yok)"]
     if atlanan:
         # Kural 5: atlanan tablo sessizce kaybolmaz. Onceki kosudan kalmis
         # ayni adli dosya varsa BAYAT'tir; silmiyoruz, isaret ediyoruz.

@@ -1,0 +1,11 @@
+satir_turu,seviye,Hist Gradient Boosting,Linear Regression,Polynomial Ridge,en_iyi,en_kotu,span_W,span_min_W,span_ort_W,span_maks_W,n
+pencere_rmse,1,143.67776632694148,141.3278859408776,139.4109450768704,Polynomial Ridge,Hist Gradient Boosting,4.266821250071075,,,,
+pencere_rmse,2,140.3098708339177,141.17146017401478,137.52431024950425,Polynomial Ridge,Linear Regression,3.647149924510529,,,,
+pencere_rmse,3,138.5859149773727,141.09945765619162,136.94587600383358,Polynomial Ridge,Linear Regression,4.153581652358042,,,,
+pencere_rmse,5,137.4998168204709,141.06896639622153,136.56066592441724,Polynomial Ridge,Linear Regression,4.50830047180429,,,,
+pencere_rmse,tum,136.93991708831734,141.0812096057207,136.41591543475715,Polynomial Ridge,Linear Regression,4.665294170963534,,,,
+hacim_span,Hist Gradient Boosting,,,,K=tum,K=1,6.737849238624136,,,,
+hacim_span,Linear Regression,,,,K=tum,K=1,0.24667633515690568,,,,
+hacim_span,Polynomial Ridge,,,,K=tum,K=1,2.995029642113252,,,,
+kiyas,algoritma_span (K sabit),,,,,,,3.647149924510529,4.248229493941494,4.665294170963534,5.0
+kiyas,hacim_span (model sabit),,,,,,,0.24667633515690568,3.326518405298098,6.737849238624136,3.0
