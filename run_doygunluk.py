@@ -33,14 +33,16 @@ for _ad in THREAD_DEGISKENLERI:
     os.environ[_ad] = str(OMP_THREAD_SAYISI)
 
 import argparse  # noqa: E402
+import hashlib  # noqa: E402
 import time  # noqa: E402
+from datetime import datetime  # noqa: E402
 
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
 from pv10.config import (DOYGUNLUK_KOLLARI, DOYGUNLUK_TEST_YILLARI,  # noqa: E402
                          EGITIM_PENCERELERI, GENIS_KOSU_HARIC,
-                         ORNEKLEME_TOHUMLARI, SONUC, VERI)
+                         ORNEKLEME_TOHUMLARI, SONUC, VERI, VERI_SHA16)
 from pv10 import ozet  # noqa: E402
 from pv10.dogrulama import tum_invaryantlar  # noqa: E402
 # _tamamlananlar ozel ad ama kasitli olarak yeniden yazilmiyor: "tamamlanmis
@@ -173,11 +175,34 @@ def _baslik(s: str) -> None:
     print(f"\n{'-' * 78}\n{s}\n{'-' * 78}")
 
 
+# Ozet CSV'leri. Bir tablo uretilemezse dosyasi YAZILMAZ - yarim veya bos
+# dosya birakmak, sonraki oturumda gecerli sonucla karistirilir.
+OZET_DOSYA = {
+    "egri": "doygunluk_ozet_egri.csv",
+    "marjinal": "doygunluk_ozet_marjinal.csv",
+    "hacim_orani": "doygunluk_ozet_hacim_orani.csv",
+    "tohum_yayilimi": "doygunluk_ozet_tohum_yayilimi.csv",
+    "model_pencere": "doygunluk_ozet_model_pencere.csv",
+    "model_pencere_yil": "doygunluk_ozet_model_pencere_yil.csv",
+    "varyans": "doygunluk_ozet_varyans.csv",
+    "konum": "doygunluk_ozet_konum.csv",
+}
+KUNYE = SONUC / "doygunluk_ozet_kunye.txt"
+
+
+def veri_hash() -> str:
+    """Calisilan parquet'in sha256'si, pvgis_pipeline.py ile ayni yontem."""
+    return hashlib.sha256(VERI.read_bytes()).hexdigest()[:16]
+
+
 def ozetle(kollar, pencereler, yillar, model_adlari, tohumlar) -> None:
-    """Faz 4 ozet tablolari.
+    """Faz 4 ozet tablolari: ekrana basar ve sonuclar/ altina CSV yazar.
 
     ozet.py sonuclar gorulmeden yazildi; burada yalnizca CAGRILIR. Tablo
     tanimlari, metrik secimleri ve esikler bu dosyadan degistirilmez.
+
+    Diske YUVARLANMAMIS deger gider: makalenin sayilari bu CSV'lerden
+    okunacak, terminal ciktisindan degil.
 
     Eksiklik tespiti tahminle degil, izgara_hucreleri'nin urettigi beklenen
     kume ile logdaki tamamlanmis kumenin farkindan gelir.
@@ -218,23 +243,51 @@ def ozetle(kollar, pencereler, yillar, model_adlari, tohumlar) -> None:
         raise SystemExit("tamamlanmis hucre yok - ozet uretilemez.")
     dk = pd.read_csv(KONUM_LOG) if KONUM_LOG.exists() else pd.DataFrame()
 
+    yazilan: dict[str, str] = {}
+    atlanan: dict[str, str] = {}
+
+    def yaz(t: pd.DataFrame, anahtar: str, indeks: bool = False) -> None:
+        """Tabloyu tam hassasiyette diske yazar. Bos tablo YAZILMAZ."""
+        if t is None or t.empty:
+            atlanan[anahtar] = "tablo bos"
+            return
+        yol = SONUC / OZET_DOSYA[anahtar]
+        t.to_csv(yol, index=indeks)  # float_format YOK -> tam hassasiyet
+        yazilan[anahtar] = f"{yol.name} ({len(t)} satir)"
+
+    def atla(anahtar: str, neden: str) -> None:
+        atlanan[anahtar] = neden
+
     egri = ozet.egri_tablosu(d)
     _baslik("1) OGRENME EGRISI - iki kol")
     print(egri.to_string(index=False))
-    _baslik("1b) MARJINAL KAZANC - doygunluk nerede?")
-    print(ozet.marjinal_kazanc(egri).to_string(index=False))
+    yaz(egri, "egri")
 
+    marjinal = ozet.marjinal_kazanc(egri)
+    _baslik("1b) MARJINAL KAZANC - doygunluk nerede?")
+    print(marjinal.to_string(index=False))
+    yaz(marjinal, "marjinal")
+
+    hacim = ozet.hacim_orani(d)
     _baslik("2) ANA ORAN - saf hacim vs uygulamali hacim")
-    print(ozet.hacim_orani(d).to_string(index=False))
+    print(hacim.to_string(index=False))
+    yaz(hacim, "hacim_orani")
 
     _baslik("3) TOHUM YAYILIMI - (K, yil, model) bazinda")
     t3 = ozet.tohum_yayilimi(d)
-    print("altornekleme hucresi yok" if t3.empty else t3.to_string(index=False))
+    if t3.empty:
+        print("altornekleme hucresi yok")
+        atla("tohum_yayilimi", "altornekleme hucresi yok")
+    else:
+        print(t3.to_string(index=False))
+        yaz(t3, "tohum_yayilimi")
 
     _baslik("4) MODEL x PENCERE ETKILESIMI")
     e4 = ozet.model_pencere_etkilesimi(d)
     if not e4:
         print("kaydirmali hucre yok")
+        atla("model_pencere", "kaydirmali hucre yok")
+        atla("model_pencere_yil", "kaydirmali hucre yok")
     else:
         print(f"kazanan degisiyor mu: {e4['kazanan_degisiyor_mu']}  "
               f"({e4['farkli_kazanan_sayisi']} farkli kazanan, "
@@ -242,11 +295,20 @@ def ozetle(kollar, pencereler, yillar, model_adlari, tohumlar) -> None:
         print(e4["pencere_bazinda"].to_string(index=False))
         print()
         print(e4["pencere_yil_bazinda"].to_string(index=False))
+        yaz(e4["pencere_bazinda"], "model_pencere")
+        yaz(e4["pencere_yil_bazinda"], "model_pencere_yil")
 
     _baslik("5) VARYANS AYRISTIRMASI")
+    varyans_attrs = {}
     try:
         v = ozet.varyans_ayristirmasi(d)
-        print("hizli altkume bos" if v.empty else v.to_string(index=False))
+        if v.empty:
+            print("hizli altkume bos")
+            atla("varyans", "hizli altkume bos")
+        else:
+            print(v.to_string(index=False))
+            varyans_attrs = dict(v.attrs)
+            yaz(v, "varyans")
     except ValueError as e:
         # Eksik izgarada dengesiz tasarim BEKLENEN durumdur. Izgara TAMSA ayni
         # hata gercek bir kusurdur ve yutulmaz.
@@ -254,13 +316,75 @@ def ozetle(kollar, pencereler, yillar, model_adlari, tohumlar) -> None:
             raise
         print(f"ATLANDI - izgara {len(eksik)} hucre eksik, tasarim dengeli "
               f"degil.\n  {e}")
+        atla("varyans", f"tasarim dengesiz ({len(eksik)} hucre eksik)")
 
     _baslik("6) KONUM BAZINDA - nRMSE_ortalama")
     if dk.empty:
         print(f"{KONUM_LOG} yok")
+        atla("konum", f"{KONUM_LOG.name} yok")
     else:
         t6 = ozet.konum_tablosu(dk)
-        print("kaydirmali konum satiri yok" if t6.empty else t6.to_string())
+        if t6.empty:
+            print("kaydirmali konum satiri yok")
+            atla("konum", "kaydirmali konum satiri yok")
+        else:
+            print(t6.to_string())
+            yaz(t6, "konum", indeks=True)
+
+    _kunye_yaz(len(tamam), len(beklenen), eksik, hatali, e4, varyans_attrs,
+               yazilan, atlanan)
+
+
+def _kunye_yaz(n_tamam, n_beklenen, eksik, hatali, e4, varyans_attrs,
+               yazilan, atlanan) -> None:
+    """Ozet CSV'lerinin kunyesi: hangi izgaradan, hangi veriden uretildiler."""
+    h = veri_hash()
+    s = [
+        "FAZ 4 OZET KUNYESI",
+        "=" * 60,
+        "",
+        f"kosu tarihi         : {datetime.now():%Y-%m-%d %H:%M:%S}",
+        f"izgara tamam        : {'evet' if not eksik else 'HAYIR'}",
+        f"hucre               : {n_tamam}/{n_beklenen}",
+        f"eksik hucre         : {len(eksik)}",
+        f"basarisiz hucre     : {len(hatali)}",
+        f"veri dosyasi        : {VERI.name}",
+        f"veri sha256_16      : {h}",
+        f"beklenen sha256_16  : {VERI_SHA16}"
+        f"{'' if h == VERI_SHA16 else '   <-- UYUSMUYOR, VERI DEGISMIS'}",
+        f"thread sabiti       : {OMP_THREAD_SAYISI}",
+    ]
+
+    if e4:
+        s += ["", "model x pencere:",
+              f"  kazanan degisiyor mu : {e4['kazanan_degisiyor_mu']}",
+              f"  farkli kazanan       : {e4['farkli_kazanan_sayisi']}",
+              f"  kazanan dagilimi     : {e4['kazanan_dagilimi']}"]
+    if varyans_attrs:
+        s += ["", "varyans ayristirmasi:",
+              f"  deger                : {varyans_attrs.get('deger')}",
+              f"  kol                  : {varyans_attrs.get('kol')}",
+              f"  model sayisi         : {varyans_attrs.get('model_sayisi')}"]
+
+    s += ["", f"yazilan tablolar ({len(yazilan)}):"]
+    s += [f"  {k:20} {v}" for k, v in yazilan.items()] or ["  (yok)"]
+    if atlanan:
+        # Kural 5: atlanan tablo sessizce kaybolmaz. Onceki kosudan kalmis
+        # ayni adli dosya varsa BAYAT'tir; silmiyoruz, isaret ediyoruz.
+        s += ["", f"YAZILMAYAN tablolar ({len(atlanan)}):"]
+        for k, v in atlanan.items():
+            bayat = (SONUC / OZET_DOSYA[k]).exists()
+            s.append(f"  {k:20} {v}"
+                     + ("   <-- ESKI DOSYA DURUYOR, BAYAT" if bayat else ""))
+
+    KUNYE.write_text("\n".join(s) + "\n", encoding="utf-8")
+    print(f"\n{'=' * 78}")
+    print(f"{len(yazilan)} ozet CSV yazildi -> {SONUC}")
+    if atlanan:
+        print(f"{len(atlanan)} tablo uretilemedi, kunyeye islendi: "
+              f"{', '.join(atlanan)}")
+    print(f"kunye: {KUNYE.name}")
+    print(f"{'=' * 78}")
 
 
 def main():

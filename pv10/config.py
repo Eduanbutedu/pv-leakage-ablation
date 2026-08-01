@@ -20,6 +20,11 @@ SONUC.mkdir(parents=True, exist_ok=True)
 BASLANGIC_YIL, BITIS_YIL = 2014, 2023
 KAPASITE_W = 1000.0  # 1 kWp -> kapasiteye gore nRMSE icin
 
+# Dondurulmus veri surumu: sha256(parquet baytlari)[:16], pvgis_pipeline.py
+# ile ayni sekilde hesaplanir. Butun deney sonuclari BU surume bagli; ozet
+# kunyesi calisilan dosyanin hash'ini buna karsi kontrol eder.
+VERI_SHA16 = "f722a717bac502c2"
+
 # ----------------------------------------------------------------------------
 # oznitelik tanimlari - GUFBD makalesiyle BIREBIR ayni tutulmali
 # ----------------------------------------------------------------------------
