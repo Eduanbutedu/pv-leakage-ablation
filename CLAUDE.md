@@ -22,7 +22,17 @@ tutulacak.
 - Faz 1 (veri) TAMAM. 525.888 satir, 6 konum, PVGIS-SARAH3.
 - Faz 2 (sizinti ablasyonu) TAMAM. `sonuclar/ablasyon.csv`
 - Faz 3 (siralama kararliligi) TAMAM. `sonuclar/siralama_*.csv`
-- Faz 4 (veri hacmi doygunlugu) YAPILACAK: 1/2/3/5/10 yillik egitimle ogrenme egrisi.
+- Faz 4 (veri hacmi doygunlugu) ALTYAPI HAZIR, KOSU BEKLIYOR.
+  - K = 1/2/3/5/tum yillik egitim. 10 yillik pencere MUMKUN DEGIL: test yili
+    disari cikinca en fazla 9 yil kalir.
+  - Iki kol: `kaydirmali` (hacim + guncellik ic ice) ve `altornekleme`
+    (gun blogu, konuma gore tabakali, 3 tohum - saf hacim etkisi).
+    Makalenin ana orani ALTORNEKLEME kolundan gelir.
+  - Invaryant kapisi: 5 invaryant / 18 kontrol, hepsi GECTI (~1,2 dk).
+  - Ozet fonksiyonlari sonuclar GORULMEDEN yazildi (`pv10/ozet.py`) ve
+    runner'a baglandi; ciktilar `sonuclar/doygunluk_ozet_*.csv`.
+  - Ana izgara: 255 hucre (~9 dk tahmin), HENUZ KOSULMADI.
+  - Genis kosu: 50 hucre (K=tum, 2019-2023, SVR haric 10 model), OLCULMEDI.
 - Opsiyonel: DKASC gercek olcum verisiyle replikasyon.
 - Sonra: yazim.
 
@@ -61,6 +71,22 @@ tutulacak.
   dondurur. Pipeline `Gb_i + Gd_i + Gr_i` toplamindan `G_i`'yi geri kurar.
   `G_i_lag24` permutasyon oneminde en guclu oznitelik - kaybolursa fark et.
 
+- **Pencere sinirinda oznitelik isinmasi:** oznitelikler once tum veride
+  uretilip sonra yila gore dilimlenirse, "1 yil veriyle egitildi" denen model
+  onceki yillarin yuvarlanan istatistiklerini tasir. Isinma (konum basina 191
+  satir = 24 shift + 168 roll168 - 1) veri kumesinin basinda degil PENCERENIN
+  basinda tuketilmeli. Kontrol: K=1 @ 2023 icin `egitim_n` = **51.414**
+  dogrudur; **52.560** cikiyorsa sinir siziyor. Invaryant 3 bunu olcer.
+
+- **Invaryantin uretim yerine kendi kopyasini dogrulamasi:** bolme mantigi
+  invaryanta kopyalanirsa test tautolojiye doner - kopya dogru oldugu surece
+  uretim yanlis olsa bile kapi yesil yanar. Faz 4'te invaryant 5 tam bunu
+  yapiyordu; karsilastirmanin iki tarafi da ayni cagriydi ve `farkli_oznitelik
+  = 0` sonucu determinizmden geliyordu, olcumden degil. Kural: invaryant
+  URETIM fonksiyonunu cagirir (`egitim_test_bolme`, `hucre_kos`) ve kasten
+  yanlis bir referansla NEGATIF KONTROLU olur; yanlisi yakalayamiyorsa
+  invaryant islevsizdir ve kapi kirmizi yanmalidir.
+
 ## Hesaplama gercekligi
 
 350-525 bin satir x 29 oznitelikte:
@@ -81,9 +107,17 @@ pvgis_pipeline.py    veri indirme, dogrulama, birlestirme
 run_smoke.py         tek bolmeli akil saglig testi
 run_ablasyon.py      sizinti ablasyon izgarasi
 run_siralama.py      siralama kararliligi
+run_doygunluk.py     veri hacmi doygunlugu (Faz 4) + invaryant kapisi + ozet
 pv10/
   config.py features.py models.py evaluate.py experiment.py ranking.py
+  doygunluk.py       pencere aritmetigi, oznitelik onbellegi, hucre, izgara
+  ornekleme.py       gun blogu, konuma gore tabakali altornekleme
+  dogrulama.py       deney invaryantlari (5 adet) - VERI degil KURGU dogrular
+  ozet.py            Faz 4 ozet tablolari; sonuclar gorulmeden yazildi
 ```
+
+Bolme mantigi TEK yerde: `pv10/doygunluk.py:egitim_test_bolme`. Hem
+`hucre_kos` hem `dogrulama.py` oradan gecer - kopyalama yok.
 
 ## Calistirma
 
@@ -96,7 +130,15 @@ python run_smoke.py
 python run_ablasyon.py --tahmin      # once maliyet
 python run_ablasyon.py
 python run_siralama.py
+
+python run_doygunluk.py --dogrula    # 5 invaryant / 18 kontrol - ONCE BU
+python run_doygunluk.py --tahmin     # hucre maliyeti, kosmadan
+python run_doygunluk.py              # ana izgara, sonunda ozet otomatik
+python run_doygunluk.py --ozet       # mevcut CSV'lerden ozet, izgara kosmadan
 ```
+
+Invaryant kapisi gecmeden ana izgara kosulmaz. Izgara kaldigi yerden devam
+eder; basarisiz hucre `durum="hata"` ile diske yazilir, sessizce atlanmaz.
 
 ## Git
 
