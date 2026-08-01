@@ -5,9 +5,12 @@ satir sayisi, bosluk). Buradakiler DENEY KURGUSUNU dogrular: pencere
 aritmetigi, isinma siniri, ornekleme kod yolu ve Faz 2 ile geriye donuk
 uyumluluk.
 
-Dordu de basarisiz olabilecek gercek seyleri test eder, tautoloji degildir:
+Besi de basarisiz olabilecek gercek seyleri test eder, tautoloji degildir:
 beklenen degerler ablasyon.csv'den ve elle yapilan takvim aritmetiginden
-gelir, uretilen koddan turetilmez.
+gelir, uretilen koddan turetilmez. Bolmeyi olcen invaryantlar URETIM
+fonksiyonlarini (hucre_kos, egitim_test_bolme) cagirir; kendi kopyalarini
+tasimazlar. Invaryant 5 ayrica kasten yanlis bir referans uretip kendi
+ayirt etme gucunu olcer - yakalayamazsa KENDISI kalir.
 
 Tolerans BAGIL 1e-6. Bit duzeyi esitlik beklenmez: HistGradientBoosting
 OpenMP kullanir, thread sayisi degisirse toplama sirasi degisir. Gercek fark
@@ -21,10 +24,11 @@ import pandas as pd
 
 from .config import (BASLANGIC_YIL, INVARYANT_TOLERANS, KAYDIRMALI_TOHUM,
                      ORNEKLEME_TOHUMLARI, SONUC)
-from .doygunluk import PencereOnbellegi, hucre_kos, pencere_basi
+from .doygunluk import (PencereOnbellegi, egitim_test_bolme, hucre_kos,
+                        pencere_basi)
 from .features import oznitelik_uret
 from .models import HIZLI_ALTKUME
-from .ornekleme import gun_blogu_altornekle, hedef_satir_sayisi
+from .ornekleme import hedef_satir_sayisi
 
 ABLASYON = SONUC / "ablasyon.csv"
 
@@ -200,31 +204,67 @@ INVARYANT_5_HUCRE = dict(pencere=2, test_yil=2023, tohum=11)
 YUVARLANAN_TANIK = "P_roll168_mean_lag24"
 
 
+ANAHTAR = ["konum", "time_utc"]
+
+
+def _oznitelik_kiyasla(sol: pd.DataFrame, sag: pd.DataFrame,
+                       X: list[str]) -> tuple[list[str], int]:
+    """(konum, time_utc) uzerinden eslestirip oznitelik degerlerini kiyaslar.
+
+    Donen: (farkli sutun adlari, eslesen satir sayisi)
+    """
+    b = sol[ANAHTAR + X].merge(sag[ANAHTAR + X], on=ANAHTAR, how="inner",
+                               suffixes=("_a", "_b"))
+    farkli = [c for c in X
+              if not np.array_equal(b[f"{c}_a"].to_numpy(),
+                                    b[f"{c}_b"].to_numpy(), equal_nan=True)]
+    return farkli, len(b)
+
+
+def _ters_sira_referansi(ham: pd.DataFrame, secilen: pd.DataFrame) -> pd.DataFrame:
+    """KASTEN YANLIS referans: once gunler secilir, SONRA oznitelik hesaplanir.
+
+    Negatif kontrolun kaynagi. Secilen (konum, zaman) satirlarinin HAM hali
+    uzerinde oznitelik uretmek tam olarak "once ornekle, sonra hesapla"
+    demektir; bitisik olmayan gunler uzerinde yuvarlanan istatistikler cop
+    uretir. Invaryant bunu yakalayamiyorsa uretim ters sirada olsa da
+    yakalayamaz demektir - o durumda invaryant islevsizdir.
+    """
+    ham_sec = ham.merge(secilen[ANAHTAR], on=ANAHTAR, how="inner")
+    return oznitelik_uret(ham_sec, eszaman=False)
+
+
 def invaryant_5(onbellek: PencereOnbellegi, ham: pd.DataFrame) -> list[dict]:
-    """Secilen satirlarin oznitelikleri surekli havuzdakiyle ayni mi?"""
+    """Uretimin sectigi satirlarin oznitelikleri surekli havuzdakiyle ayni mi?
+
+    Bolme URETIM fonksiyonundan (egitim_test_bolme) alinir. Onceki surumde
+    invaryant bolmeyi kendi icinde yeniden yaziyordu ve karsilastirmanin iki
+    tarafi da ayni cagriya dayaniyordu: hucre_kos ters sirada calissa bile bu
+    test gecerdi. Simdi olculen sey uretimin ta kendisi.
+    """
     pencere = INVARYANT_5_HUCRE["pencere"]
     test_yil = INVARYANT_5_HUCRE["test_yil"]
     tohum = INVARYANT_5_HUCRE["tohum"]
-    basla = pencere_basi(test_yil, pencere)
 
-    o, X, isinma = onbellek.al(BASLANGIC_YIL, test_yil)
-    yil = o["time_utc"].dt.year.to_numpy()
-    havuz = np.flatnonzero(yil < test_yil)
-    hedef = hedef_satir_sayisi(ham, basla, test_yil - 1, isinma)
-    tr = havuz[gun_blogu_altornekle(o.iloc[havuz], hedef, tohum)]
+    # --- URETIM yolu: izgaranin kostugu fonksiyon ---
+    o, X, tr, te, isinma, basla = egitim_test_bolme(
+        onbellek, "altornekleme", pencere, test_yil, tohum)
     secilen = o.iloc[tr]
+    hedef = hedef_satir_sayisi(ham, basla, test_yil - 1, isinma)
 
     # --- dejenere olmadigini BELGELE ---
     # KONUM BAZINDA sayilir: her konum kendi gunlerini bagimsiz cektigi icin
     # gunlerin konumlar arasi BIRLESIMI cok daha buyuk cikar ve "havuzun
     # %78'i cekildi" gibi yanlis okunur. Gercek oran konum basina ~%22.
-    havuz_gun = pd.to_datetime(o.iloc[havuz]["time_utc"]).dt.floor("D")
+    yil = o["time_utc"].dt.year.to_numpy()
+    havuz_satir = o.iloc[np.flatnonzero(yil < test_yil)]
+    havuz_gun = pd.to_datetime(havuz_satir["time_utc"]).dt.floor("D")
     sec_gun = pd.to_datetime(secilen["time_utc"]).dt.floor("D")
 
     oranlar, kopukluklar = [], []
     for ad in secilen["konum"].unique():
         k_sec = np.sort(sec_gun[secilen["konum"].to_numpy() == ad].unique())
-        k_havuz = havuz_gun[o.iloc[havuz]["konum"].to_numpy() == ad].nunique()
+        k_havuz = havuz_gun[havuz_satir["konum"].to_numpy() == ad].nunique()
         oranlar.append(len(k_sec) / k_havuz)
         kopukluklar.append(
             int(np.sum(np.diff(k_sec).astype("timedelta64[D]").astype(int) != 1)))
@@ -234,50 +274,48 @@ def invaryant_5(onbellek: PencereOnbellegi, ham: pd.DataFrame) -> list[dict]:
     gun_orani = float(np.mean(oranlar))
     kopukluk = int(np.mean(kopukluklar))
 
-    # --- (a) surekli havuzda BAGIMSIZ yeniden hesap, anahtarla eslestir ---
+    # --- surekli havuzda BAGIMSIZ referans ---
     ham_yil = ham["time_utc"].dt.year
-    o_bagimsiz = oznitelik_uret(
+    o_referans = oznitelik_uret(
         ham[(ham_yil >= BASLANGIC_YIL) & (ham_yil <= test_yil)], eszaman=False)
-    anahtar = ["konum", "time_utc"]
-    birlesik = secilen[anahtar + X].merge(
-        o_bagimsiz[anahtar + X], on=anahtar, how="left", suffixes=("_sec", "_ref"))
 
-    if len(birlesik) != len(secilen):
-        raise ValueError(f"eslesme bozuk: {len(birlesik)} != {len(secilen)}")
+    # --- POZITIF: uretimin sectigi satirlar referansla ayni mi? ---
+    farkli, n_eslesen = _oznitelik_kiyasla(secilen, o_referans, X)
 
-    farkli = [c for c in X
-              if not np.array_equal(birlesik[f"{c}_sec"].to_numpy(),
-                                    birlesik[f"{c}_ref"].to_numpy(), equal_nan=True)]
+    # --- NEGATIF KONTROL: ters sirali referansi YAKALIYOR mu? ---
+    o_ters = _ters_sira_referansi(ham, secilen)
+    farkli_ters, n_ters = _oznitelik_kiyasla(o_ters, o_referans, X)
+    yakalandi = len(farkli_ters) > 0
 
-    # --- (b) DIS: ters sira gercekten farkli mi uretiyor? ---
-    # Secilen (konum, zaman) satirlarinin HAM hali uzerinde oznitelik uretmek
-    # = "once ornekle, sonra hesapla". Bu testin gucu olsun diye olculuyor;
-    # fark cikmazsa invaryantin ayirt etme gucu yok demektir.
-    ham_sec = ham.merge(secilen[anahtar], on=anahtar, how="inner")
-    o_ters = oznitelik_uret(ham_sec, eszaman=False)
-    ters = secilen[anahtar + [YUVARLANAN_TANIK]].merge(
-        o_ters[anahtar + [YUVARLANAN_TANIK]], on=anahtar, how="inner",
+    # tanik oznitelik: farkin BUYUKLUGU de kayda girsin
+    tanik = secilen[ANAHTAR + [YUVARLANAN_TANIK]].merge(
+        o_ters[ANAHTAR + [YUVARLANAN_TANIK]], on=ANAHTAR, how="inner",
         suffixes=("_dogru", "_ters"))
-    d, t = (ters[f"{YUVARLANAN_TANIK}_dogru"].to_numpy(),
-            ters[f"{YUVARLANAN_TANIK}_ters"].to_numpy())
+    d, t = (tanik[f"{YUVARLANAN_TANIK}_dogru"].to_numpy(),
+            tanik[f"{YUVARLANAN_TANIK}_ters"].to_numpy())
     gecerli = ~(np.isnan(d) | np.isnan(t))
     ters_farkli_oran = float(np.mean(d[gecerli] != t[gecerli])) if gecerli.any() else 0.0
     ters_maks_fark = float(np.nanmax(np.abs(d[gecerli] - t[gecerli]))) if gecerli.any() else 0.0
 
-    gecti = (not farkli
+    gecti = (not farkli                       # uretim dogru sirada
+             and n_eslesen == len(secilen)    # her satir referansta bulundu
              and len(tr) == sum(hedef.values())
              and n_sec_gun < n_havuz_gun      # dejenere degil
              and kopukluk > 0                 # gercekten kopuk
-             and ters_farkli_oran > 0.5)      # testin ayirt etme gucu var
+             and yakalandi                    # invaryantin disi var
+             and ters_farkli_oran > 0.5)
 
     return [_kayit(
         "5_ornekleme_hesap_sirasi", gecti,
         pencere=pencere, test_yil=test_yil, tohum=tohum,
-        secilen_n=len(tr), hedef_n=sum(hedef.values()),
+        secilen_n=len(tr), hedef_n=sum(hedef.values()), eslesen_n=n_eslesen,
         havuz_gun_konum=n_havuz_gun, secilen_gun_konum=n_sec_gun,
         gun_orani_konum=round(gun_orani, 4), gun_kopuklugu_konum=kopukluk,
         farkli_oznitelik=len(farkli),
         farkli_adlar=",".join(farkli[:5]) if farkli else "",
+        negatif_kontrol_farkli_oznitelik=len(farkli_ters),
+        negatif_kontrol_yakalandi=yakalandi,
+        negatif_kontrol_eslesen_n=n_ters,
         ters_sira_farkli_oran=round(ters_farkli_oran, 4),
         ters_sira_maks_fark=ters_maks_fark)]
 
