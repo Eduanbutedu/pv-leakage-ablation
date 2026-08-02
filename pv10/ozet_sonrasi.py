@@ -34,10 +34,15 @@ eslestirilmis test gerekir (Faz 3'teki kumelenmis Diebold-Mariano).
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 
-from .config import EGITIM_PENCERELERI
+from .config import EGITIM_PENCERELERI, KAYDIRMALI_TOHUM
+from .doygunluk import tahmin_dosyasi
+from .evaluate import diebold_mariano, etki_buyuklugu, metrikler
+from .ranking import esli_bootstrap
 
 PENCERE_SIRA = [str(p) for p in EGITIM_PENCERELERI]
 
@@ -141,3 +146,84 @@ def ga_uclari(d: pd.DataFrame) -> pd.DataFrame:
 
     m = m.sort_values(["test_yil", "model", "tohum"])
     return pd.concat([m, ozet], ignore_index=True)
+
+
+# --------------------------------------------------------------------------- #
+# C) egri uclarinda ESLI test - kumelenmis Diebold-Mariano
+# --------------------------------------------------------------------------- #
+# Kumelenme birimi Faz 3'un kullandiginin AYNISI: zaman damgasi (time_utc).
+# Gerekce evaluate.diebold_mariano icinde yazili - alti konum ayni saati
+# paylastigi icin ayni damga veri setinde alti kez geciyor; Newey-West
+# yalnizca zaman icindeki otokorelasyonu duzeltir, konumlar arasi eszamanli
+# korelasyonu duzeltmez. Kayip farki once damga duzeyinde ortalanir, test o
+# seri uzerinde kosulur. ranking.py:110 ayni cagriyi 'kume=damga' ile yapiyor.
+DM_KUMELENME_BIRIMI = "time_utc (zaman damgasi); alti konum ayni damgada"
+
+
+def _tahmin_oku(dizin: Path, kol: str, pencere, test_yil: int,
+                model_ad: str, tohum: int) -> pd.DataFrame:
+    yol = tahmin_dosyasi(dizin, kol, pencere, test_yil, model_ad, tohum)
+    if not yol.exists():
+        raise FileNotFoundError(
+            f"{yol} yok. Tahmin vektorleri --tahmin-kaydet ile uretilir; "
+            "eksik dosyayi sessizce atlamak DM tablosunu yaniltir.")
+    return pd.read_parquet(yol)
+
+
+def uc_dm(tahmin_dizin, test_yillari, model_adlari, tohumlar,
+          bootstrap: bool = True) -> pd.DataFrame:
+    """Altornekleme K=1 ile paylasilan K=tum ucu arasinda ESLI DM testi.
+
+    Marjinal GA kiyasi (ga_uclari) muhafazakardir: iki uc AYNI test setinde
+    degerlendirildigi icin hatalari korelasyonlu ve esli olmayan kiyas bu
+    korelasyonu yok sayar. Burada kayip FARKI dogrudan test edilir.
+
+    Isaret kuralı evaluate.diebold_mariano'dan gelir: pozitif DM, A'nin (K=1)
+    B'den (K=tum) DAHA KOTU oldugunu gosterir. Beklenen isaret pozitif, ama
+    beklenti dogrulama olcutu degil - cikan isaret bulgudur.
+    """
+    dizin = Path(tahmin_dizin)
+    satir = []
+
+    for yil in test_yillari:
+        for model in model_adlari:
+            ust = _tahmin_oku(dizin, "kaydirmali", "tum", yil, model,
+                              KAYDIRMALI_TOHUM)
+            for tohum in tohumlar:
+                alt = _tahmin_oku(dizin, "altornekleme", 1, yil, model, tohum)
+
+                b = alt.merge(ust, on=["time_utc", "konum"],
+                              suffixes=("_K1", "_Ktum"))
+                if len(b) != len(alt) or len(b) != len(ust):
+                    raise ValueError(
+                        f"{yil}/{model}/t{tohum}: eslesme bozuk "
+                        f"({len(alt)} / {len(ust)} -> {len(b)}). Iki ucun test "
+                        "satirlari birebir ayni olmali.")
+                if not np.array_equal(b["y_K1"].to_numpy(), b["y_Ktum"].to_numpy()):
+                    raise ValueError(f"{yil}/{model}/t{tohum}: y serileri farkli")
+
+                y = b["y_K1"].to_numpy()
+                a1 = b["tahmin_K1"].to_numpy()
+                at = b["tahmin_Ktum"].to_numpy()
+                damga = b["time_utc"].to_numpy()
+
+                dm = diebold_mariano(y, a1, at, kume=damga)
+                r1 = metrikler(y, a1)["RMSE"]
+                rt = metrikler(y, at)["RMSE"]
+                eb = etki_buyuklugu(r1, rt)
+
+                s = dict(test_yil=yil, model=model, tohum=tohum,
+                         RMSE_K1=r1, RMSE_Ktum=rt, **eb,
+                         DM=dm["DM"], p=dm["p"], anlamli=dm["p"] < 0.05,
+                         n_ham=len(b), n_kume=int(pd.unique(damga).size),
+                         kumelenme=DM_KUMELENME_BIRIMI)
+
+                if bootstrap:
+                    gunler = pd.to_datetime(b["time_utc"]).dt.date.to_numpy()
+                    lo, hi = esli_bootstrap(y, a1, at, gunler)
+                    s["fark_GA_alt"], s["fark_GA_ust"] = lo, hi
+                    s["GA_sifiri_iceriyor"] = bool(lo <= 0.0 <= hi)
+
+                satir.append(s)
+
+    return pd.DataFrame(satir)
