@@ -1,7 +1,7 @@
 FAZ 4 OZET KUNYESI
 ============================================================
 
-kosu tarihi         : 2026-08-02 01:55:26
+kosu tarihi         : 2026-08-02 04:23:18
 izgara tamam        : evet
 hucre               : 255/255
 eksik hucre         : 0
@@ -13,9 +13,18 @@ thread sabiti       : 8
 
 on-kayit durumu     : 1-6 arasi tablolar izgara kosulmadan once
                       yazildi (pv10/ozet.py, dokunulmadi).
-                      algoritma_span, ga tablolari
+                      algoritma_span, ga, duzeltilmis tablolari
                       sonuclar goruldukten SONRA eklendi
                       (pv10/ozet_sonrasi.py).
+
+UYARI - hacim_orani  : YANLIS TURDEN KIYAS. Hacim SPAN'ini Faz 3'un
+                      algoritma MEDYAN IKILI farkina (0.4669 W)
+                      boluyor; ikisi ayni turden istatistik degil.
+                      Ayrica havuzlanmis tek sayi veriyor, oysa etki
+                      model bagimli (LR 0.209944 W - HGB 4.493244 W).
+                      Tablo kayit icin yerinde birakildi; makalenin
+                      ana iddiasi doygunluk_ozet_duzeltilmis.csv'den
+                      okunur.
 
 model x pencere:
   kazanan degisiyor mu : False
@@ -27,7 +36,7 @@ varyans ayristirmasi:
   kol                  : kaydirmali
   model sayisi         : 3
 
-yazilan tablolar (10):
+yazilan tablolar (11):
   egri                 doygunluk_ozet_egri.csv (10 satir)
   marjinal             doygunluk_ozet_marjinal.csv (8 satir)
   hacim_orani          doygunluk_ozet_hacim_orani.csv (3 satir)
@@ -38,3 +47,4 @@ yazilan tablolar (10):
   konum                doygunluk_ozet_konum.csv (6 satir)
   algoritma_span       doygunluk_ozet_algoritma_span.csv (10 satir)   [sonradan eklendi]
   ga                   doygunluk_ozet_ga.csv (46 satir)   [sonradan eklendi]
+  duzeltilmis          doygunluk_ozet_duzeltilmis.csv (17 satir)   [sonradan eklendi]

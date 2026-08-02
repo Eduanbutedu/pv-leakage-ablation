@@ -191,8 +191,14 @@ OZET_DOSYA = {
     # --- sonuclar GORULDUKTEN SONRA eklendi, bkz. pv10/ozet_sonrasi.py ---
     "algoritma_span": "doygunluk_ozet_algoritma_span.csv",
     "ga": "doygunluk_ozet_ga.csv",
+    "duzeltilmis": "doygunluk_ozet_duzeltilmis.csv",
 }
-SONRADAN_EKLENEN = ("algoritma_span", "ga")
+SONRADAN_EKLENEN = ("algoritma_span", "ga", "duzeltilmis")
+
+# Ana izgara disindaki loglar - duzeltilmis tablonun kaynaklari.
+GENIS_LOG = SONUC / "doygunluk_genis.csv"
+DM_OZET = SONUC / "doygunluk_ozet_dm.csv"
+YIL_DM_OZET = SONUC / "doygunluk_ozet_dm_yil.csv"
 KUNYE = SONUC / "doygunluk_ozet_kunye.txt"
 
 
@@ -359,6 +365,26 @@ def ozetle(kollar, pencereler, yillar, model_adlari, tohumlar) -> None:
         print(t8.to_string(index=False))
         yaz(t8, "ga")
 
+    _baslik("9) DUZELTILMIS ANA TABLO  [sonradan eklendi]")
+    dm = pd.read_csv(DM_OZET) if DM_OZET.exists() else None
+    genis = pd.read_csv(GENIS_LOG) if GENIS_LOG.exists() else None
+    varyans = None
+    try:
+        varyans = ozet.varyans_ayristirmasi(d)
+    except ValueError:
+        pass  # yukarida zaten raporlandi
+    if dm is None and genis is None:
+        print(f"kaynak yok: {DM_OZET.name} / {GENIS_LOG.name}")
+        atla("duzeltilmis", "DM ve genis kosu ciktilari yok")
+    else:
+        eksik_kaynak = [p.name for p in (DM_OZET, GENIS_LOG) if not p.exists()]
+        if eksik_kaynak:
+            print(f"UYARI: eksik kaynak {eksik_kaynak} - ilgili satirlar YOK")
+        yil_dm = pd.read_csv(YIL_DM_OZET) if YIL_DM_OZET.exists() else None
+        t9 = ozet_sonrasi.duzeltilmis_ana_tablo(dm, genis, varyans, yil_dm)
+        print(t9.to_string(index=False))
+        yaz(t9, "duzeltilmis")
+
     _kunye_yaz(len(tamam), len(beklenen), eksik, hatali, e4, varyans_attrs,
                yazilan, atlanan)
 
@@ -387,6 +413,15 @@ def _kunye_yaz(n_tamam, n_beklenen, eksik, hatali, e4, varyans_attrs,
         f"                      {', '.join(SONRADAN_EKLENEN)} tablolari",
         "                      sonuclar goruldukten SONRA eklendi",
         "                      (pv10/ozet_sonrasi.py).",
+        "",
+        "UYARI - hacim_orani  : YANLIS TURDEN KIYAS. Hacim SPAN'ini Faz 3'un",
+        "                      algoritma MEDYAN IKILI farkina (0.4669 W)",
+        "                      boluyor; ikisi ayni turden istatistik degil.",
+        "                      Ayrica havuzlanmis tek sayi veriyor, oysa etki",
+        "                      model bagimli (LR 0.209944 W - HGB 4.493244 W).",
+        "                      Tablo kayit icin yerinde birakildi; makalenin",
+        "                      ana iddiasi doygunluk_ozet_duzeltilmis.csv'den",
+        "                      okunur.",
     ]
 
     if e4:

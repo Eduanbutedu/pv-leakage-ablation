@@ -22,19 +22,37 @@ tutulacak.
 - Faz 1 (veri) TAMAM. 525.888 satir, 6 konum, PVGIS-SARAH3.
 - Faz 2 (sizinti ablasyonu) TAMAM. `sonuclar/ablasyon.csv`
 - Faz 3 (siralama kararliligi) TAMAM. `sonuclar/siralama_*.csv`
-- Faz 4 (veri hacmi doygunlugu) ALTYAPI HAZIR, KOSU BEKLIYOR.
+- Faz 4 (veri hacmi doygunlugu) TAMAM.
   - K = 1/2/3/5/tum yillik egitim. 10 yillik pencere MUMKUN DEGIL: test yili
     disari cikinca en fazla 9 yil kalir.
   - Iki kol: `kaydirmali` (hacim + guncellik ic ice) ve `altornekleme`
     (gun blogu, konuma gore tabakali, 3 tohum - saf hacim etkisi).
     Makalenin ana orani ALTORNEKLEME kolundan gelir.
   - Invaryant kapisi: 5 invaryant / 18 kontrol, hepsi GECTI (~1,2 dk).
-  - Ozet fonksiyonlari sonuclar GORULMEDEN yazildi (`pv10/ozet.py`) ve
-    runner'a baglandi; ciktilar `sonuclar/doygunluk_ozet_*.csv`.
-  - Ana izgara: 255 hucre (~9 dk tahmin), HENUZ KOSULMADI.
-  - Genis kosu: 50 hucre (K=tum, 2019-2023, SVR haric 10 model), OLCULMEDI.
-- Opsiyonel: DKASC gercek olcum verisiyle replikasyon.
-- Sonra: yazim.
+  - Ana izgara TAMAM: 255/255 hucre, 11,0 dk, hata yok. `sonuclar/doygunluk.csv`
+  - Genis kosu TAMAM: 50/50 hucre, 81,2 dk, K=tum x 2019-2023 x 10 model
+    (SVR haric). `sonuclar/doygunluk_genis.csv`
+  - Esli kumelenmis DM (egri uclari) TAMAM: 45 karsilastirma, 35 anlamli.
+    Kirilim model bagimli - LR 5/15, PolyRidge 15/15, HGB 15/15.
+    `sonuclar/doygunluk_ozet_dm.csv`
+  - 2022 dogrulama kosusu TAMAM: 10 hucre, 19,6 dk, tahmin kaydiyla.
+    Genis kosuyla 99/100 alan birebir (tek istisna asagida).
+  - Yil ici DM (2022, ilk uc model) TAMAM: uc ciftin HICBIRI anlamli degil.
+    Kazanan-ikinci (Neural Network vs Polynomial Ridge) p=0,413134, esli GA
+    sifiri iceriyor. Yani "kazanan yila gore degisiyor" gozlemi 2022'de
+    ISTATISTIKSEL OLARAK DESTEKLENMIYOR. Diger dort yil SINANMADI - genis
+    kosuda tahmin vektoru kaydedilmemisti.
+    `sonuclar/doygunluk_ozet_dm_yil.csv`
+- **ACIK MADDE - Extra Trees nondeterminizmi.** 2022 dogrulama kosusunda
+  Extra Trees `R2`'si genis kosudakinden 1 ULP farkli cikti
+  (0,7126799175406285 vs 0,7126799175406284, fark -1,110223e-16).
+  RMSE / MAE / nRMSE_kapasite / nRMSE_ortalama / skill BIT DUZEYINDE ayni;
+  Random Forest, Gradient Boosting ve Neural Network her alanda birebir.
+  Sebep OLCULMEDI - tahmin: 400 agacin paralel toplama sirasi. Yarin
+  olculecek (ayni hucre iki kez kosulup tahmin vektoru hash'lenerek).
+  Raporlanan hicbir sayi etkilenmiyor.
+- Kalan: `faz-notlari/faz-4.md`, `faz-2` / `faz-3` / `faz-4` etiketleri
+  (repoda hic etiket yok), sonra DKASC (opsiyonel) veya dogrudan yazim.
 
 ## Degismez kurallar
 
@@ -78,6 +96,26 @@ tutulacak.
   basinda tuketilmeli. Kontrol: K=1 @ 2023 icin `egitim_n` = **51.414**
   dogrudur; **52.560** cikiyorsa sinir siziyor. Invaryant 3 bunu olcer.
 
+- **Yanlis turden kiyas:** `hacim_orani` tablosu hacim SPAN'ini (K=1 -> K=tum)
+  Faz 3'un algoritma MEDYAN IKILI farkina (0,4669 W) bolup "4,72 kat" uretiyordu.
+  Ikisi ayni turden istatistik degil - biri bir aralik, digeri ikili farklarin
+  medyani. Span span ile, medyan medyan ile kiyaslanir. Ayni turden bakildiginda
+  algoritma span'i 3,65-4,67 W, hacim span'i 0,25-6,74 W: ayni mertebede.
+  Tablo kayit icin yerinde birakildi, ana iddia
+  `sonuclar/doygunluk_ozet_duzeltilmis.csv`'den okunur.
+
+- **Havuzlanmis ortalama etkiyi gizler:** saf hacim etkisinin 2,204968 W'lik
+  ortalamasi, Linear Regression'in 0,209944 W'siyle Hist Gradient Boosting'in
+  4,493244 W'sini ayni potaya koyuyor. LR'de etki 15 karsilastirmanin yalnizca
+  5'inde anlamli ve uc hucrede isaret ters; HGB'de 15/15. Etki MODEL BAGIMLI,
+  tek sayiya indirgenmez.
+
+- **Marjinal GA cakismasi "fark yok" demek DEGILDIR:** egrinin iki ucu AYNI test
+  setinde degerlendirildigi icin hatalar korelasyonlu; esli olmayan kiyas
+  muhafazakardir. Marjinal GA'larda 45/45 cakisiyordu, esli kumelenmis DM'de
+  35/45 anlamli cikti. Cakismama farki ispatlar, cakisma farksizligi ispatlamaz.
+  Kumelenme birimi `time_utc` - Faz 3 ile ayni (`ranking.py:110`).
+
 - **Invaryantin uretim yerine kendi kopyasini dogrulamasi:** bolme mantigi
   invaryanta kopyalanirsa test tautolojiye doner - kopya dogru oldugu surece
   uretim yanlis olsa bile kapi yesil yanar. Faz 4'te invaryant 5 tam bunu
@@ -114,7 +152,14 @@ pv10/
   ornekleme.py       gun blogu, konuma gore tabakali altornekleme
   dogrulama.py       deney invaryantlari (5 adet) - VERI degil KURGU dogrular
   ozet.py            Faz 4 ozet tablolari; sonuclar gorulmeden yazildi
+  ozet_sonrasi.py    sonuclar GORULDUKTEN sonra eklenen tablolar
 ```
+
+`ozet.py` ile `ozet_sonrasi.py` ayri tutulur; sebep kayit duzenidir. `ozet.py`
+izgara kosulmadan once yazildi ve o gunden beri dokunulmadi - bunu
+`git log -- pv10/ozet.py` dosya duzeyinde gosteriyor. Metrik seciminin post-hoc
+olmadigi iddiasi buna dayaniyor. Sonradan eklenen tablo AYRI dosyaya gider,
+kunyede `[sonradan eklendi]` diye isaretlenir.
 
 Bolme mantigi TEK yerde: `pv10/doygunluk.py:egitim_test_bolme`. Hem
 `hucre_kos` hem `dogrulama.py` oradan gecer - kopyalama yok.
@@ -136,6 +181,23 @@ python run_doygunluk.py --tahmin     # hucre maliyeti, kosmadan
 python run_doygunluk.py              # ana izgara, sonunda ozet otomatik
 python run_doygunluk.py --ozet       # mevcut CSV'lerden ozet, izgara kosmadan
 ```
+
+Ana izgara disinda kosu yaparken uc bayrak:
+
+```
+--pencere tum        # pencere listesini kisitla; varsayilan HEPSI (1,2,3,5,tum)
+--etiket genis       # ayri log dosyasi (doygunluk_<etiket>.csv); ozet uretilmez
+--tahmin-kaydet      # her hucrenin gunduz tahmin vektorunu diske yaz
+```
+
+`--etiket` VERILMEZSE kosu ana izgara loguna yazar ve ozet tablolari kirlenir -
+egri, ana oran, tohum yayilimi ve model x pencere tablolari mevcut modeller
+uzerinde ortalama aliyor. Farkli model kumesi veya tek pencere kosarken
+`--etiket` ZORUNLU sayilmali.
+
+`--tahmin-kaydet` olmadan esli DM SONRADAN kosulamaz; tahmin vektoru
+uretilir ama diske yazilmaz. Tahminler `sonuclar/tahminler/doygunluk/<etiket>/`
+altina parquet olarak gider, `.gitignore` kapsamindadir.
 
 Invaryant kapisi gecmeden ana izgara kosulmaz. Izgara kaldigi yerden devam
 eder; basarisiz hucre `durum="hata"` ile diske yazilir, sessizce atlanmaz.
