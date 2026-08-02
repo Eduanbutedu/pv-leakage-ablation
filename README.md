@@ -110,8 +110,15 @@ Interrupted runs resume automatically: completed cells are read from
 
 Random seed 42 throughout. Hyperparameters are fixed a priori and never tuned on
 validation or test partitions. Pinned dependency versions are in `requirements.txt`;
-results were produced with Python 3.14, pandas 3.0.5, NumPy 2.5.1 and
-scikit-learn 1.9.0.
+results were produced with Python 3.14, pandas 3.0.5, NumPy 2.5.1,
+scikit-learn 1.9.0 and pyarrow 22.0.0.
+
+pyarrow is pinned to 22.0.0 rather than the latest release because Windows Smart App
+Control blocks the `arrow.dll` shipped with 25.0.0 on the machine used for the runs.
+The pin affects only Parquet I/O. The frozen dataset is byte-identical under both
+versions (`sha256_16 = f722a717bac502c2`), the five experiment invariants pass 18/18
+checks under 22.0.0, and the reference metrics they compare against reproduce to the
+same digits as under 25.0.0.
 
 ## Related work
 

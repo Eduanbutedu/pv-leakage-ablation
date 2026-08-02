@@ -3,5 +3,8 @@
 pandas==3.0.5
 numpy==2.5.1
 scikit-learn==1.9.0
-pyarrow==25.0.0
+# pyarrow 22.0.0 kasitli: Windows Smart App Control 25.0.0'in arrow.dll'ini
+# imza/itibar gerekcesiyle blokluyor (CodeIntegrity 3077/3033). Veri hash'i
+# f722a717bac502c2 iki surumde de ayni; invaryant kapisi 18/18 gecti.
+pyarrow==22.0.0
 requests==2.34.2

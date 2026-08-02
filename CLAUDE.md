@@ -169,6 +169,17 @@ Bolme mantigi TEK yerde: `pv10/doygunluk.py:egitim_test_bolme`. Hem
 Python komutlarini HER ZAMAN .venv\Scripts\python.exe ile calistir.
 Sistem Python'unda pandas ve scikit-learn kurulu degil.
 
+**pyarrow 22.0.0 kullaniliyor (25.0.0 DEGIL).** 3 Agustos 2026 02:06'da Windows
+Smart App Control 25.0.0'in `arrow.dll`'ini bloklamaya basladi (CodeIntegrity
+3077/3033, `VerifiedAndReputablePolicyState=1`); parquet okunamadigi icin hicbir
+kosu baslamiyordu. 22.0.0'a indirildi, `--only-binary=:all:` ile, kaynaktan
+derleme yok. SAC ayarina DOKUNULMADI - kapatmak geri alinamaz bir islem.
+Veri hash'i degismedi (`f722a717bac502c2`), invaryant kapisi 22.0.0 ile 18/18
+gecti ve invaryant 1-2'nin ablasyon referanslari son basamagina kadar ayni
+cikti (6,050675e-13 ve 7,797529e-12 bagil fark, ikisi de surum oncesiyle
+birebir). Ana izgara, genis kosu ve 2022 kosusu 25.0.0 ile uretildi; sonraki
+kosular 22.0.0 ile.
+
 ```
 python pvgis_pipeline.py duzenle ham/
 python run_smoke.py
