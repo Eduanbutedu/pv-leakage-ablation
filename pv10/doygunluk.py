@@ -21,7 +21,9 @@ dokunulmadan kalir ve n butun K seviyelerinde sabit cikar.
 
 from __future__ import annotations
 
+import re
 import time
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -148,11 +150,26 @@ def egitim_test_bolme(onbellek: PencereOnbellegi, kol: str, pencere,
 
 
 # --------------------------------------------------------------------------- #
+# tahmin vektoru kaydi
+# --------------------------------------------------------------------------- #
+def tahmin_dosyasi(dizin: Path, kol: str, pencere, test_yil: int,
+                   model_ad: str, tohum: int) -> Path:
+    """Bir hucrenin tahmin dosyasinin yolu."""
+    ad = re.sub(r"[^A-Za-z0-9]+", "_", model_ad).strip("_")
+    return Path(dizin) / f"{kol}_K{pencere}_{test_yil}_{ad}_t{tohum}.parquet"
+
+
+# --------------------------------------------------------------------------- #
 # tek hucre
 # --------------------------------------------------------------------------- #
 def hucre_kos(onbellek: PencereOnbellegi, kol: str, pencere, test_yil: int,
-              model_ad: str, tohum: int, bootstrap: bool = True) -> tuple[dict, list[dict]]:
+              model_ad: str, tohum: int, bootstrap: bool = True,
+              tahmin_dizin: Path | None = None) -> tuple[dict, list[dict]]:
     """Tek bir hucreyi kosar.
+
+    tahmin_dizin verilirse gunduz tahmin vektoru diske yazilir. Yazma metrik
+    hesabindan SONRA yapilir ve hicbir metrik degerine dokunmaz - esli
+    Diebold-Mariano icin ham hata serisi gerekiyordu, metrikler degil.
 
     Donen: (ana satir, konum bazinda satirlar)
     """
@@ -194,6 +211,18 @@ def hucre_kos(onbellek: PencereOnbellegi, kol: str, pencere, test_yil: int,
                durum="tamam", hata="",
                **m, RMSE_GA_alt=ga_alt, RMSE_GA_ust=ga_ust,
                egitim_sn=round(egitim_sn, 1), bootstrap_sn=round(bootstrap_sn, 1))
+
+    # --- tahmin vektoru (metrikler HESAPLANDIKTAN sonra, onlara dokunmadan) ---
+    if tahmin_dizin is not None:
+        yol = tahmin_dosyasi(tahmin_dizin, kol, pencere, test_yil, model_ad, tohum)
+        yol.parent.mkdir(parents=True, exist_ok=True)
+        pd.DataFrame({
+            "time_utc": test_satirlari["time_utc"].to_numpy()[maske],
+            "konum": konum,
+            "y": yte,
+            "persistence": pers,
+            "tahmin": tah,
+        }).to_parquet(yol, index=False)
 
     # --- konum bazinda: nRMSE_ortalama (mutlak W konumlar arasi kiyaslanamaz) ---
     konum_satirlari = []
@@ -254,7 +283,7 @@ def _tamamlananlar(log_yolu) -> set[tuple]:
 
 def izgara_kos(ham: pd.DataFrame, kollar, pencereler, yillar, model_adlari,
                tohumlar, log_yolu, konum_log_yolu, bootstrap: bool = True,
-               ilerleme=print) -> pd.DataFrame:
+               ilerleme=print, tahmin_dizin: Path | None = None) -> pd.DataFrame:
     """Izgarayi kosar; her hucre aninda diske yazilir, kesilirse devam eder."""
     onbellek = PencereOnbellegi(ham)
     tamam = _tamamlananlar(log_yolu)
@@ -275,7 +304,8 @@ def izgara_kos(ham: pd.DataFrame, kollar, pencereler, yillar, model_adlari,
                   f"{model_ad[:22]} t{tohum}")
         try:
             ana, konumlar = hucre_kos(onbellek, kol, pencere, yil, model_ad,
-                                      tohum, bootstrap=bootstrap)
+                                      tohum, bootstrap=bootstrap,
+                                      tahmin_dizin=tahmin_dizin)
         except Exception as e:
             # Kural 5: basarisiz hucre de DISKE yazilir. Yoksa kosu "bitti"
             # der ama CSV'de eksik hucre olur ve bunu soyleyen hicbir sey

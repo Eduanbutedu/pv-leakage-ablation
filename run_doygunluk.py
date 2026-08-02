@@ -55,6 +55,8 @@ from pv10.models import ABLASYON_ALTKUMESI, HIZLI_ALTKUME, modeller  # noqa: E40
 
 LOG = SONUC / "doygunluk.csv"
 KONUM_LOG = SONUC / "doygunluk_konum.csv"
+# Tahmin vektorleri: *.parquet zaten .gitignore kapsaminda, repoya girmez.
+TAHMIN_DIZIN = SONUC / "tahminler" / "doygunluk"
 
 
 def thread_durumu() -> str:
@@ -432,11 +434,37 @@ def main():
                     help="mevcut CSV'lerden ozet tablolari bas, izgarayi kosma")
     ap.add_argument("--modeller", default="hizli",
                     choices=["hizli", "ablasyon", "tumu"])
+    ap.add_argument("--pencere", default=None,
+                    help="virgullu pencere listesi (or. 'tum'); varsayilan hepsi")
+    ap.add_argument("--etiket", default=None,
+                    help="ayri log dosyasi soneki (or. 'genis'); verilirse "
+                         "ana izgara loguna KARISMAZ ve ozet uretilmez")
     ap.add_argument("--yillar", default=",".join(str(y) for y in DOYGUNLUK_TEST_YILLARI))
     ap.add_argument("--kol", default=",".join(DOYGUNLUK_KOLLARI))
     ap.add_argument("--hizli-bootstrap", action="store_true",
                     help="gun-blogu bootstrap GA'sini atla")
+    ap.add_argument("--tahmin-kaydet", action="store_true",
+                    help="her hucrenin gunduz tahmin vektorunu diske yaz "
+                         "(esli DM icin gerekli; parquet, .gitignore kapsaminda)")
     a = ap.parse_args()
+
+    global LOG, KONUM_LOG
+    if a.etiket:
+        # Genis kosu ana izgaranin logunu KIRLETMEZ: ozet tablolarinin cogu
+        # model kumesine gore ortalama aliyor, 10 modelli satirlar 3 modelli
+        # egriye karisirsa tablolar sessizce yanlis cikar.
+        LOG = SONUC / f"doygunluk_{a.etiket}.csv"
+        KONUM_LOG = SONUC / f"doygunluk_{a.etiket}_konum.csv"
+
+    pencereler = EGITIM_PENCERELERI
+    if a.pencere:
+        istenen = [p.strip() for p in a.pencere.split(",")]
+        gecerli = {str(p): p for p in EGITIM_PENCERELERI}
+        bilinmeyen = [p for p in istenen if p not in gecerli]
+        if bilinmeyen:
+            raise SystemExit(f"bilinmeyen pencere: {bilinmeyen} "
+                             f"(gecerli: {sorted(gecerli)})")
+        pencereler = tuple(gecerli[p] for p in istenen)
 
     ham = pd.read_parquet(VERI)
 
@@ -454,12 +482,11 @@ def main():
                     "tumu": [m for m in havuz if m not in GENIS_KOSU_HARIC]}[a.modeller]
 
     if a.ozet:
-        ozetle(kollar, EGITIM_PENCERELERI, yillar, model_adlari,
-               ORNEKLEME_TOHUMLARI)
+        ozetle(kollar, pencereler, yillar, model_adlari, ORNEKLEME_TOHUMLARI)
         return
 
     if a.tahmin:
-        tahmin_et(ham, kollar, EGITIM_PENCERELERI, yillar, model_adlari,
+        tahmin_et(ham, kollar, pencereler, yillar, model_adlari,
                   ORNEKLEME_TOHUMLARI)
         return
 
@@ -467,13 +494,27 @@ def main():
     print(f"  veri: {len(ham):,} satir, {ham.konum.nunique()} konum")
     print(f"  log : {LOG}\n")
     t0 = time.time()
-    izgara_kos(ham, kollar, EGITIM_PENCERELERI, yillar, model_adlari,
+    tahmin_dizin = None
+    if a.tahmin_kaydet:
+        tahmin_dizin = TAHMIN_DIZIN / (a.etiket or "ana")
+        print(f"  tahmin: {tahmin_dizin}")
+
+    izgara_kos(ham, kollar, pencereler, yillar, model_adlari,
                ORNEKLEME_TOHUMLARI, LOG, KONUM_LOG,
-               bootstrap=not a.hizli_bootstrap)
+               bootstrap=not a.hizli_bootstrap, tahmin_dizin=tahmin_dizin)
     print(f"\nToplam sure: {(time.time() - t0) / 60:.1f} dakika")
 
-    ozetle(kollar, EGITIM_PENCERELERI, yillar, model_adlari,
-           ORNEKLEME_TOHUMLARI)
+    if a.etiket:
+        # Tek pencereli / farkli model kumeli kosuda ogrenme egrisi tanimsiz;
+        # ozet tablolari URETILMEZ. Ham RMSE tablosu basilir.
+        g = pd.read_csv(LOG)
+        print(f"\n{'=' * 78}")
+        print(f"GENIS KOSU - ozet tablolari uretilmedi (tek pencere)")
+        print(f"{'=' * 78}")
+        print(g[g.durum == "tamam"].groupby(["model", "test_yil"])["RMSE"]
+              .mean().unstack().to_string())
+    else:
+        ozetle(kollar, pencereler, yillar, model_adlari, ORNEKLEME_TOHUMLARI)
 
 
 if __name__ == "__main__":
