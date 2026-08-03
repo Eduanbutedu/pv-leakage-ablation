@@ -6,12 +6,12 @@ S2 algoritma,ilk-iki farki,0.524001653560191,Polynomial Ridge vs Hist Gradient B
 S2 algoritma,havuz span'i (Decision Tree haric),7.793213517227656,9 model,makul aday kumesinde algoritma secimi ne oynatir,50,sonuclar/doygunluk_genis.csv,SONRADAN
 S2 algoritma,havuz span'i (tam kume),35.9402752648831,"10 model, Decision Tree dahil",zayif aday dahil edilirse span buyur; SVR haric,50,sonuclar/doygunluk_genis.csv,SONRADAN
 S3 test yili,kazanan degisimi (10 model),,"2 farkli kazanan: {'Polynomial Ridge': 4, 'Neural Network': 1}",ayni kurulumda yil degisince kazanan degisiyor mu,50,sonuclar/doygunluk_genis.csv,SONRADAN
-S3 kapsam,2019 ilk-iki farki,0.59413637951792,Polynomial Ridge vs Neural Network; SINANMADI,tahmin vektoru yok -> esli DM kosulamaz; bu yil icin ne 'anlamli' ne 'anlamsiz' iddia EDILEMEZ,10,sonuclar/doygunluk_genis.csv,SONRADAN
-S3 kapsam,2020 ilk-iki farki,0.14696355921665827,Polynomial Ridge vs Neural Network; SINANMADI,tahmin vektoru yok -> esli DM kosulamaz; bu yil icin ne 'anlamli' ne 'anlamsiz' iddia EDILEMEZ,10,sonuclar/doygunluk_genis.csv,SONRADAN
-S3 kapsam,2021 ilk-iki farki,0.272656091191692,Polynomial Ridge vs Hist Gradient Boosting; SINANMADI,tahmin vektoru yok -> esli DM kosulamaz; bu yil icin ne 'anlamli' ne 'anlamsiz' iddia EDILEMEZ,10,sonuclar/doygunluk_genis.csv,SONRADAN
+S3 kapsam,2019 ilk-iki farki,0.59413637951792,"Polynomial Ridge vs Neural Network; p=0.155011, anlamli DEGIL",esli kumelenmis DM ile SINANDI,10,sonuclar/doygunluk_genis.csv,SONRADAN
+S3 kapsam,2020 ilk-iki farki,0.14696355921665827,"Polynomial Ridge vs Neural Network; p=0.742136, anlamli DEGIL",esli kumelenmis DM ile SINANDI,10,sonuclar/doygunluk_genis.csv,SONRADAN
+S3 kapsam,2021 ilk-iki farki,0.272656091191692,"Polynomial Ridge vs Hist Gradient Boosting; p=0.432974, anlamli DEGIL",esli kumelenmis DM ile SINANDI,10,sonuclar/doygunluk_genis.csv,SONRADAN
 S3 kapsam,2022 ilk-iki farki,0.31137746954880186,"Neural Network vs Polynomial Ridge; p=0.413134, anlamli DEGIL",esli kumelenmis DM ile SINANDI,10,sonuclar/doygunluk_genis.csv,SONRADAN
-S3 kapsam,2023 ilk-iki farki,0.7328062050261224,Polynomial Ridge vs Neural Network; SINANMADI,tahmin vektoru yok -> esli DM kosulamaz; bu yil icin ne 'anlamli' ne 'anlamsiz' iddia EDILEMEZ,10,sonuclar/doygunluk_genis.csv,SONRADAN
-S3 kapsam,kazanan degisimi iddiasinin dayanagi,,"sinanan yil: [2022] | sinanmayan: [2019, 2020, 2021, 2023]",'kazanan yila gore degisiyor' iddiasi yalnizca sinanan yil(lar)a dayanir; kalan yillar icin siralama farki OLCULDU ama anlamliligi test EDILMEDI,50,sonuclar/doygunluk_genis.csv,SONRADAN
+S3 kapsam,2023 ilk-iki farki,0.7328062050261224,"Polynomial Ridge vs Neural Network; p=0.114696, anlamli DEGIL",esli kumelenmis DM ile SINANDI,10,sonuclar/doygunluk_genis.csv,SONRADAN
+S3 kapsam,kazanan degisimi iddiasinin dayanagi,,"sinanan yil: [2019, 2020, 2021, 2022, 2023] | sinanmayan: []",'kazanan yila gore degisiyor' iddiasi yalnizca sinanan yil(lar)a dayanir; kalan yillar icin siralama farki OLCULDU ama anlamliligi test EDILMEDI,50,sonuclar/doygunluk_genis.csv,SONRADAN
 S3 test yili,varyans payi: test yili,,%48.486837,"uc faktorlu kare toplami, 3 hizli model",3,sonuclar/doygunluk_ozet_varyans.csv + doygunluk_genis.csv,ON-KAYITLI
 S3 test yili,varyans payi: algoritma,,%25.217039,"uc faktorlu kare toplami, 3 hizli model",3,sonuclar/doygunluk_ozet_varyans.csv + doygunluk_genis.csv,ON-KAYITLI
 S3 test yili,varyans payi: veri hacmi,,%15.272219,"uc faktorlu kare toplami, 3 hizli model",3,sonuclar/doygunluk_ozet_varyans.csv + doygunluk_genis.csv,ON-KAYITLI
