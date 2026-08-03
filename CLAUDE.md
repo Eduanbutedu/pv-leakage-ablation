@@ -37,22 +37,52 @@ tutulacak.
     `sonuclar/doygunluk_ozet_dm.csv`
   - 2022 dogrulama kosusu TAMAM: 10 hucre, 19,6 dk, tahmin kaydiyla.
     Genis kosuyla 99/100 alan birebir (tek istisna asagida).
-  - Yil ici DM (2022, ilk uc model) TAMAM: uc ciftin HICBIRI anlamli degil.
-    Kazanan-ikinci (Neural Network vs Polynomial Ridge) p=0,413134, esli GA
-    sifiri iceriyor. Yani "kazanan yila gore degisiyor" gozlemi 2022'de
-    ISTATISTIKSEL OLARAK DESTEKLENMIYOR. Diger dort yil SINANMADI - genis
-    kosuda tahmin vektoru kaydedilmemisti.
+  - 2022 dogrulama kosusu TAMAM: 10 hucre, 19,6 dk, tahmin kaydiyla.
+  - Kalan dort yilin kosusu TAMAM: 40 hucre, 96,5 dk, tahmin kaydiyla,
+    K=tum x 2019/2020/2021/2023 x 10 model. `sonuclar/doygunluk_dm_kalan.csv`
+    Genis kosuyla 510/520 alan birebir; farkli cikan 10 alanin hepsi 1-2 ULP
+    ve yalnizca Random Forest ile Extra Trees'te (asagiya bak).
+  - **Yil ici DM (bes yil, ilk uc model) TAMAM. 15 karsilastirma, 1 anlamli.**
+    KAZANAN-IKINCI FARKI HICBIR YILDA ANLAMLI DEGIL - 0/5:
+    2019 p=0,155011 | 2020 p=0,742136 | 2021 p=0,432974 |
+    2022 p=0,413134 | 2023 p=0,114696. Besinin de esli GA'si sifiri iceriyor.
+    Yani on modelli, bes yillik kurulumda kazanan iki kez degisiyor
+    (Polynomial Ridge x4, Neural Network x1) ama DEGISIMIN KENDISI GURULTU:
+    hicbir yilda kazanani ikinciden ayirt edemiyoruz.
+    Tek anlamli satir 2023 Polynomial Ridge vs Hist Gradient Boosting
+    (p=0,038040) - birinci-UCUNCU cifti, kazanan-ikinci degil; ayrica 15
+    testte 0,05 esiginde beklenen tesadufi anlamli sayisi 0,75 ve coklu
+    karsilastirma duzeltmesi YAPILMADI. Bu tek satira iddia yaslanmaz.
+    Sinirda bir tutarsizlik: 2021 Polynomial Ridge vs Extra Trees p=0,059786
+    (anlamli degil) ama esli GA [-1,718271; -0,084734] sifiri DISLIYOR;
+    DM'nin Newey-West standart hatasi ile blok bootstrap kuyrugu ayni yerde
+    durmuyor. Kazanan-ikinci ciftlerinin hicbiri etkilenmiyor.
     `sonuclar/doygunluk_ozet_dm_yil.csv`
-- **ACIK MADDE - Extra Trees nondeterminizmi.** 2022 dogrulama kosusunda
-  Extra Trees `R2`'si genis kosudakinden 1 ULP farkli cikti
-  (0,7126799175406285 vs 0,7126799175406284, fark -1,110223e-16).
-  RMSE / MAE / nRMSE_kapasite / nRMSE_ortalama / skill BIT DUZEYINDE ayni;
-  Random Forest, Gradient Boosting ve Neural Network her alanda birebir.
-  Sebep OLCULMEDI - tahmin: 400 agacin paralel toplama sirasi. Yarin
-  olculecek (ayni hucre iki kez kosulup tahmin vektoru hash'lenerek).
-  Raporlanan hicbir sayi etkilenmiyor.
-- Kalan: `faz-notlari/faz-4.md`, `faz-2` / `faz-3` / `faz-4` etiketleri
-  (repoda hic etiket yok), sonra DKASC (opsiyonel) veya dogrudan yazim.
+- **Random Forest / Extra Trees nondeterminizmi - OLCULDU, KAPANDI.**
+  Sapma yalnizca Extra Trees'te degil, Random Forest'ta da var. Olcum:
+  ayni hucre (kaydirmali K=tum 2020) uc modelde iki duzeyde tekrarlandi -
+  A: ayni surecte pes pese iki kosu, B: ayri iki surecte. **A duzeyi kesti,
+  B'ye gerek kalmadi:** RF ve ET'de dort kosunun dordu de FARKLI tahmin
+  hash'i verdi. Sebep surec ici paralel hesap (agac toplama sirasi),
+  pyarrow DEGIL. Kontrol tanigi: Neural Network dort kosuda da AYNI hash
+  (`52016056fdc69ba8...`) - duzenek yapay fark uretmiyor, farkli hash'ler
+  gercek. `y` ve `persistence` on iki satirin hepsinde tek deger, yani fark
+  modelde, veride degil.
+  Sapma tahmin vektorunde HER ZAMAN var, metrige ancak BAZEN yansiyor:
+  dort RF kosusunun RMSE'si de 138,71018130192496 ciktigi halde ayni
+  hucrenin izgaradaki degeri 1 ULP asagidaydi. 40 hucrede yalnizca 10 alanin
+  oynamasinin sebebi bu - hucre sayisi degil, yuvarlamanin nereye dustugu.
+  Etkilenen alanlar 1-2 ULP (bagil ~2e-16); `egitim_n`, `n`, `isinma`,
+  `egitim_basla`, `RMSE_persistence` her hucrede TAM ESIT.
+  Raporlanan hicbir sayi etkilenmiyor. Yalniz 2021'in ucuncu modeli Extra
+  Trees oldugu icin o DM satirinin son basamagi baska kosuda birebir
+  tekrarlanmayabilir; kazanan-ikinci ciftleri etkilenmiyor.
+- Kalan:
+  1. `faz-notlari/faz-4.md` (mevcut dosya BAYAT - refactor, izgara, genis kosu,
+     DM ve nondeterminizm olcumu oncesine ait).
+  2. `faz-2` / `faz-3` / `faz-4` anotasyonlu etiketler (repoda hic etiket yok).
+  3. Push (bugune kadarki commit'lerin hicbiri push EDILMEDI).
+  Sonra DKASC (opsiyonel) veya dogrudan yazim.
 
 ## Degismez kurallar
 
@@ -153,7 +183,15 @@ pv10/
   dogrulama.py       deney invaryantlari (5 adet) - VERI degil KURGU dogrular
   ozet.py            Faz 4 ozet tablolari; sonuclar gorulmeden yazildi
   ozet_sonrasi.py    sonuclar GORULDUKTEN sonra eklenen tablolar
+arac/
+  nondeterminizm.py        teshis: ayni hucre x tekrar x surec, tahmin sha256
+  nondeterminizm_karar.py  yorum kurali (sonuc gorulmeden) + karar tablosu
 ```
+
+`arac/` DENEY DEGIL TESHIS icindir; makalenin hicbir sayisini uretmez ve
+ana akistan cagrilmaz. `pv10/` ile `run_*.py` yalnizca deney kodu kalsin
+diye ayri tutuldu - faz notunda hangi dosyanin makale sayisi urettigi
+bulanmasin.
 
 `ozet.py` ile `ozet_sonrasi.py` ayri tutulur; sebep kayit duzenidir. `ozet.py`
 izgara kosulmadan once yazildi ve o gunden beri dokunulmadi - bunu
@@ -205,6 +243,14 @@ Ana izgara disinda kosu yaparken uc bayrak:
 egri, ana oran, tohum yayilimi ve model x pencere tablolari mevcut modeller
 uzerinde ortalama aliyor. Farkli model kumesi veya tek pencere kosarken
 `--etiket` ZORUNLU sayilmali.
+
+Teshis (deney degil, kok dizinden `-m` ile; iki surec SIRAYLA kosulur):
+
+```
+python -m arac.nondeterminizm --surec p1
+python -m arac.nondeterminizm --surec p2
+python -m arac.nondeterminizm_karar     # sonuclar/nondeterminizm_olcum.csv
+```
 
 `--tahmin-kaydet` olmadan esli DM SONRADAN kosulamaz; tahmin vektoru
 uretilir ama diske yazilmaz. Tahminler `sonuclar/tahminler/doygunluk/<etiket>/`
