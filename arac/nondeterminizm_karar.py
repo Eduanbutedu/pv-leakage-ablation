@@ -17,7 +17,9 @@ Kontrol modeli (Neural Network) icin ayni kural anlamli DEGILDIR: orada
 beklenen sonuc "A ve B ayni"dir ve bu, duzenegin yapay fark uretmedigini
 gosterir. Kontrolun kendisi farkli cikarsa olcum degersizdir.
 """
+import argparse
 import sys
+from pathlib import Path
 
 import pandas as pd
 
@@ -39,9 +41,20 @@ def karar(a_farkli: bool, b_farkli: bool) -> str:
 
 
 def main() -> int:
-    if not CIKTI.exists():
-        raise SystemExit(f"{CIKTI} yok - once arac/nondeterminizm.py kosun.")
-    d = pd.read_csv(CIKTI)
+    ap = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--olcum", default=None,
+                    help="okunacak olcum CSV'si; varsayilan "
+                         "sonuclar/nondeterminizm_olcum.csv")
+    a = ap.parse_args()
+    yol = Path(a.olcum) if a.olcum else CIKTI
+
+    if not yol.exists():
+        raise SystemExit(f"{yol} yok - once arac/nondeterminizm.py kosun.")
+    print(f"olcum       : {yol}")
+    print()
+    d = pd.read_csv(yol)
     pd.set_option("display.width", 250, "display.max_columns", 40,
                   "display.max_rows", None)
 

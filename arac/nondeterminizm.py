@@ -32,9 +32,18 @@ CPU cakisir ve thread atamasi olcumun konusu):
     python -m arac.nondeterminizm --surec p2
     python -m arac.nondeterminizm_karar
 
+Betik CSV'ye EKLER, uzerine yazmaz - B duzeyi ancak boyle olusur. Onceki bir
+olcumu korumak icin `--cikti` ile ayri yol verilir; karar tarafinda karsiligi
+`--olcum`.
+
 Ilk kosu: 3 Agustos 2026, pyarrow 22.0.0, OMP_NUM_THREADS=8.
 Sonuc: A duzeyi kesti - RF ve ET'de dort kosunun dordu farkli hash;
 NN dordunde de ayni. Sebep surec ici paralel hesap, pyarrow degil.
+
+Dogrulama kosusu: 4 Agustos 2026, betigin REPODAKI suruyle, --surec d1/d2,
+--cikti sonuclar/nondeterminizm_olcum_dogrulama.csv. Hash'lerin ilk olcumle
+AYNI cikmasi beklenmez (olculen sey zaten tekrarlanmamalari); beklenen sey
+KARARIN ayni cikmasi.
 """
 from __future__ import annotations
 
@@ -43,6 +52,7 @@ import hashlib
 import os
 import sys
 import time
+from pathlib import Path
 
 from pv10.config import OMP_THREAD_SAYISI
 
@@ -77,13 +87,19 @@ def main() -> int:
         formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--surec", required=True,
                     help="surec etiketi (or. p1 / p2); B duzeyi bununla ayrisir")
+    ap.add_argument("--cikti", default=None,
+                    help="olcum CSV yolu; varsayilan sonuclar/nondeterminizm_"
+                         "olcum.csv. Dosya varsa satirlar EKLENIR, uzerine "
+                         "yazilmaz - onceki bir olcumu korumak icin ayri yol ver.")
     a = ap.parse_args()
+    cikti = Path(a.cikti) if a.cikti else CIKTI
 
     print(f"surec       : {a.surec}   pid {os.getpid()}")
     print(f"pyarrow     : {pyarrow.__version__}")
     print(f"thread      : {OMP_THREAD_SAYISI}")
     print(f"hucre       : {KOL} K={PENCERE} {TEST_YIL} tohum={TOHUM}")
     print(f"modeller    : {list(MODELLER)}  (Neural Network = kontrol)")
+    print(f"cikti       : {cikti}")
     print()
 
     ham = pd.read_parquet(VERI)
@@ -118,11 +134,11 @@ def main() -> int:
     yeni = pd.DataFrame(satir)
     # Ayri surecler ayri kosuda yazar; onceki satirlar KORUNUR, yoksa B
     # duzeyi hic olusmaz.
-    if CIKTI.exists():
-        yeni = pd.concat([pd.read_csv(CIKTI), yeni], ignore_index=True)
-    CIKTI.parent.mkdir(parents=True, exist_ok=True)
-    yeni.to_csv(CIKTI, index=False)
-    print(f"\nyazildi -> {CIKTI}  ({len(yeni)} satir)")
+    if cikti.exists():
+        yeni = pd.concat([pd.read_csv(cikti), yeni], ignore_index=True)
+    cikti.parent.mkdir(parents=True, exist_ok=True)
+    yeni.to_csv(cikti, index=False)
+    print(f"\nyazildi -> {cikti}  ({len(yeni)} satir)")
     return 0
 
 
