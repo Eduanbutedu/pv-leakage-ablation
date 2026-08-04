@@ -77,11 +77,20 @@ tutulacak.
   Raporlanan hicbir sayi etkilenmiyor. Yalniz 2021'in ucuncu modeli Extra
   Trees oldugu icin o DM satirinin son basamagi baska kosuda birebir
   tekrarlanmayabilir; kazanan-ikinci ciftleri etkilenmiyor.
+  **Dogrulama kosusu TAMAM (4 Agustos 2026):** olcum betigi REPODAKI haliyle
+  iki surec sirayla kosuldu, cikti ayri dosyaya
+  (`sonuclar/nondeterminizm_olcum_dogrulama.csv`). Karar birebir tekrarlandi -
+  RF ve ET'de A duzeyi kesti, NN dort kosuda tek hash. Hash'ler tekrarlanmadi
+  (RF/ET'de iki olcumun 8 kosusu 8 farkli hash, ortak sifir) - olculen sey
+  zaten bu. Kontrol tanigi NN ayni hash'i (`52016056fdc69ba8...`) iki olcumda,
+  ayri gunlerde, dort surecte verdi.
+- Faz 4 notu TAMAM: `faz-notlari/faz-4.md` bastan yazildi (eski surum izgara
+  kosulmadan onceydi ve "uretilen deney sonucu YOK" diyordu).
 - Kalan:
-  1. `faz-notlari/faz-4.md` (mevcut dosya BAYAT - refactor, izgara, genis kosu,
-     DM ve nondeterminizm olcumu oncesine ait).
-  2. `faz-2` / `faz-3` / `faz-4` anotasyonlu etiketler (repoda hic etiket yok).
-  3. Push (bugune kadarki commit'lerin hicbiri push EDILMEDI).
+  1. `faz-2` / `faz-3` / `faz-4` anotasyonlu etiketler (repoda hic etiket yok).
+  2. Push (bugune kadarki commit'lerin hicbiri push EDILMEDI).
+  3. `arac/dm_yil.py` repodaki haliyle hic kosulmadi - tek acik
+     kalicilastirma boslugu; ~20-25 dk. Faz notunda kusur 2 olarak yazili.
   Sonra DKASC (opsiyonel) veya dogrudan yazim.
 
 ## Degismez kurallar
@@ -137,8 +146,9 @@ tutulacak.
 - **Havuzlanmis ortalama etkiyi gizler:** saf hacim etkisinin 2,204968 W'lik
   ortalamasi, Linear Regression'in 0,209944 W'siyle Hist Gradient Boosting'in
   4,493244 W'sini ayni potaya koyuyor. LR'de etki 15 karsilastirmanin yalnizca
-  5'inde anlamli ve uc hucrede isaret ters; HGB'de 15/15. Etki MODEL BAGIMLI,
-  tek sayiya indirgenmez.
+  5'inde anlamli, IKI hucrede isaret ters (2019 tohum 11 ve 33, ikisi de
+  anlamsiz) ve 10 hucrede esli GA sifiri iceriyor; HGB'de 15/15 anlamli.
+  Etki MODEL BAGIMLI, tek sayiya indirgenmez.
 
 - **Marjinal GA cakismasi "fark yok" demek DEGILDIR:** egrinin iki ucu AYNI test
   setinde degerlendirildigi icin hatalar korelasyonlu; esli olmayan kiyas
@@ -250,7 +260,14 @@ Teshis (deney degil, kok dizinden `-m` ile; iki surec SIRAYLA kosulur):
 python -m arac.nondeterminizm --surec p1
 python -m arac.nondeterminizm --surec p2
 python -m arac.nondeterminizm_karar     # sonuclar/nondeterminizm_olcum.csv
+
+python -m arac.dm_yil                   # yil ici DM, bes yil
+python -m arac.regresyon_kiyas          # iki izgara logu, toleranssiz kiyas
 ```
+
+`nondeterminizm.py` CSV'ye EKLER, uzerine yazmaz - B duzeyi ancak boyle
+olusur. Onceki bir olcumu korumak icin `--cikti <yol>` ver; karar tarafinda
+karsiligi `--olcum <yol>`.
 
 `--tahmin-kaydet` olmadan esli DM SONRADAN kosulamaz; tahmin vektoru
 uretilir ama diske yazilmaz. Tahminler `sonuclar/tahminler/doygunluk/<etiket>/`
