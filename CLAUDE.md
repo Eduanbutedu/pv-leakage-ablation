@@ -86,11 +86,23 @@ tutulacak.
   ayri gunlerde, dort surecte verdi.
 - Faz 4 notu TAMAM: `faz-notlari/faz-4.md` bastan yazildi (eski surum izgara
   kosulmadan onceydi ve "uretilen deney sonucu YOK" diyordu).
+- **Dort teshis betiginin dordu de repodaki haliyle kosuldu; kalicilastirma
+  boslugu YOK.** `dm_yil.py` dogrulamasi 285/285 alan birebir
+  (`sonuclar/doygunluk_ozet_dm_yil_dogrulama.csv`). Beklenen tek sapma - 2021'in
+  Extra Trees satirlarinin son basamagi - GERCEKLESMEDI: betik model egitmez,
+  diskteki tahminleri okur. Nondeterminizm `hucre_kos` icinde, model FIT
+  edilirken doguyor; ondan sonraki zincir (tahmin -> DM -> ozet) determinist.
+  `dipnot` sutunu "betik tekrar kosulursa" degil "IZGARA yeniden kosulup
+  tahminler yeniden uretilirse" anlamindadir.
+- Faz 3 ile capraz teyit: 2023 PolyRidge vs HGB satiri iki fazda da ayni -
+  dokuz alanin dokuzu, Faz 3'un sakli hassasiyetinde (p=0,0380, DM=-2,074,
+  GA [-1,51; -0,10]). Bolme ve DM zinciri iki fazda AYRI kod yolu
+  (`experiment.py:bolme_indeksleri` / `ranking.py` vs
+  `doygunluk.py:egitim_test_bolme` / `ozet_sonrasi.py:yil_ici_dm`), veri ve
+  oznitelik katmani ortak. Invaryant 2'nin bagimsiz teyidi.
 - Kalan:
   1. `faz-2` / `faz-3` / `faz-4` anotasyonlu etiketler (repoda hic etiket yok).
   2. Push (bugune kadarki commit'lerin hicbiri push EDILMEDI).
-  3. `arac/dm_yil.py` repodaki haliyle hic kosulmadi - tek acik
-     kalicilastirma boslugu; ~20-25 dk. Faz notunda kusur 2 olarak yazili.
   Sonra DKASC (opsiyonel) veya dogrudan yazim.
 
 ## Degismez kurallar
@@ -265,9 +277,10 @@ python -m arac.dm_yil                   # yil ici DM, bes yil
 python -m arac.regresyon_kiyas          # iki izgara logu, toleranssiz kiyas
 ```
 
-`nondeterminizm.py` CSV'ye EKLER, uzerine yazmaz - B duzeyi ancak boyle
-olusur. Onceki bir olcumu korumak icin `--cikti <yol>` ver; karar tarafinda
-karsiligi `--olcum <yol>`.
+`nondeterminizm.py` CSV'ye EKLER, `dm_yil.py` UZERINE YAZAR. Ikisinde de
+mevcut bir tabloyu korumak icin `--cikti <yol>` ver; karar tarafinda karsiligi
+`--olcum <yol>`. Dogrulama kosulari `_dogrulama` sonekli dosyaya yazildi; ana
+tablo her zaman soneksiz olandir.
 
 `--tahmin-kaydet` olmadan esli DM SONRADAN kosulamaz; tahmin vektoru
 uretilir ama diske yazilmaz. Tahminler `sonuclar/tahminler/doygunluk/<etiket>/`

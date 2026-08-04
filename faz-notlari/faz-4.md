@@ -13,11 +13,15 @@ Sadece rapor. Yorum ve makale metni burada degil.
 ## Faz kunyesi
 
     faz             : 4 (veri hacmi doygunlugu)
-    HEAD            : 4be6a45a3bb783b57eaf152c035c0c215796c4e7
-    agac            : bu not ve nondeterminizm dogrulama kosusu commit
-                      edildikten sonra temiz
-    etiket           : YOK (bu oturumda atilacak)
+    HEAD (not yazilirken)
+                    : 4be6a45a3bb783b57eaf152c035c0c215796c4e7
+    agac            : bu not ve dogrulama kosulari commit edildikten sonra
+                      temiz
+    etiket          : faz-4, bu notu iceren commit'e baglanir (asagida)
     push            : YAPILMADI - Faz 2/3/4'un hicbir commit'i push edilmedi
+
+Not kendi commit'inin hash'ini icermez; `faz-4` etiketi o commit'e baglandigi
+icin `git show faz-4` ile bulunur.
 
 Faz 4 commit'leri (19):
 
@@ -213,6 +217,11 @@ Ayni sema ile uretilen etiketli loglar:
 | `doygunluk_ozet_dm_yil.csv` | 15 | `ozet_sonrasi.py` | SONRADAN |
 | `doygunluk_ozet_kunye.txt` | - | `run_doygunluk.py` | - |
 | `nondeterminizm_olcum.csv` | 12 | `arac/nondeterminizm.py` | teshis |
+| `nondeterminizm_olcum_dogrulama.csv` | 12 | `arac/nondeterminizm.py` | teshis, dogrulama |
+| `doygunluk_ozet_dm_yil_dogrulama.csv` | 15 | `arac/dm_yil.py` | teshis, dogrulama |
+
+Dogrulama CSV'leri ASLA ana tablolarin yerine gecmez; kiyas icin duruyorlar.
+Ana tablo her zaman `_dogrulama` soneki OLMAYAN dosyadir.
 
 DM tablolarinin semasi:
 
@@ -794,6 +803,83 @@ Makalenin ana iddialari BU tablodan okunur, `hacim_orani`'ndan degil.
 
 `sinanmayan` listesi BOS - bes test yilinin hepsi esli DM ile sinandi.
 
+### 14. Faz 3 ile capraz teyit -- 2023 PolyRidge vs HGB ayni satiri veriyor
+
+Faz 3'te (`sonuclar/siralama_karsilastirma.csv`) yedi yilin ilk-iki cifti
+yalnizca 2023'te anlamli cikmisti: Polynomial Ridge vs Hist Gradient Boosting,
+p=0,0380. Faz 4'un yil ici DM'sinde AYNI cift, AYNI yilda, ayni sayilari
+veriyor.
+
+Bu beklenen bir sonuctur - K=tum @ 2023 hucresi Faz 3'un 2023 bolmesiyle ayni
+egitim/test bolmesidir (invaryant 2 tam bunu pinliyor). Beklenen olmasi
+onemsiz oldugu anlamina gelmez: iki sayi IKI AYRI KOD YOLUNDAN cikiyor.
+
+| alan | Faz 3 (`siralama_karsilastirma.csv`) | Faz 4 (`doygunluk_ozet_dm_yil.csv`) | Faz 4, Faz 3 hassasiyetine yuvarlanmis |
+|---|---|---|---|
+| RMSE_a | 132.61 | 132.61471409623294 | 132.61 |
+| RMSE_b | 133.4 | 133.4042007222262 | 133.40 |
+| RMSE_fark_W | -0.7895 | -0.7894866259932485 | -0.7895 |
+| RMSE_fark_kapasite_yuzde | -0.0789 | -0.07894866259932484 | -0.0789 |
+| RMSE_fark_bagil_yuzde | -0.5918 | -0.5918004243637838 | -0.5918 |
+| DM | -2.074 | -2.0744185759403537 | -2.074 |
+| p | 0.038 | 0.03804045360045688 | 0.0380 |
+| fark_GA_alt | -1.51 | -1.5055220933988522 | -1.51 |
+| fark_GA_ust | -0.1 | -0.09738996364109556 | -0.10 |
+
+**Dokuz alanin dokuzu da tutuyor.** Faz 3'un CSV'si yuvarlanmis
+saklandigi icin kiyas o hassasiyette; bit duzeyi kiyas degil.
+
+Ayrisan kod yollari:
+
+    bolme     : Faz 3 pv10/experiment.py:bolme_indeksleri
+                Faz 4 pv10/doygunluk.py:egitim_test_bolme
+    DM hesabi : Faz 3 pv10/ranking.py
+                Faz 4 pv10/ozet_sonrasi.py:yil_ici_dm
+
+Ortak olan: `features.py`, `models.py`, `evaluate.py` ve dondurulmus veri.
+Yani teyit edilen sey oznitelik uretimi degil, BOLME ve DM zinciri - Faz 4'te
+bilincli olarak yeniden yazilmis olan iki parca (karar: `bolme_indeksleri`
+degistirilmedi, ayri kod yolu acildi).
+
+Invaryant 2 bir NOKTA metrigi karsilastirir (RMSE, `ablasyon.csv`'ye karsi).
+Bu satir ondan fazlasini yapiyor: farkli GA'sini, DM istatistigini, p
+degerini ve bootstrap araligini da ayni yere dusuruyor. **Invaryant 2'nin
+bagimsiz bir teyididir** ve invaryantin kapsamadigi zinciri (kumelenme,
+Newey-West, blok bootstrap) de kapsar.
+
+Not: bu satir kazanan-ikinci cifti DEGIL, birinci-ucuncu ciftidir (karar 6);
+capraz teyit degeri, iddia degeri ile karistirilmamalidir.
+
+### 15. `dm_yil.py` dogrulama kosusu -- `doygunluk_ozet_dm_yil_dogrulama.csv`
+
+Betik REPODAKI haliyle kosuldu (4 Agustos 2026):
+
+    python -m arac.dm_yil --cikti sonuclar/doygunluk_ozet_dm_yil_dogrulama.csv
+
+`--cikti` bayragi bu kosu icin eklendi; betik cikti dosyasinin UZERINE
+yazdigi icin bayrak olmadan mevcut tablo ezilirdi. Varsayilan yol degismedi,
+hesap mantigina dokunulmadi.
+
+Kiyas: 15 satir x 19 alan = **285 karsilastirma, TOLERANSSIZ (`==`),
+sifir fark.** Anahtar `(test_yil, model_a, model_b)`; iki tabloda da 15 satir,
+eslesme tam. Sayisal alanlar kadar `anlamli`, `kumelenme`, `kaynak_dizin`,
+`en_iyi`, `ikinci`, `kazanan_ikinci_cifti`, `dipnot` gibi metin/mantik
+alanlari da kiyaslandi.
+
+**Beklenen tek sapma GERCEKLESMEDI ve sebebi ogreticidir.** 2021'in Extra
+Trees iceren iki satirinin son basamaginin oynayabilecegi dusunulmustu; hicbir
+alan oynamadi. Sebep: `dm_yil.py` MODEL EGITMEZ - diskteki tahmin
+parquet'lerini okur. RF/ET nondeterminizmi model FIT edildiginde dogar; ayni
+tahmin vektoru iki kez okundugunda ayni sayilari verir.
+
+Dolayisiyla `dipnot` sutununun kapsami daraltilmali: o satirlar "bu betik
+tekrar kosulursa degisebilir" demiyor - **"IZGARA yeniden kosulur ve tahminler
+yeniden uretilirse degisebilir"** diyor. Betik duzeyinde tekrarlanabilirlik
+tam; belirsizlik yukarida, tahminleri ureten katmanda.
+
+Bu ayni zamanda kusur 1'in siniridir: nondeterminizm `hucre_kos` cagrisinda
+dogar, ondan sonraki her sey (tahmin -> DM -> ozet) determinist.
+
 ## Alinan kararlar ve gerekceleri
 
 Karar 1-14 arasi `d469060`'daki kararlarin devamidir; numaralar orada
@@ -1052,29 +1138,24 @@ sabite karsi kontrol eder. Veri sessizce degisirse ozet bunu yazar.
 
 1. **Random Forest ve Extra Trees surec ici nondeterminist.** Olculdu ve
    kapatildi (yukariya bak). Sapma 1-2 ULP (bagil ~2e-16) ve raporlanan
-   hicbir sayiyi etkilemiyor. Tek somut sonucu: 2021'in ucuncu modeli Extra
-   Trees oldugu icin `doygunluk_ozet_dm_yil.csv`'nin iki satirinin son
-   basamagi baska bir kosuda birebir tekrarlanmayabilir. Kazanan-ikinci
-   ciftlerinin hicbiri etkilenmiyor; o satirlar `dipnot` sutunuyla isaretli.
+   hicbir sayiyi etkilemiyor.
 
-2. **`arac/dm_yil.py` repodaki haliyle HIC KOSULMADI.**
-   `doygunluk_ozet_dm_yil.csv` scratchpad'deki `dm_yil_kos.py` ile uretildi;
-   betik olcumden SONRA `arac/` altina alindi. Govde birebir tasindi
-   (degisen: docstring, argparse, cikti yolu) ama ucbastan kosularak
-   DOGRULANMADI. **Tek acik kalicilastirma boslugu budur.**
+   Belirsizligin siniri OLCULDU: nondeterminizm `hucre_kos` icinde, model FIT
+   edilirken doguyor. Ondan sonraki zincir (kaydedilmis tahmin -> DM -> ozet)
+   determinist - `dm_yil.py` dogrulama kosusu 285/285 alani birebir uretti.
+   Yani `doygunluk_ozet_dm_yil.csv`'nin Extra Trees iceren iki satiri betik
+   tekrar kosuldugunda DEGISMEZ; degisebilecegi durum IZGARANIN yeniden
+   kosulup tahminlerin yeniden uretilmesidir. `dipnot` sutunu bu ikinci
+   durumu isaretler. Kazanan-ikinci ciftlerinin hicbiri etkilenmiyor.
 
-   Diger uc betikte bu bosluk YOK:
-   - `arac/regresyon_kiyas.py` repodaki haliyle kosuldu, 510/520 sonucunu
-     birebir uretti, cikis kodu 0.
-   - `arac/nondeterminizm.py` ve `arac/nondeterminizm_karar.py` repodaki
-     haliyle iki surec sirayla kosuldu; karar iki olcumde de ayni cikti
-     (yukaridaki dogrulama bolumu).
-
-   `dm_yil.py`'yi kosmak ~20-25 dk surer (bes yilin tahmin parquet'leri
-   diskte, hesap bootstrap agirlikli). Sonraki oturumda kosulup CSV'nin
-   birebir yeniden uretildigi gosterilebilir; sayilarin degismesi
-   beklenmiyor, tek istisna 2021'in Extra Trees iceren iki satirinin son
-   basamagi (kusur 1).
+2. ~~`arac/dm_yil.py` repodaki haliyle hic kosulmadi.~~ **KAPANDI.**
+   Kalicilastirma boslugu kalmadi; dort teshis betiginin dordu de repodaki
+   haliyle kosuldu:
+   - `arac/dm_yil.py` -> `doygunluk_ozet_dm_yil_dogrulama.csv`, 285/285 alan
+     birebir (asagida).
+   - `arac/regresyon_kiyas.py` -> 510/520, cikis kodu 0.
+   - `arac/nondeterminizm.py` + `nondeterminizm_karar.py` -> karar iki
+     olcumde de ayni.
 
 3. **`hacim_orani` tablosu yanlis ama repoda duruyor.** Silinmedi; kunyede
    UYARI blogu var, bu notta karar 1 var, `duzeltilmis` tablosu yerine

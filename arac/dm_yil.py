@@ -37,13 +37,18 @@ Onkosul:
 Kullanim (kok dizinden):
     python -m arac.dm_yil
 
+Betik cikti dosyasinin UZERINE YAZAR. Mevcut bir tabloyu korumak icin
+`--cikti <yol>` ver.
+
 Ilk kosu: 3 Agustos 2026. 15 karsilastirma, 1 anlamli
 (2023 Polynomial Ridge vs Hist Gradient Boosting, p=0,038040 - birinci
 UCUNCU cifti). Kazanan-ikinci: 0/5 anlamli, p = 0,155011 / 0,742136 /
 0,432974 / 0,413134 / 0,114696, besinin de esli GA'si sifiri iceriyor.
 """
+import argparse
 import os
 from itertools import combinations
+from pathlib import Path
 
 from pv10.config import OMP_THREAD_SAYISI
 
@@ -72,6 +77,16 @@ NONDET = {"Extra Trees", "Random Forest"}
 
 
 def main() -> int:
+    ap = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--cikti", default=None,
+                    help="cikti CSV yolu; varsayilan "
+                         "sonuclar/doygunluk_ozet_dm_yil.csv. Dosya UZERINE "
+                         "YAZILIR - mevcut bir tabloyu korumak icin ayri yol ver.")
+    a = ap.parse_args()
+    cikti = Path(a.cikti) if a.cikti else CIKTI
+
     pd.set_option("display.width", 260, "display.max_columns", 60,
                   "display.max_rows", None)
 
@@ -136,8 +151,8 @@ def main() -> int:
     print(f"  dipnotlu satir        : {len(dip)}"
           + (f"  -> {sorted(set(dip.test_yil))}" if len(dip) else ""))
 
-    d.to_csv(CIKTI, index=False)
-    print(f"\nyazildi -> {CIKTI}  ({len(d)} satir)")
+    d.to_csv(cikti, index=False)
+    print(f"\nyazildi -> {cikti}  ({len(d)} satir)")
     return 0
 
 
