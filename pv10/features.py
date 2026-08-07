@@ -62,7 +62,9 @@ def gunes_yuksekligi_sin(lat: float, lon: float, zaman_utc: pd.Series) -> np.nda
 # --------------------------------------------------------------------------- #
 # oznitelik uretimi
 # --------------------------------------------------------------------------- #
-def _konum_oznitelikleri(g: pd.DataFrame, eszaman: bool) -> pd.DataFrame:
+def _konum_oznitelikleri(g: pd.DataFrame, eszaman: bool,
+                         gecikmeli: tuple[str, ...],
+                         eszaman_degisken: tuple[str, ...]) -> pd.DataFrame:
     """Tek bir konum icin oznitelikleri uretir. g zaman siralidir."""
     g = g.sort_values("time_utc").reset_index(drop=True)
     lat, lon = float(g["lat"].iloc[0]), float(g["lon"].iloc[0])
@@ -82,13 +84,13 @@ def _konum_oznitelikleri(g: pd.DataFrame, eszaman: bool) -> pd.DataFrame:
     o["elev_sin"] = np.clip(elev_sin, 0.0, None)
 
     # --- gecikmeli dinamik oznitelikler ---
-    eksik = [d for d in GECIKMELI_DEGISKEN if d not in g]
+    eksik = [d for d in gecikmeli if d not in g]
     if eksik:
         raise KeyError(
             f"Zorunlu degiskenler veri setinde yok: {eksik}. "
             "Sessizce atlamak modelin en guclu ozniteliklerini kaybettirir - "
             "pipeline'in duzenle adimini yeniden kosun.")
-    for d in GECIKMELI_DEGISKEN:
+    for d in gecikmeli:
         for k in GECIKMELER:
             o[f"{d}_lag{k}"] = g[d].shift(k)
 
@@ -119,21 +121,44 @@ def _konum_oznitelikleri(g: pd.DataFrame, eszaman: bool) -> pd.DataFrame:
 
     # --- SIZINTI varyanti: hedef saatteki meteoroloji ---
     if eszaman:
-        for d in ESZAMAN_DEGISKEN:
-            if d in g:
-                o[f"{d}_eszaman"] = g[d]
+        eksik_es = [d for d in eszaman_degisken if d not in g]
+        if eksik_es:
+            raise KeyError(
+                f"Eszaman varyanti icin beyan edilen degiskenler yok: "
+                f"{eksik_es}. Sessizce atlanirsa varyant BEYAN EDILENDEN daha "
+                "az sizinti kanali tasir ve olculen sisme oldugundan kucuk "
+                "cikar - tam olarak olcmek istedigimiz sey bozulur.")
+        for d in eszaman_degisken:
+            o[f"{d}_eszaman"] = g[d]
         o["H_sun_eszaman"] = g["H_sun"]
 
     return o
 
 
-def oznitelik_uret(ham: pd.DataFrame, eszaman: bool = False) -> pd.DataFrame:
+def oznitelik_uret(ham: pd.DataFrame, eszaman: bool = False,
+                   gecikmeli: tuple[str, ...] = GECIKMELI_DEGISKEN,
+                   eszaman_degisken: tuple[str, ...] = ESZAMAN_DEGISKEN
+                   ) -> pd.DataFrame:
     """Tum konumlar icin oznitelik tablosunu uretir.
 
     eszaman=True verildiginde hedef saatteki meteorolojik degiskenler de
     eklenir - bu KASITLI bir sizintidir, yalnizca ablasyon deneyi icindir.
+
+    `gecikmeli` ve `eszaman_degisken` BEYAN EDILEN oznitelik setidir.
+    Varsayilanlari `config.GECIKMELI_DEGISKEN` / `config.ESZAMAN_DEGISKEN`,
+    yani GUFBD makalesinin cekirdek seti; varsayilanlarla cagrildiginda
+    uretilen tablo parametre eklenmeden onceki halle BIREBIR AYNIDIR
+    (`arac/oznitelik_regresyon.py` bunu olcer).
+
+    Neden bayrak degil de tuple: DKASC'de `WS10m` kanali yok (karar 1,
+    dokumanlar/dkasc-kalite-kurallari.md). Bunu `ruzgar=False` gibi bir
+    bayrakla kodlamak sapmayi uretim koduna gomer ve her yeni veri
+    setinde bir bayrak daha birikir. Beyan edilen bir tuple ise
+    ozniteliK setini kod yolunun yan etkisi olmaktan cikarip
+    raporlanabilir bir DEGERE cevirir - makalede raporlanacak sey de
+    zaten budur.
     """
-    parcalar = [_konum_oznitelikleri(g, eszaman)
+    parcalar = [_konum_oznitelikleri(g, eszaman, gecikmeli, eszaman_degisken)
                 for _, g in ham.groupby("konum", sort=True)]
     o = pd.concat(parcalar, ignore_index=True)
 
@@ -147,7 +172,7 @@ def oznitelik_uret(ham: pd.DataFrame, eszaman: bool = False) -> pd.DataFrame:
     # makalede oldugu gibi imputasyonla doldurulur. Onu zorunlu listeye
     # koymak butun gece satirlarini silerdi - egitim seti gece gozlemlerini
     # icermeli, gunduz filtresi yalnizca DEGERLENDIRMEDE uygulanir.
-    zorunlu = [f"{d}_lag{k}" for d in GECIKMELI_DEGISKEN for k in GECIKMELER
+    zorunlu = [f"{d}_lag{k}" for d in gecikmeli for k in GECIKMELER
                if f"{d}_lag{k}" in o.columns]
     zorunlu += [c for c in o.columns if "roll168" in c]
     o = o.dropna(subset=zorunlu).reset_index(drop=True)

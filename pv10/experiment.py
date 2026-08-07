@@ -20,7 +20,8 @@ import pandas as pd
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
 
-from .config import SEED, SIZINTI_VARYANTLARI
+from .config import (ESZAMAN_DEGISKEN, GECIKMELI_DEGISKEN, KAPASITE_W, SEED,
+                     SIZINTI_VARYANTLARI)
 from .evaluate import gunduz_maskesi, metrikler
 from .features import oznitelik_kolonlari, oznitelik_uret
 from .models import modeller
@@ -30,13 +31,29 @@ from .models import modeller
 # oznitelik onbellegi - eszaman varyanti icin tablo iki kez uretilmeli
 # --------------------------------------------------------------------------- #
 class OznitelikOnbellegi:
-    def __init__(self, ham: pd.DataFrame):
+    """Oznitelik tablosunu bir kez uretip saklar.
+
+    `gecikmeli` / `eszaman_degisken` BEYAN EDILEN oznitelik setidir ve
+    onbellege girer; varsayilanlari GUFBD cekirdek seti. DKASC kolunda
+    `config.DKASC_GECIKMELI` / `config.DKASC_ESZAMAN` gecirilir (karar 1:
+    ruzgar yok). Ayni tuple, PVGIS verisi uzerinde ESLESMIS KONTROL
+    kosusunda da kullanilir - iki kolun sisme oranlari ancak ayni sayida
+    sizinti kanaliyla kiyaslanabilir.
+    """
+
+    def __init__(self, ham: pd.DataFrame,
+                 gecikmeli: tuple[str, ...] = GECIKMELI_DEGISKEN,
+                 eszaman_degisken: tuple[str, ...] = ESZAMAN_DEGISKEN):
         self._ham = ham
+        self.gecikmeli = tuple(gecikmeli)
+        self.eszaman_degisken = tuple(eszaman_degisken)
         self._bellek: dict[bool, tuple[pd.DataFrame, list[str]]] = {}
 
     def al(self, eszaman: bool) -> tuple[pd.DataFrame, list[str]]:
         if eszaman not in self._bellek:
-            o = oznitelik_uret(self._ham, eszaman=eszaman)
+            o = oznitelik_uret(self._ham, eszaman=eszaman,
+                               gecikmeli=self.gecikmeli,
+                               eszaman_degisken=self.eszaman_degisken)
             self._bellek[eszaman] = (o, oznitelik_kolonlari(o))
         return self._bellek[eszaman]
 
@@ -69,7 +86,7 @@ def bolme_indeksleri(o: pd.DataFrame, test_yil: int,
 # tek hucre
 # --------------------------------------------------------------------------- #
 def hucre_kos(onbellek: OznitelikOnbellegi, varyant_ad: str, model_ad: str,
-              test_yil: int) -> dict:
+              test_yil: int, kapasite_w: float = KAPASITE_W) -> dict:
     """Tek bir (varyant, model, yil) hucresini kosar ve metrikleri dondurur."""
     v = SIZINTI_VARYANTLARI[varyant_ad]
     o, X = onbellek.al(v["eszaman"])
@@ -102,7 +119,7 @@ def hucre_kos(onbellek: OznitelikOnbellegi, varyant_ad: str, model_ad: str,
     maske = gunduz_maskesi(test_satirlari, gece_dahil=v["gece"])
     pers = test_satirlari["persistence"].to_numpy()
 
-    m = metrikler(yte[maske], tahmin[maske], pers[maske])
+    m = metrikler(yte[maske], tahmin[maske], pers[maske], kapasite_w=kapasite_w)
     return dict(varyant=varyant_ad, model=model_ad, test_yil=test_yil,
                 egitim_n=len(tr), **m, egitim_sn=round(sure, 1))
 
@@ -111,9 +128,12 @@ def hucre_kos(onbellek: OznitelikOnbellegi, varyant_ad: str, model_ad: str,
 # izgara
 # --------------------------------------------------------------------------- #
 def izgara_kos(ham: pd.DataFrame, varyantlar: list[str], model_adlari: list[str],
-               yillar: list[int], log_yolu, ilerleme=print) -> pd.DataFrame:
+               yillar: list[int], log_yolu, ilerleme=print,
+               gecikmeli: tuple[str, ...] = GECIKMELI_DEGISKEN,
+               eszaman_degisken: tuple[str, ...] = ESZAMAN_DEGISKEN,
+               kapasite_w: float = KAPASITE_W) -> pd.DataFrame:
     """Izgarayi kosar. Tamamlanmis hucreler log dosyasindan okunup atlanir."""
-    onbellek = OznitelikOnbellegi(ham)
+    onbellek = OznitelikOnbellegi(ham, gecikmeli, eszaman_degisken)
 
     tamam: set[tuple] = set()
     if log_yolu.exists():
@@ -133,7 +153,8 @@ def izgara_kos(ham: pd.DataFrame, varyantlar: list[str], model_adlari: list[str]
                     continue
                 etiket = f"[{sayac}/{toplam}] {varyant} / {model_ad} / {yil}"
                 try:
-                    satir = hucre_kos(onbellek, varyant, model_ad, yil)
+                    satir = hucre_kos(onbellek, varyant, model_ad, yil,
+                                      kapasite_w=kapasite_w)
                 except Exception as e:  # bir hucre patlarsa izgara devam etmeli
                     ilerleme(f"{etiket} -> HATA: {type(e).__name__}: {e}")
                     continue

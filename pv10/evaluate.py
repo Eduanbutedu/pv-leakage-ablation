@@ -22,8 +22,15 @@ def gunduz_maskesi(o: pd.DataFrame, gece_dahil: bool = False) -> np.ndarray:
 
 
 def metrikler(y: np.ndarray, tahmin: np.ndarray,
-              persistence: np.ndarray | None = None) -> dict[str, float]:
-    """MAE, RMSE, nRMSE (iki payda), R2 ve persistence becerisi."""
+              persistence: np.ndarray | None = None,
+              kapasite_w: float = KAPASITE_W) -> dict[str, float]:
+    """MAE, RMSE, nRMSE (iki payda), R2 ve persistence becerisi.
+
+    kapasite_w yalnizca `nRMSE_kapasite`nin paydasidir. Varsayilani PVGIS
+    kolunun 1 kWp'si; DKASC kolunda hedef dizi 5,25 kWp oldugu icin
+    `config.DKASC_KAPASITE_W` gecilmelidir, yoksa kapasiteye gore
+    normalize edilen her sayi 5,25 kat kucuk cikar.
+    """
     y = np.asarray(y, dtype=float)
     tahmin = np.asarray(tahmin, dtype=float)
     hata = tahmin - y
@@ -37,7 +44,7 @@ def metrikler(y: np.ndarray, tahmin: np.ndarray,
         "MAE": mae,
         "RMSE": rmse,
         "nRMSE_ortalama": 100.0 * rmse / ortalama if ortalama > 0 else np.nan,
-        "nRMSE_kapasite": 100.0 * rmse / KAPASITE_W,
+        "nRMSE_kapasite": 100.0 * rmse / kapasite_w,
         "R2": 1.0 - float(np.sum(hata ** 2)) / ss_tot if ss_tot > 0 else np.nan,
         "n": int(len(y)),
     }
@@ -125,7 +132,8 @@ def diebold_mariano(y: np.ndarray, tahmin_a: np.ndarray, tahmin_b: np.ndarray,
     return {"DM": float(dm), "p": float(p), "fark_ortalama": d_ort}
 
 
-def etki_buyuklugu(rmse_a: float, rmse_b: float) -> dict[str, float]:
+def etki_buyuklugu(rmse_a: float, rmse_b: float,
+                   kapasite_w: float = KAPASITE_W) -> dict[str, float]:
     """Iki modelin RMSE farkini yorumlanabilir olceklerde verir.
 
     Istatistiksel anlamlilik ile pratik anlamlilik ayni sey degildir: yeterince
@@ -135,6 +143,6 @@ def etki_buyuklugu(rmse_a: float, rmse_b: float) -> dict[str, float]:
     fark = rmse_a - rmse_b
     return {
         "RMSE_fark_W": float(fark),
-        "RMSE_fark_kapasite_yuzde": float(100.0 * fark / KAPASITE_W),
+        "RMSE_fark_kapasite_yuzde": float(100.0 * fark / kapasite_w),
         "RMSE_fark_bagil_yuzde": float(100.0 * fark / rmse_b) if rmse_b else np.nan,
     }

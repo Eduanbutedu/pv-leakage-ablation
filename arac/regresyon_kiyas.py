@@ -25,6 +25,11 @@ Kullanim (kok dizinden):
     python -m arac.regresyon_kiyas --referans sonuclar/doygunluk.csv \\
         --yeni sonuclar/doygunluk_dm.csv --nondet "Extra Trees,Random Forest"
 
+Faz 2 (ablasyon) logu farkli anahtarlanir; --anahtar ile verilir:
+    python -m arac.regresyon_kiyas --referans sonuclar/ablasyon.csv \\
+        --yeni sonuclar/ablasyon_regresyon.csv \\
+        --anahtar varyant,model,test_yil --nondet ""
+
 Ilk kosu: 3 Agustos 2026, dm_kalan (pyarrow 22.0.0) vs genis (25.0.0).
 40 hucre x 13 alan = 520 karsilastirma, 510'u birebir. Farkli cikan 10
 alanin hepsi 1-2 ULP ve yalnizca Random Forest ile Extra Trees'te; sekiz
@@ -55,17 +60,28 @@ def main() -> int:
     ap.add_argument("--nondet", default="Extra Trees,Random Forest",
                     help="fark cikmasi BEKLENEN modeller (virgullu); "
                          "bunlarin disindaki fark kapiyi kirmizi yakar")
+    ap.add_argument("--anahtar", default=",".join(ANAHTAR),
+                    help="hucreyi tanimlayan sutunlar, virgullu; varsayilan "
+                         "Faz 4 izgarasi. Faz 2 icin: varyant,model,test_yil")
     a = ap.parse_args()
 
     beklenen = {m.strip() for m in a.nondet.split(",") if m.strip()}
+    anahtar = [c.strip() for c in a.anahtar.split(",") if c.strip()]
     r = pd.read_csv(a.referans)
     y = pd.read_csv(a.yeni)
-    r, y = r[r.durum == "tamam"], y[y.durum == "tamam"]
+    # `durum` yalnizca Faz 4 izgarasinda var; olmadiginda filtre atlanir
+    if "durum" in r.columns and "durum" in y.columns:
+        r, y = r[r.durum == "tamam"], y[y.durum == "tamam"]
     # pencere hem int hem 'tum' olabiliyor; birlestirme oncesi tip esitlenir
-    r["pencere"] = r.pencere.astype(str)
-    y["pencere"] = y.pencere.astype(str)
+    if "pencere" in r.columns and "pencere" in y.columns:
+        r["pencere"] = r.pencere.astype(str)
+        y["pencere"] = y.pencere.astype(str)
 
-    m = y.merge(r, on=ANAHTAR, suffixes=("_yeni", "_ref"))
+    eksik = [c for c in anahtar if c not in r.columns or c not in y.columns]
+    if eksik:
+        raise SystemExit(f"anahtar sutunlari loglarda yok: {eksik}")
+
+    m = y.merge(r, on=anahtar, suffixes=("_yeni", "_ref"))
     if len(m) != len(y):
         # Kural 5: eksik eslesme sessizce kucuk bir kiyasa donusmez
         raise SystemExit(f"eslesme bozuk: {len(y)} yeni hucre, {len(m)} eslesti. "
@@ -86,6 +102,7 @@ def main() -> int:
                   "display.max_rows", None)
     print(f"referans    : {a.referans}")
     print(f"yeni        : {a.yeni}")
+    print(f"anahtar     : {anahtar}")
     print(f"hucre       : {len(m)}")
     print(f"kiyaslanan  : {len(var)} alan -> {len(m) * len(var)} karsilastirma")
     print(f"alanlar     : {var}")
