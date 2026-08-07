@@ -145,7 +145,53 @@ olculmustur; yuzdeler bu paydaya goredir.
   yol acabilir; 1,5 kat ustu fiziksel degildir. Esik sabit bir W/m2
   degeri degil, gunes yuksekligine bagli G0 ile normalize edilir -
   boylece esik mevsimden ve saatten bagimsiz kalir.
-- **Etkilenen:** 1.126 satir eksige cevrilir.
+- **Etkilenen:** 1.126 satir eksige cevrilir. (Uretimde 1.117; fark,
+  kural 1'in once kosmasi ve gunes konumunun etiket + 2,5 dk'dan
+  hesaplanmasindandir.)
+
+#### Kural 6 TESHISI - kural DEGISTIRILMEDI  `[SONRADAN eklendi - 8 Agustos 2026]`
+
+Kural 10'un cokusu arastirilirken kural 6'nin nerede atesledigi
+olculdu. **Teshis amaclidir; kural degistirilmemistir.** Yorum kurali
+olcumden ONCE yazildi: vuruslar alcak guneste yogunlasiyorsa uygulama
+yazili niyetle (fiziksel tavan) uyusmuyor demektir; gun boyuna
+yayilmissa kural gercek sensor sicramalarini yakaliyor demektir.
+
+Olcum (1.117 vurulan yuva):
+
+| | |
+|---|---|
+| sin h medyani | **0,00223** (yukseklik **0,128 derece**) |
+| sin h < 0,05 orani | **%99,64** (1.113 yuva) |
+| kiyas: butun gunduz yuvalarinda sin h < 0,10 orani | %7,35 |
+| vurus aninda GHI medyani | **12,949 W/m2** (p95 21,746) |
+| GHI < 20 W/m2 orani | %92,48 |
+| gunes ogleninden \|sapma\| medyani | **355 dakika** |
+| oglene 180 dk'dan yakin vurus | **0 (sifir)** |
+| 300+ dk uzaktaki vurus | %99,64 |
+| `sin h > 0,05` kisitiyla kalan vurus | **1.117'den 4'e** |
+| yillik dagilim | 2017-2022: 192/184/189/180/179/193 |
+
+**Sonuc: uygulama, kuralin yazili niyetiyle ALCAK GUNES bolgesinde
+uyusmuyor.** Kuralin gerekcesi yuksek isinimda fiziksel bir tavandi
+("bulut kenari yansimasi 1,4 kata cikabilir; 1,5 kat ustu fiziksel
+degildir"); pratikte 0,13 derece yukseklikte, 13 W/m2'lik degerlerde
+atesliyor. Mekanizma: `G0 = E0 x sin h` ufka yaklasirken sifira gider
+(vurus aninda medyan G0 = 3,103 W/m2), oysa kural 1'in olctugu
+piranometre ofseti ayni mertebededir (gece medyani 2,2921, p99
+9,9649 W/m2). Ufkun hemen ustunde kural 1 artik sifirlama yapmaz ama
+ofset durmaya devam eder; `1,5 x G0` cizgisi sensorun kendi
+gurultusunun ICINE duser. Kuralin gercekten aradigi seyi - hakiki
+sensor sicramalarini - yakaladigi da goruluyor ama nadiren: sin h >
+0,15 olan yalnizca 2 vurus var, birinin GHI'si 2015,182 W/m2.
+
+**KURAL DEGISTIRILMEDI.** Ateslenme oruntusu asagi akista sorun
+yarattigi icin ON-KAYITLI bir esigi gevsetmek, tam olarak bu makalenin
+elestirdigi post-hoc davranistir. Kayda gecirilmistir ve makalede
+boyle raporlanacaktir. Etkisi kural 10'un yururlukteki haliyle zaten
+notrlenmistir: bir saatte kural 6 tipik olarak TEK yuvayi dusurur,
+geriye 11 yuva kalir ve saat girdi esigini (>=9) gecer - kural 6'nin
+kendisine dokunmadan.
 
 ### Kural 7 - Gunduz sifir uretim
 
@@ -256,10 +302,84 @@ davranisi tanimlanmamisti. Tanimsiz birakmak sessiz basarisizliktir.
   esigi gevsetmenin bedeli, gevsetmenin getirisinden buyuktur.
   Karsilastirma: >=12 -> 51.736 gecerli saat; >=9 -> 51.776;
   >=1 -> 51.797.
-- **Etkilenen:** 61 saat (%0,116) ek olarak duser; 787 saat zaten
-  tamamen bostur.
+- ~~**Etkilenen:** 61 saat (%0,116) ek olarak duser; 787 saat zaten
+  tamamen bostur.~~ **BU SAYI YANLIS - asagiya bakin.**
 - **Not:** GTI'nin 12/12 orani yalnizca %87,502'dir (0/12 = 6.216).
   Bu kanal karar 2 geregi kullanilmadigi icin esigi baglamaz.
+
+#### Kural 10 duzeltmesi  `[SONRADAN eklendi - 8 Agustos 2026, ikinci duzeltme]`
+
+**Yukaridaki "61 saat" sayisi HAM veride olculmustu.** Uretimde kural 10,
+uygulama sirasinin YEDINCI adimidir: kural 6 ve kural 9 ONDAN ONCE kosar
+ve tek tek 5 dk yuvalarini eksige cevirir. Iki kural ayri ayri dogru
+sayilmisti; ETKILESIMLERI hic hesaplanmamisti.
+
+Uretimde olculen gercek bedel:
+
+| kaynak | saat | oran |
+|---|---|---|
+| tamamen bos (0/12, hicbir kanalda olcum yok) | 787 | %35,63 |
+| kismi gercek olcum (1-11 yuva) | 62 | %2,81 |
+| **ham 12/12 TAMDI, kural dusurdu** | **1.360** | **%61,57** |
+| - bunlardan kural 6 (GHI) | 1.115 | |
+| - bunlardan kural 9 (T2m) | 257 | |
+| **toplam gecersiz saat** | **2.209** | **%4,2009** |
+
+Yani kural 10'un ek bedeli 61 degil **1.422 saattir** (62 kismi +
+1.360 kural). Fark, kurallarin BIRBIRINE degil veriye bakilarak
+sayilmasindan geliyor.
+
+Bunun yikici sonucu asagi akista goruldu: `roll168` 168 ARDISIK gecerli
+saat ister; kural 6'nin dusurdugu 1.115 saatin neredeyse hepsi tek
+basina duran deliklerdir ve iclerinden gectikleri her 168 saatlik
+pencereyi parcalar. Alti yilda yalnizca 22 adet >=168 saatlik kesintisiz
+blok kalmisti ve **oznitelik tablosu 52.584 satirdan 1.344'e (%2,56)
+dusuyordu** - 2022'de 57 satir. Bu haliyle DKASC ablasyonu kosulamazdi.
+
+#### Kural 10'un YURURLUKTEKI hali  `[SONRADAN eklendi - 8 Agustos 2026]`
+
+**Esik GIRDIDE gevser, HEDEF ve DEGERLENDIRMEDE siki kalir.**
+
+- **Girdi (gecikme ve yuvarlanma ozniteliklerinin kaynagi):** bir saat,
+  dort kanalin her birinde **en az 9/12 yuvasi doluysa** gecerlidir ve o
+  saatin kismi ortalamasi kullanilir.
+- **Hedef ve degerlendirme:** **12/12 SARTI AYNEN DURUR.** Girdi
+  esigiyle gecen ama 12/12 olmayan saatler bayraklanir; ne egitim hedefi
+  ne test gozlemi olurlar. Yalnizca baska satirlarin gecikme kaynagi
+  olarak yasarlar.
+
+**Bu desen bu projede YENI DEGILDIR.** Gece satirlarini egitimde tutup
+gunduz filtresini yalnizca DEGERLENDIRMEDE uyguluyoruz (CLAUDE.md,
+"gece satirlari" dersi; kural 1 ve kural 7'nin notlari da ayni sey).
+Filtrenin girdide degil ciktida uygulanmasi, bu calismanin bastan beri
+savundugu ayrimdir: egitim gercek isletme kosullarini gorur,
+degerlendirme temiz kosulda olculur. Kural 10 artik ayni desende.
+
+**Neden ARA DEGER DEGIL.** Once dogrusal ara deger dusunuldu (izole
+tek saatler komsulardan doldurulur). Olculdu ve **daha kotu cikti**:
+ara deger (K=1) 46.748 kullanilabilir satir verirken girdi esigi >=9
+**46.857** veriyor - yani ara deger, uydurma sayi ekleyerek daha AZ
+satir kurtariyor. Sebep, bu saatlerin bos olmamasidir: izole tek
+saatlerin %97,43'unde ham veri 12/12 TAMDI ve kural onlari dusurmustu,
+%2,57'sinde de kismi gercek olcum vardi; **hicbiri bos degildi (0/12
+oran: %0,00).** Doldurulacak bir delik yoktu - kullanilmayan bir olcum
+vardi. Bu yolla kullanilan her sayi GERCEK olcumun ortalamasidir.
+
+**Neden 9, 1 degil.** Kural 10'un ilk gerekcesi hala gecerli: uc
+yuvadan alinan ortalama ile on ikiden alinan ayni kestirici degildir.
+9/12 saatin ucte dorduduur; 1/12 ise saatlik ortalama kiligina girmis
+bir nokta ornegidir. Olculen kazanc bu gerekceyi bozmaya degmiyor:
+
+| girdi esigi | oznitelik satiri | hedefi de dolu | oran |
+|---|---|---|---|
+| 12/12 (eski) | 1.344 | 1.321 | %2,51 |
+| >= 11 yuva | 46.109 | 44.856 | %85,30 |
+| **>= 9 yuva (SECILEN)** | **48.162** | **46.857** | **%89,11** |
+| >= 1 yuva | 49.181 | 47.854 | %91,00 |
+| *(kiyas) K=1 ara deger* | *48.044* | *46.748* | *%88,90* |
+
+- **Etkilenen:** girdi olarak gecerli saat 50.375 -> 51.520; hedef ve
+  degerlendirme icin gecerli saat **50.375 olarak DEGISMEZ.**
 
 ---
 
@@ -485,7 +605,11 @@ uc ekleme vardir, hepsinin gerekcesi yazilidir.
    ile saat ici degerlerin ortalamasindan gelen `Rb` ayni sey degildir
    ve fark sistematiktir. Karar 4'un dogrulamasi da 5 dakikada
    yapilmistir - uretim, dogrulanan yolla ayni olmalidir.
-7. **Kural 10 (YENI):** yerel saat kovalarina topla, 12/12 yuva sarti.
+7. **Kural 10 (YENI):** yerel saat kovalarina topla. Girdi icin
+   **>=9/12** yuva sarti; hedef ve degerlendirme icin **12/12** sarti.
+   12/12 olmayan ama >=9 olan saatler `kismi` bayragini alir.
+   `[8 Agustos 2026'da guncellendi - eski hali "12/12 yuva sarti" idi;
+   gerekce kural 10'un duzeltmesinde]`
 8. **Tam saatlik izgaraya reindex (YENI - kritik).** `pv10/features.py`
    konumsal `shift(k)` kullanir. PVGIS boslusuzdu; DKASC'de 787+ eksik
    saat vardir. Boslukli bir seride `shift(24)` **24 saat oncesini
@@ -607,7 +731,45 @@ uc ekleme vardir, hepsinin gerekcesi yazilidir.
 11. **Albedo varsayimdir.** `rho = 0,20` alindi; sahada olculmedi.
     20°'lik duzlemde yer terimi GHI'nin %0,60'idir, yani rho'yu
     0,10-0,30 araliginda oynatmak `G_i`'yi ~±%0,3 kaydirir.
-12. **Ortam:** 4-7 Agustos 2026 kesif kosularinda `pandas._libs.parsers`
+12. **Kurallar tek tek dogru, ETKILESIMLERI sayilmamisti.**
+    `[SONRADAN eklendi - 8 Agustos 2026]` Kural 6, kural 9 ve kural
+    10'un her birinin "etkilenen satir" sayisi HAM veride olculmustu.
+    Uretimde kurallar SIRAYLA kosar; kural 6 ve 9'un actigi tek yuvalik
+    delikler, kural 10'un 12/12 sartiyla carpisip 1.360 saat dusurdu ve
+    `roll168` uzerinden oznitelik tablosunu %2,56'ya indirdi. Hicbir
+    kural yanlis degildi; eksik olan, kurallarin BIRBIRINE bakilarak
+    sayilmamasiydi. Bundan sonra eklenen her kural icin etkilenen satir
+    sayisi, ondan ONCE gelen kurallar uygulanmis veri uzerinde de
+    olculecektir.
+
+13. **Dondurulmus surum gecmisi.** `[SONRADAN eklendi - 8 Agustos 2026]`
+
+    | surum | sha256_16 | satir | girdi-gecerli | hedef-gecerli |
+    |---|---|---|---|---|
+    | ilk (girdi esigi 12/12) | `24d7f7c2e6e00585` | 52.584 | 50.375 | 50.375 |
+    | **yururlukteki (girdi esigi >=9)** | **`f7f644df5e0d1618`** | 52.584 | 51.520 | 50.375 |
+
+    Eski hash kayit icin burada birakildi. **O surumle uretilmis HICBIR
+    deney sonucu yoktur** - kural 10'un cokusu ablasyon kosulmadan once
+    yakalandi, dolayisiyla geri alinacak bir sayi da yok.
+
+    Yururlukteki surumun oznitelik katmanindaki karsiligi: **47.928
+    oznitelik satiri**, bunlarin **46.857'si hedef olarak kullanilabilir**
+    (1.071'i `kismi` bayrakli, yalnizca gecikme kaynagi), 23.271'i gunduz.
+    Yil basina hedef-gecerli: 2017/7.986 · 2018/8.337 · 2019/7.691 ·
+    2020/7.705 · 2021/7.310 · 2022/7.828.
+
+14. **Saatlik ortalama ORTAK yuva maskesinden alinir.**
+    `[SONRADAN eklendi - 8 Agustos 2026]` Girdi esigi gevsedikten sonra
+    bir saatte bazi kanallar dolu bazilari eksik olabiliyor. Her sutunu
+    kendi dolu yuvalari uzerinden ortalamak `G_i = Gb_i + Gd_i + Gr_i`
+    ozdesligini bozar: kural 6 yalnizca GHI'yi dusurdugunde o yuvada
+    `Gd_i` durur ama `Gb_i`, `Gr_i` ve `G_i` duser, ortalamalar FARKLI
+    kumelerden alinir. Sema kapisi bunu ilk kosuda yakaladi (maks fark
+    4,027 W/m2). Bir yuva ancak DORT kanalin da dolu oldugu yuvadir;
+    hem sayim hem ortalama bu ortak maskeden gecer.
+
+15. **Ortam:** 4-7 Agustos 2026 kesif kosularinda `pandas._libs.parsers`
    DLL'i bir kez "Uygulama Denetimi ilkesi bu dosyayi engelledi"
    hatasiyla yuklenemedi, ikinci denemede acildi. pyarrow'da yasananla
    ayni sinif (Windows Smart App Control). SAC ayarina DOKUNULMADI.
