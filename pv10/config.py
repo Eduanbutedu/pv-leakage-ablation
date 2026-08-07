@@ -116,7 +116,7 @@ DKASC_VERI = KOK / "veri" / "dkasc_m6b.parquet"
 
 # Dondurulmus DKASC surumu; `dkasc_pipeline.py duzenle` her kosuda bunu
 # uretilen dosyanin hash'iyle kiyaslar ve uymazsa yuksek sesle soyler.
-DKASC_VERI_SHA16 = "24d7f7c2e6e00585"
+DKASC_VERI_SHA16 = "f7f644df5e0d1618"
 
 DKASC_BASLANGIC_YIL, DKASC_BITIS_YIL = 2017, 2022
 DKASC_TEST_YILLARI = (2018, 2019, 2020, 2021, 2022)  # 2017 yalnizca egitim
@@ -149,7 +149,16 @@ DKASC_ISINIM_KANAL = (DKASC_GHI, DKASC_DHI, DKASC_GTI, DKASC_DTI)
 
 DKASC_SUTUN_SAYISI = 197       # alti yilda da ayni ad, ayni sira
 DKASC_YUVA_DK = 5
-DKASC_SAAT_YUVA = 12           # kural 10: 12/12 zorunlu
+DKASC_SAAT_YUVA = 12           # kural 10: HEDEF ve DEGERLENDIRME icin 12/12
+
+# Kural 10, yururlukteki hali: esik GIRDIDE gevser, HEDEF ve
+# DEGERLENDIRMEDE siki kalir. Girdi olarak >=9/12 yuvasi dolu bir saatin
+# kismi ortalamasi kullanilir (gercek olcum, ara deger DEGIL); o saat
+# `kismi` bayragini alir ve ne egitim hedefi ne test gozlemi olur.
+# Ayni desen gece satirlarinda kullaniliyor: filtre girdide degil ciktida.
+# 9 secildi cunku 1/12 "ortalama" saatlik ortalama kiligina girmis bir
+# nokta ornegidir; 9/12 saatin ucte dordudur. Olcum belgede.
+DKASC_GIRDI_YUVA = 9
 
 # Karar 5: 5 dk etiketi araligin BASI kabul edilir, temsil ettigi an
 # etiket + 2,5 dk'dir. On iki yuvanin ortalamasi boylece HH:30 olur.

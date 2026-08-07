@@ -37,7 +37,8 @@ import pandas as pd
 from pv10.config import (DKASC_ALBEDO, DKASC_ARIZA_GHI, DKASC_BASLANGIC_YIL,
                          DKASC_BITIS_YIL, DKASC_DHI, DKASC_DHI_ORAN_BAYRAK,
                          DKASC_DTI, DKASC_EGIM, DKASC_EGIM_TARAMA, DKASC_G0_CARPAN,
-                         DKASC_GHI, DKASC_GTI, DKASC_GUC_OLU_BOLGE,
+                         DKASC_GHI, DKASC_GIRDI_YUVA, DKASC_GTI,
+                         DKASC_GUC_OLU_BOLGE,
                          DKASC_GUNES_SABITI, DKASC_HEDEF_DIZI,
                          DKASC_KAPI_EGIM_ARALIK, DKASC_KAPI_GHI,
                          DKASC_KAPI_MBE_YUZDE, DKASC_KAPI_RMSE_YUZDE,
@@ -263,34 +264,58 @@ def saatlige_topla(d: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
     for k in ("Gb_i", "Gd_i", "Gr_i", "G_i"):
         d[k] = bilesen[k]
 
-    # --- Adim 7: Kural 10 - yerel saat kovalari, 12/12 zorunlu ---
+    # --- Adim 7: Kural 10 - yerel saat kovalari ---
+    # Esik GIRDIDE gevser (>=9/12), HEDEF ve DEGERLENDIRMEDE siki kalir
+    # (12/12). Gece satirlarini egitimde tutup gunduz filtresini yalnizca
+    # degerlendirmede uygulamamizla ayni desen: filtre girdide degil ciktida.
+    #
     # Tamlik G_i'yi URETEN kanallar ve hedefe gore olculur. RH tasinir ama
     # oznitelik degildir (PVGIS semasinda da yok), bu yuzden saati BAGLAMAZ;
     # baglasaydi kural 9'un RH kolu hicbir ozniteligi beslemeyen bir kanal
     # icin saat dusururdu.
+    #
+    # Yuva sayimi ORTAK maskeden gelir: bir yuva ancak DORT kanalin da dolu
+    # oldugu yuvadir. Kanal basina ayri sayip minimum almak yanlistir, cunku
+    # farkli kanallar farkli yuvalarda eksik olabilir. Daha onemlisi: saatlik
+    # ortalamalar da bu ORTAK yuva kumesi uzerinden alinmalidir. Aksi halde
+    # kural 6'nin yalnizca GHI'yi dusurdugu bir yuvada Gd_i durur, Gb_i/Gr_i/
+    # G_i duser ve `.mean()` her sutunu FARKLI kumeden alir - G_i artik
+    # bilesenlerin toplamina esit olmaz. Sema kapisi bunu yakaladi.
     tam5 = (d[DKASC_GHI].notna() & d[DKASC_DHI].notna()
             & d[DKASC_T].notna() & d[DKASC_HEDEF_DIZI].notna())
-    d["_tam"] = tam5
-    kova = d.groupby(pd.Grouper(freq="h"))
-    dolu = kova["_tam"].sum()
-    gecerli = dolu == DKASC_SAAT_YUVA
-
-    say["saat_toplam"] = int(len(dolu))
-    say["saat_tam"] = int(gecerli.sum())
-    say["saat_bos"] = int((dolu == 0).sum())
-    say["saat_kismi"] = int(((dolu > 0) & (dolu < DKASC_SAAT_YUVA)).sum())
-
-    # kanal bazinda tamlik - "kismi" saatlerin hangi kanaldan dustugu
+    # kanal bazinda tamlik, MASKELEMEDEN ONCE olculur - hangi kanalin
+    # bagladigini gostermesi icin; maskelemeden sonra hepsi esitlenir
     for ad, c in (("GHI", DKASC_GHI), ("DHI", DKASC_DHI),
                   ("T2m", DKASC_T), ("P", DKASC_HEDEF_DIZI)):
-        say[f"saat_tam_{ad}"] = int((kova[c].count() == DKASC_SAAT_YUVA).sum())
+        say[f"saat_tam_{ad}"] = int(
+            (d[c].groupby(pd.Grouper(freq="h")).count() == DKASC_SAAT_YUVA).sum())
 
-    ort = kova[[DKASC_GHI, DKASC_DHI, DKASC_T, DKASC_RH, DKASC_HEDEF_DIZI,
-                "Gb_i", "Gd_i", "Gr_i", "G_i"]].mean()
+    ortalanacak = [DKASC_GHI, DKASC_DHI, DKASC_T, DKASC_RH, DKASC_HEDEF_DIZI,
+                   "Gb_i", "Gd_i", "Gr_i", "G_i"]
+    d.loc[~tam5, ortalanacak] = np.nan
+    d["_tam"] = tam5
+
+    kova = d.groupby(pd.Grouper(freq="h"))
+    dolu = kova["_tam"].sum()
+    gecerli = dolu >= DKASC_GIRDI_YUVA        # GIRDI icin
+    kati = dolu == DKASC_SAAT_YUVA            # HEDEF ve DEGERLENDIRME icin
+
+    say["saat_toplam"] = int(len(dolu))
+    say["saat_kati_12_12"] = int(kati.sum())
+    say["saat_girdi_gecerli"] = int(gecerli.sum())
+    say["saat_kismi_girdi"] = int((gecerli & ~kati).sum())
+    say["saat_bos"] = int((dolu == 0).sum())
+    say["saat_esik_alti"] = int(((dolu > 0) & ~gecerli).sum())
+
+    ort = kova[ortalanacak].mean()
     bayrak = kova[["rh_bayrak", "dhi_bayrak"]].max().astype(bool)
     s = pd.concat([ort, bayrak], axis=1)
     s = s.where(pd.Series(gecerli, index=s.index), other=np.nan)
     s.loc[~gecerli, ["rh_bayrak", "dhi_bayrak"]] = False
+    # `kismi` bayragi: girdi esigini gecti ama 12/12 DEGIL. Bu satirlarin
+    # hedefi ASLA kullanilmaz - asagida P'leri de eksige cevrilir.
+    s["kismi"] = (gecerli & ~kati).reindex(s.index, fill_value=False)
+    s["yuva"] = dolu.reindex(s.index)
 
     # Saatin on iki yuvasindaki EN YUKSEK gunes konumu. Saf geometridir,
     # gecerlilik maskesinden SONRA eklenir ki her satirda tanimli kalsin.
@@ -338,8 +363,8 @@ def semaya_donustur(s: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
     sira = ["konum", "time_utc", "time_local", "time_gozlem",
             "lat", "lon", "utc_ofset",
             "P", "G_i", "Gb_i", "Gd_i", "Gr_i", "H_sun", "T2m",
-            "GHI", "DHI", "RH", "ariza", "rh_bayrak", "dhi_bayrak",
-            "sin_h_maks"]
+            "GHI", "DHI", "RH", "ariza", "kismi", "yuva",
+            "rh_bayrak", "dhi_bayrak", "sin_h_maks"]
     s = s[sira].sort_values("time_utc").reset_index(drop=True)
     return s, say
 
@@ -386,6 +411,27 @@ def sema_kapisi(s: pd.DataFrame) -> None:
                  & s["G_i"].notna()).sum())
     print(f"  gecis saati (merkez gece, yuvalarin bir kismi gunduz): {kenar:,} "
           f"- gunduz maskesi bunlari DISLAR")
+
+    # Kural 10 invaryanti: `kismi` bayrakli satirlarin verisi DOLU olmali
+    # (gecikme kaynagi olarak yasarlar) ama 12/12 OLMAMALI. Bayragin bos
+    # cikmasi esigin uygulanmadigi anlamina gelir; bayrakli bir satirin
+    # 12/12 cikmasi bayragin yanlis hesaplandigi anlamina gelir.
+    kismi = s[s["kismi"]]
+    if len(kismi) == 0:
+        raise ValueError(
+            "hicbir satir `kismi` bayragi almadi. Girdi esigi "
+            "uygulanmamis olabilir; olculen deger 1.145 saatti.")
+    if kismi["G_i"].isna().any() or kismi["P"].isna().any():
+        raise ValueError("`kismi` satirlarda G_i veya P eksik - bu satirlar "
+                         "gecikme kaynagi olarak KULLANILACAK, dolu olmalilar.")
+    if (kismi["yuva"] == 12).any():
+        raise ValueError("12/12 olan bir satir `kismi` bayragi almis.")
+    if (kismi["yuva"] < DKASC_GIRDI_YUVA).any():
+        raise ValueError(f"`kismi` satirlarda yuva sayisi "
+                         f"{DKASC_GIRDI_YUVA} esiginin altinda.")
+    print(f"  kural 10: kati (12/12) {int((s['yuva'] == 12).sum()):,}  "
+          f"kismi (>={DKASC_GIRDI_YUVA}/12) {len(kismi):,}  "
+          f"-> kismi satirlar gecikme KAYNAGI, hedef ve degerlendirme DISI")
 
 
 def duzenle(klasor: Path, cikti: Path) -> pd.DataFrame:
@@ -437,8 +483,10 @@ def duzenle(klasor: Path, cikti: Path) -> pd.DataFrame:
     print("\n[11] sema kapisi")
     sema_kapisi(s)
     dolu = int(s["P"].notna().sum())
-    print(f"  TAMAM. {len(s):,} saatlik satir, dolu {dolu:,} "
-          f"(%{100*dolu/len(s):.4f})")
+    kati = int((s["yuva"] == 12).sum())
+    print(f"  TAMAM. {len(s):,} saatlik satir, girdi-gecerli {dolu:,} "
+          f"(%{100*dolu/len(s):.4f}), hedef-gecerli {kati:,} "
+          f"(%{100*kati/len(s):.4f})")
 
     # yil sinirinda UTC kaymasi: time_utc yerel saatten 9,5 saat geridedir,
     # dolayisiyla yerel 1 Ocak'in ilk 10 saati UTC yilinda bir onceki yila
@@ -454,7 +502,11 @@ def duzenle(klasor: Path, cikti: Path) -> pd.DataFrame:
     kunye = "\n".join([
         f"dosya: {cikti.name}",
         f"sha256_16: {h}",
-        f"satir: {len(s)}   dolu: {dolu}",
+        f"satir: {len(s)}   girdi_gecerli: {dolu}   hedef_gecerli: {kati}",
+        f"kural_10: girdi esigi >={DKASC_GIRDI_YUVA}/12 yuva, hedef ve "
+        f"degerlendirme 12/12. `kismi` bayrakli satirlar gecikme KAYNAGIDIR; "
+        f"egitim hedefi ve test gozlemi OLAMAZ - dislama bolme asamasinda "
+        f"bayrakla yapilir (kural 7'nin `ariza` deseniyle ayni).",
         f"konum: {DKASC_KONUM}",
         f"aralik: {DKASC_BASLANGIC_YIL}-{DKASC_BITIS_YIL} (yerel ACST saat izgarasi)",
         f"kapasite_W: 5250.0",
