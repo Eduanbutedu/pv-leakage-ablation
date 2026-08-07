@@ -10,9 +10,17 @@ Bu dosyaya sonradan eklenen her madde `[SONRADAN eklendi - <tarih>]`
 diye isaretlenir ve gerekcesi yazilir. Isaretsiz madde, veri islenmeden
 once sabitlenmistir.
 
-Kurallarin dayandigi gozlemler bir KESIF turundan gelir (4-7 Agustos
+Kurallarin dayandigi gozlemler bir KESIF turundan gelir (4-8 Agustos
 2026). Kesif yalnizca okudu; hicbir kural uygulanmadi, hicbir deger
 degistirilmedi, repoya veri girmedi.
+
+**8 Agustos 2026 eklemeleri de veri islenmeden oncedir.** Kural 9,
+Kural 10, Karar 4, Karar 5 ve bolum 4'un guncellenen maddeleri
+`dkasc_pipeline.py`'nin ILK SATIRI YAZILMADAN once, ayri bir commit'te
+girdi. Dosya duzeyinde `git log dokumanlar/dkasc-kalite-kurallari.md`
+bunu gosterir: bu commit ile pipeline commit'i ayridir ve bu once
+gelir. Sebep `pv10/ozet.py` ile ayni - on-kayit disiplini
+bulanmamalidir.
 
 ---
 
@@ -51,6 +59,14 @@ gercek dunyada vardir; raporlanir, ayiklanmaz. Aynisi 2019 (kurak yil,
 ---
 
 ## 1. Sekiz kural
+
+> `[SONRADAN eklendi - 8 Agustos 2026]` Bu bolume iki kural eklendi:
+> **Kural 9** (sicaklik gecerli araligi) ve **Kural 10** (saatlik
+> toplamada tam yuva sarti). Ikisi de asagida, kendi gerekceleri ve
+> "neden sonradan" aciklamalariyla duruyor. Ikisi de DKASC verisinin
+> hicbir satiri islenmeden, hicbir model egitilmeden once yazildi.
+> Baslik "Sekiz kural" olarak birakildi; bolum 6 geregi eski hali
+> silinmez.
 
 Her kural icin: gozlem, esik, gerekce, etkilenen satir. Sayimlar
 2017-2022'nin tamami uzerinden, 621.933 satirlik birlesik seride
@@ -177,9 +193,82 @@ olculmustur; yuzdeler bu paydaya goredir.
   bagimsizdir.
 - Kayit icin yazilmistir; secilmedigi burada duruyor.
 
+### Kural 9 - Sicaklik gecerli araligi  `[SONRADAN eklendi - 8 Agustos 2026]`
+
+**Neden sonradan:** 7 Agustos'ta yazilan sekiz kural sicakligi hic ele
+almiyordu; eksik bolum 4, madde 6'da acik kusur olarak kaydedilmisti
+("sicaklik icin ayri bir sentinel kurali YAZILMADI ... pipeline'da
+acikca ele alinacaktir"). Bu madde o acigi kapatir. Kural, DKASC'nin
+hicbir satiri islenmeden ve hicbir model egitilmeden once yazilmistir;
+gecikme kayittadir, gizlenmemistir.
+
+- **Gozlem** (621.933 satir):
+
+  | bant | satir | oran |
+  |---|---|---|
+  | `T <= -39` (analog ray, ~-39,9879) | 1.649 | %0,2651 |
+  | `-39 < T <= -20` | 1.390 | %0,2235 |
+  | `-20 < T <= -15` | 1 | %0,0002 |
+  | `-15 < T <= -10` | 2 | %0,0003 |
+  | `45,2 < T <= 50` | 29 | %0,0047 |
+  | `T > 50` | 4 | %0,0006 |
+  | `T` eksik (NaN) | 600 | %0,0965 |
+
+  Ray degeri tam sabit degil (-39,987949 .. -39,987919), 56 kesintisiz
+  blok, uc ayda kumelenmis: 2018-03 (105), 2020-02 (105), 2020-03
+  (1.439). `T > 50` olan dort deger: 51,2617 · 51,4537 · 61,3712 ·
+  61,9235. Gecerli sicaklik araligi min -38,99 maks 46,31 ort 21,381.
+- **Esik:** `T < -10 °C` veya `T > 50 °C` -> **eksik**. Ayrica
+  `T <= -39` olan satirlarda **RH de eksik** sayilir.
+- **Gerekce:** Alice Springs rekor dusugu -7,5 °C, rekor yuksegi
+  45,2 °C. Bracket kasten GENIS tutuldu (-10 .. +50): esik veriye
+  bakilarak degil, sahanin iklim rekorlarina bakilarak secilmistir ve
+  rekor kiran gercek bir degeri kendi elimizle kirpmamak icin
+  rekorlarin disinda birakilmistir. `45,2 < T <= 50` bandindaki 29
+  satir bu yuzden KORUNUR.
+  RH'nin ayrica dusurulmesi olculdu: ray satirlarinin **hepsinde** RH
+  0,0116 ile 0,9518 arasindadir (medyan 0,1498), yani RH de sifira
+  raylanmistir. Ray disinda RH < %0,1 olan yalnizca 19 satir vardir,
+  yani bu davranis raya OZGUdur. Kural RH esigine degil rayin kendisine
+  baglanmistir; `RH < 0,1` esigi 1.649 ray satirinin yalnizca 646'sini
+  yakalardi.
+- **Etkilenen:** 3.046 satir (%0,4898) T bakimindan eksige cevrilir;
+  bunlarin 1.649'unda RH de eksige cevrilir. Kural 10 (12/12) altinda
+  **259 saat** duser (T bakimindan tam olan 51.737 saatten).
+
+### Kural 10 - Saatlik toplamada tam yuva sarti  `[SONRADAN eklendi - 8 Agustos 2026]`
+
+**Neden sonradan:** 5 dakikadan saatlige toplama 7 Agustos'ta uygulama
+sirasinda (bolum 3, adim 6) bir islem olarak yaziliydi ama EKSIK YUVA
+davranisi tanimlanmamisti. Tanimsiz birakmak sessiz basarisizliktir.
+
+- **Gozlem:** 52.584 saatlik kovada GHI'nin dolu 5 dk yuvasi:
+  **12/12 = 51.736 (%98,387)**, 0/12 = 787 (%1,497), kismi = **61
+  (%0,116)**. DHI birebir ayni; M6_B 12/12 = 51.742. Kismi saatlerin
+  yuva dagilimi: 11 yuva 23 saat, 10 yuva 9, 9 yuva 8, 8 yuva 3,
+  7 yuva 4, 5 yuva 1, 4 yuva 2, 3 yuva 4, 2 yuva 1, 1 yuva 6.
+- **Esik:** bir saat ancak **12/12 yuvasi da doluysa** gecerlidir;
+  aksi halde o saat EKSIK'tir. Toplama islemi ortalamadir (isinim,
+  sicaklik, nem ve guc icin ayni).
+- **Gerekce:** uc yuvadan alinan ortalama ile on ikiden alinan ortalama
+  ayni kestirici degildir; sematik olarak ayni gorunmeleri farki gizler.
+  Esigi 12'den 1'e indirmenin kazanci **61 saat (%0,116)** olculdu -
+  esigi gevsetmenin bedeli, gevsetmenin getirisinden buyuktur.
+  Karsilastirma: >=12 -> 51.736 gecerli saat; >=9 -> 51.776;
+  >=1 -> 51.797.
+- **Etkilenen:** 61 saat (%0,116) ek olarak duser; 787 saat zaten
+  tamamen bostur.
+- **Not:** GTI'nin 12/12 orani yalnizca %87,502'dir (0/12 = 6.216).
+  Bu kanal karar 2 geregi kullanilmadigi icin esigi baglamaz.
+
 ---
 
 ## 2. Uc karar
+
+> `[SONRADAN eklendi - 8 Agustos 2026]` Bu bolume iki karar eklendi:
+> **Karar 4** (transpozisyon modeli izotropik + dogrulama kapisi) ve
+> **Karar 5** (geometri saat merkezinden, izgara yerel saatte). Baslik
+> "Uc karar" olarak birakildi; bolum 6 geregi eski hali silinmez.
 
 ### Karar 1 - Ruzgar hizi ve yonu oznitelik setinden CIKARILDI
 
@@ -268,6 +357,93 @@ sistematik yanlilik; kullanilmaz.
 dosyadan cikarilamaz: sistem 12 -> `dka-m5-b-phase`, sistem 13 ->
 `dka-m6-b-phase`, sistem 18 -> `dka-m2-c-phase`.
 
+### Karar 4 - Transpozisyon modeli IZOTROPIK (Liu-Jordan)  `[SONRADAN eklendi - 8 Agustos 2026]`
+
+**Neden sonradan:** karar 2 "GHI+DHI'den standart transpozisyon" diyor
+ama HANGI transpozisyon modeli oldugunu soylemiyordu. Model secimi
+uretilen `G_i` degerini degistirir; tanimsiz birakilamaz.
+
+**Secim gelenege gore degil OLCUME gore yapildi.** Iki model, ayni
+254.741 satirda (`sin h > 0,10`, `GHI > 20`, `DHI <= GHI`, GTI dolu),
+egik piranometrenin OLCUMUNE karsi, egim taramasiyla:
+
+| egim | izo MBE | izo RMSE | izo R2 | Hay-Davies MBE | HD RMSE | HD R2 |
+|---|---|---|---|---|---|---|
+| 0° | -37,5594 | 94,8296 (%15,13) | 0,92370 | -37,5594 | 94,8296 | 0,92370 |
+| 11° | -6,5823 | 54,2796 (%8,66) | 0,97500 | -3,2986 | 52,2441 | 0,97680 |
+| 14° | -1,3145 | 48,6780 (%7,77) | 0,97990 | +2,6894 | 47,7497 | 0,98070 |
+| 16° | +1,4234 | 46,6126 (%7,44) | 0,98160 | +5,8635 | **46,9048** | 0,98134 |
+| **18°** | +3,5389 | **45,9182 (%7,33)** | **0,98212** | +8,3797 | 47,6904 | 0,98070 |
+| 20° | +5,0299 | 46,5254 (%7,42) | 0,98160 | +10,2354 | 49,8771 | 0,97890 |
+| 30° | +3,1107 | 63,3162 (%10,10) | 0,96600 | +9,5924 | 72,8611 | 0,95500 |
+
+- Izotropik en iyi egim **18°** (MBE-sifir 15°); Hay-Davies en iyi **16°**
+  (MBE-sifir 13°). Ikisi de karar 2'nin 11-17° bracket'iyle ortusur.
+- **Izotropik, Hay-Davies'ten IYIDIR** (45,9182 vs 46,9048 W/m2;
+  R2 0,98212 vs 0,98134). Hay-Davies'in cevresel-gunes terimi bu sahanin
+  yuksek berrak-gok oraninda `Rb` uzerinden fazla sisiriyor.
+- **Sonuc model secimine dayaniklidir:** 20°/kuzey duzleminde iki modelin
+  farki ortalama **+5,206 W/m2 (+%0,824)**, p99 31,901, maks 103,991.
+
+**Karar:** izotropik. Bilesenler PVGIS'in `components=1` yapisini birebir
+taklit eder, boylece `G_i`'nin bilesenlerden geri kurulmasi iki kolda
+AYNI islemdir:
+
+```
+Gb_i = (GHI - DHI) * Rb
+Gd_i = DHI * (1 + cos B) / 2
+Gr_i = GHI * rho * (1 - cos B) / 2          rho = 0,20
+G_i  = Gb_i + Gd_i + Gr_i
+```
+
+`cos(theta)` kopyalanmis bir formulden degil, URETIM fonksiyonundan
+gelir: ekvatora bakan duzlem icin `cos(theta) = sin h(lat + B)`, yani
+`gunes_yuksekligi_sin(lat + B, lon, t)`. `Rb` paydasi `max(sin h, 0,05)`
+ile tabanlanir.
+
+**Kapi (uretimde zorunlu):** kosuda transpozisyon olculen GTI'ye karsi
+yeniden dogrulanir. Esikler burada, sonuc gorulmeden sabitlenmistir:
+`RMSE <= %9` VE `|MBE| <= %2` VE `RMSE-optimal egim 11-20°` araliginda.
+Gecmezse kosu DURUR. **Negatif kontrol:** kapi kasten `B = 0°` ile
+cagrildiginda KIRMIZI yanmalidir (0°'da RMSE %15,13, MBE -%5,99 - yakalar).
+Invaryant 5 dersi: kapi uretim fonksiyonunu cagirir ve yanlisi
+yakalayamiyorsa islevsizdir.
+
+### Karar 5 - Geometri SAAT MERKEZINDEN; izgara YEREL saatte  `[SONRADAN eklendi - 8 Agustos 2026]`
+
+**Olcum:** alti dosyanin altisi da `01-01 00:00` ile baslar, `23:55` ile
+biter; gunun ilk uc damgasi `00:00, 00:05, 00:10`. Bu, **aralik SONU**
+etiketlemesini eler (o gelenek `00:05 .. 24:00` verirdi). Geriye aralik
+BASI ile ANLIK ornek kalir; ikisi 2,5 dakika ayrisir.
+
+Gunes ogleni 1.991 tam ve kesintisiz gunde olculdu (GHI>20 blogunun orta
+noktasi): gozlenen eksi tahmin medyan **+4,498 dk**, ortalama +4,113,
+sd 17,237. Bu artik BOYLAM hatasi olarak da ETIKET OFSETI olarak da
+okunabilir - ikisi de saat acisinda sabit kaymadir ve isinimdan
+**AYRILAMAZ**. Ustelik artik sabit degil, alti yilda suruklenir
+(2017 +6,00 · 2018 +6,00 · 2019 +5,25 · 2020 +4,00 · 2021 +3,50 ·
+2022 +4,00 dk; yillik standart hata ~0,95 dk), yani tamami tek bir
+gelenek farkiyla aciklanamaz.
+
+**Belirleyici olan bu 2,5 dakika degildir.** Saatlige toplandiginda
+`HH:00`'dan `HH:55`'e on iki yuva `[HH:00, HH+1:00)` araligini kaplar;
+temsil ettigi an **`HH:30`**'dur. Geometriyi `HH:00`'dan hesaplamak
+**30 dakika = 7,5 derece** saat acisi hatasi verir - PVGIS'te yakalanan
+`:09/:10` hatasinin (~1,5°) BES KATI. Cozulemeyen 2,5 dakikalik
+belirsizlik ise 0,6°'dir.
+
+**Karar:**
+- Izgara **yerel ACST saatinde** kurulur; dosya zaten yerel gun
+  sinirlarinda yatiyor.
+- `time_local` = yerel `HH:00`; `time_utc` = `time_local - 9:30`
+  (dakikasi `:30` olur); `time_gozlem` = `time_utc + 30 dk` = saatin
+  merkezi. Butun gunes geometrisi `time_gozlem`'den hesaplanir.
+- Sonuc: `h_sin`/`h_cos` PVGIS koluna gore sabit bir aci kadar DONER.
+  Dogrusal modellerde bu (sin, cos) ciftinin tam bir dondurmesidir,
+  yani birebir yeniden parametrizasyondur; agaclarda bolmeler
+  degismez. Zararsizdir ama PVGIS ile kiyaslayan okuyucu `:00` bekler,
+  bu yuzden kunyeye yazilir.
+
 ---
 
 ## 3. Uygulama sirasi
@@ -289,15 +465,74 @@ Kurallar bu sirayla uygulanir; sira degistirilirse sonuc degisir.
 Kural 8a'nin bolmeden SONRA gelmesi kuralin kendisi kadar onemlidir;
 oncesine alinirsa sizinti geri gelir.
 
+### Yururlukteki sira  `[SONRADAN eklendi - 8 Agustos 2026]`
+
+Yukaridaki dokuz adimlik liste 7 Agustos'ta yazildi ve **yerinde
+birakilmistir**. Asagidaki liste onun yerine gecer; iki degisiklik ve
+uc ekleme vardir, hepsinin gerekcesi yazilidir.
+
+1. Alti yillik dosyayi oku, takvim disi 288 satiri kirp, birlestir
+   (621.933 satir).
+2. Tam 5 dakikalik izgaraya oturt; olmayan damgalar EKSIK'tir.
+3. Kural 1 (gece ofseti) - isinim kanallarini sifirla.
+4. Kural 2 (nem), Kural 3 (DHI<=GHI), Kural 6 (isinim ust siniri),
+   **Kural 9 (sicaklik araligi - YENI)**.
+5. Kural 5 (negatif guc).
+6. **Transpozisyon 5 DAKIKA cozunurlugunde yapilir** (karar 2 + karar 4).
+   **DEGISIKLIK:** eski listede toplama (adim 6) transpozisyondan
+   (adim 7) onceydi. **Gerekce:** `Rb` saat icinde nonlineerdir ve
+   alcak gunes acilarinda patlar; saatlik ortalamadan hesaplanan `Rb`
+   ile saat ici degerlerin ortalamasindan gelen `Rb` ayni sey degildir
+   ve fark sistematiktir. Karar 4'un dogrulamasi da 5 dakikada
+   yapilmistir - uretim, dogrulanan yolla ayni olmalidir.
+7. **Kural 10 (YENI):** yerel saat kovalarina topla, 12/12 yuva sarti.
+8. **Tam saatlik izgaraya reindex (YENI - kritik).** `pv10/features.py`
+   konumsal `shift(k)` kullanir. PVGIS boslusuzdu; DKASC'de 787+ eksik
+   saat vardir. Boslukli bir seride `shift(24)` **24 saat oncesini
+   degil 24 SATIR oncesini** alir; makalenin en guclu ozniteligi
+   `G_i_lag24` yanlis satirdan gelir ve **hicbir yerde hata firlamaz**.
+   Tam izgaraya reindex edilince bosluklar NaN kalir ve zorunlu-sutun
+   `dropna`'si onlari dusurur. Bu bir tercih degil, "sessiz basarisizlik
+   yasak" maddesidir (CLAUDE.md, kural 5).
+9. **Kural 7 (gunduz sifir bayragi) SAATLIK duzeyde** hesaplanir;
+   degerlendirmede dislanir, egitimde ASLA.
+10. Semaya donustur: `P` kW -> W (**x1000**), `konum = "dkasc_m6b"`,
+    `utc_ofset = +9,5`, `H_sun` geometriden turetilir (bolum 4,
+    madde 8).
+11. Transpozisyon kapisi (karar 4) + sema kapisi. Gecmezse DUR.
+12. Dondur: parquet + `sha256_16` + veri surumu kunyesi.
+13. **Bolme yapilir. Bundan SONRA** Kural 8a: esik egitim bolmesinden,
+    kat basina yeniden.
+14. Oznitelikler uretilir. Ruzgar YOK (karar 1).
+
 ---
 
 ## 4. Bilinen kusurlar ve varsayimla gecilen her sey
 
-1. **Konum koordinati varsayimdir.** Gunes geometrisi hesaplarinda
+1. ~~**Konum koordinati varsayimdir.**~~ Gunes geometrisi hesaplarinda
    `lat = -23,7621`, `lon = 133,8744` kullanildi. Siteden teyit
    EDILMEDI. Damga geleneginin ACST cikmasi ve GHI korelasyonunun
    +0,82..+0,84 olmasi koordinatin dogru mertebede oldugunu gosterir
    ama tam degerini dogrulamaz.
+
+   **`[SONRADAN eklendi - 8 Agustos 2026]` KUSUR KAPANDI - koordinat
+   DIS KAYNAKLA DOGRULANDI.** Hakemli bir yayin DKASC'nin konumunu
+   **23° 46' G, 133° 52' D, 558 m** olarak veriyor (Theoretical and
+   Applied Climatology, 2022, doi:10.1007/s00704-022-04166-6). Ondalik
+   karsiligi -23,7667 / 133,8667; kullandigimiz varsayimla fark
+   **enlemde 0,005°, boylamda 0,007°** - gunes geometrisinde ihmal
+   edilebilir. Kunyeye "koordinat: dis kaynakla dogrulandi" diye
+   islenir, kaynak da yazilir. Kullanilan deger DEGISTIRILMEZ
+   (-23,7621 / 133,8744); fark, olcum belirsizliginin cok altindadir
+   ve degistirmek dondurulmus kesif sayilarini kaydirirdi.
+
+   Veriden ic dogrulama denendi ve **yetersiz cikti** - bu yontemin
+   kaydi: gun uzunlugundan (saat geleneginden BAGIMSIZ) ortak EKK ile
+   enlem -23,060°, esik yuksekligi `sin h0 = 0,060`, artik RMS
+   23,35 dk. Enlemi ±1° oynatinca artik RMS yalnizca 23,35 -> 23,53 dk
+   degisiyor: bulut kaynakli kenar kirpilmasi sinyali boguyor ve
+   enlem ile `s0` birbiriyle takas ediliyor. Yani veri koordinatla
+   CELISMIYOR ama koordinati DOGRULAMIYOR; dogrulama disaridan geldi.
 2. **Istasyon egimi bilinmiyor.** Olculdu, 11-17 derece araliginda
    bracket edildi, 20 cikmadi; belirsizlik kestirimin kendisinden
    buyuk. Karar 2 bu belirsizligi zincirin disina attigi icin sonuc
@@ -312,13 +547,67 @@ oncesine alinirsa sizinti geri gelir.
    gun icinde monoton artar ve gece yarisi sifirlanir. Aylik toplam,
    gunluk maksimumlarin toplamidir. Gunun maksimumu ile son degeri
    gunlerin %99,95'inde ayni.
-6. **Sentinel degerler alti yilda uc ayda kumelenmis:** `T <= -39`
+6. ~~**Sentinel degerler alti yilda uc ayda kumelenmis:**~~ `T <= -39`
    yalniz 2018-03 (105), 2020-02 (105), 2020-03 (1439); `T > 50`
    yalniz ayni uc ay. Bu aylar icin sicaklik kanali guvenilmezdir.
    Sicaklik icin ayri bir sentinel kurali YAZILMADI - sicaklik
    `T2m` olarak oznitelik setinde oldugu icin bu bir aciktir ve
    pipeline'da acikca ele alinacaktir.
-7. **Ortam:** 4-7 Agustos 2026 kesif kosularinda `pandas._libs.parsers`
+
+   **`[SONRADAN eklendi - 8 Agustos 2026]` ACIK KAPANDI: Kural 9.**
+   Ayrica bu maddedeki iki ifade olcumle DUZELTILMISTIR: (i) bozukluk
+   yalnizca raydan ibaret degil - `-39 < T <= -20` bandinda 1.390
+   satir daha var, `T < -10` toplami 3.046'dir; (ii) `T > 50` olan
+   dort satirin ucuncusu ve dorduncusu (61,37 / 61,92) 2020-03'te
+   degil, dagilmis haldedir. Ray satirlarinda RH de sifira raylanmistir
+   (hepsi 0,0116-0,9518 arasi, medyan 0,1498), bu yuzden kural 9 RH'yi
+   de dusurur.
+
+7. **RH sifira yakin 19 satir kural disidir.** `RH < %0,1` olan 665
+   satirin 646'si sicaklik rayindadir ve kural 9 ile temizlenir; kalan
+   19 satir hicbir kurala takilmaz. Kural yazilmadi: 19 satir
+   621.933'te %0,003'tur ve fiziksel olarak imkansiz olduklari
+   gosterilemez (col ikliminde cok dusuk RH gercektir). Kayit icin
+   burada duruyor.  `[SONRADAN eklendi - 8 Agustos 2026]`
+
+8. **`H_sun` DKASC'de YOKTUR, geometriden TURETILIR - ve bu maskeyi
+   ozniteliktEN bagimsiz olmaktan cikarir.**  `[SONRADAN eklendi - 8 Agustos 2026]`
+   `pv10/features.py:74` `H_sun` sutununu zorunlu kilar ve
+   `pv10/evaluate.py:21` gunduz maskesini `H_sun > 0` ile tanimlar.
+   PVGIS'te `H_sun` PVGIS'in KENDI sutunudur; bizim Spencer
+   hesabimizdan BAGIMSIZDIR, dolayisiyla geometrimizde bir hata olsa
+   maske onu yakalardi. DKASC'de `H_sun` ayni Spencer rutininden
+   turetilecegi icin **bu bagimsizlik kaybolur: geometride bir hata
+   olursa hem maskeyi hem ozniteligi TUTARLI bicimde kaydirir ve
+   kendini gizler.** Faz notunda da kusur olarak yer alir.
+
+   Ikinci sonuc: `eszaman` sizinti varyantinda `H_sun_eszaman` artik
+   `elev_sin`'in deterministik fonksiyonudur, yani **DKASC kolunda hic
+   sizinti tasimaz**. Ruzgarin da olmamasiyla birlikte DKASC'nin
+   `eszaman` varyantinda PVGIS'e gore IKI sizinti kanali eksiktir.
+   Iki kolun sisme oranlari bu haliyle dogrudan kiyaslanamaz; kiyas
+   icin PVGIS ablasyonu DKASC'nin indirgenmis oznitelik setiyle ayrica
+   kosulacaktir (eslesmis kontrol kosusu, ayri log dosyasina).
+
+9. **Etiket geleneginde 2,5 dakikalik belirsizlik COZULMEDI.**
+   `[SONRADAN eklendi - 8 Agustos 2026]` Aralik SONU elendi (olculdu,
+   karar 5) ama aralik BASI ile ANLIK ornek ayrilamadi; ayrilamamasinin
+   sebebi boylam hatasiyla tam olarak ayni imzayi tasimalaridir.
+   Buyuklugu 0,6 derece saat acisidir. Karar 5'in kapattigi 7,5
+   derecelik hatanin yaninda kucuktur ama sifir degildir.
+
+10. **Transpozisyon dogrulamasi ALCAK GUNESTE yapilmamistir.**
+    `[SONRADAN eklendi - 8 Agustos 2026]` Karar 4'un 254.741 satirlik
+    dogrulamasi `sin h > 0,10` (yukseklik > 5,74°) ile sinirlidir;
+    `Rb`'nin en kararsiz oldugu bolge olculmemistir. Uretimde payda
+    `max(sin h, 0,05)` ile tabanlanir - bu taban DOGRULANMAMIS bir
+    secimdir. Alcak gunes satirlarinin gunduz enerjisine katkisi
+    kucuktur, ama kayit icin buradadir.
+
+11. **Albedo varsayimdir.** `rho = 0,20` alindi; sahada olculmedi.
+    20°'lik duzlemde yer terimi GHI'nin %0,60'idir, yani rho'yu
+    0,10-0,30 araliginda oynatmak `G_i`'yi ~±%0,3 kaydirir.
+12. **Ortam:** 4-7 Agustos 2026 kesif kosularinda `pandas._libs.parsers`
    DLL'i bir kez "Uygulama Denetimi ilkesi bu dosyayi engelledi"
    hatasiyla yuklenemedi, ikinci denemede acildi. pyarrow'da yasananla
    ayni sinif (Windows Smart App Control). SAC ayarina DOKUNULMADI.
@@ -421,6 +710,30 @@ REKORUNU kiriyor; ayni aylarda berrak oran alti yilin en dusugu.
 **Tek cumleyle: 2022-05 kirilmasi alet degil HAVA'dir - alti yilin en
 yagisli yilinda atmosfer bulaniklasmis, yayili oran artmis, huzme
 azalmis, iki PV dizisi birden ayni yonde dusmustur.**
+
+### 5.5 Dis teyitler  `[SONRADAN eklendi - 8 Agustos 2026]`
+
+Kesifte veriden CIKARILAN iki sonucu, veri disi kaynaklar bagimsiz
+olarak destekliyor:
+
+1. **Nisan 2019 kiriginin neden cikmadigi acikandi.** "Class A" hava
+   verisi DKASC'nin yillik dosyalariyla ayni akista degildir; **ayri bir
+   projeye (NTSR) aittir** ve yillik dosyalara hic girmez. Bolum 5.3'te
+   olculen sey - Nisan 2019'a zorlanan bolmenin her seride kendi
+   maksimumunun cok altinda kalmasi (GHI'de 0,030) - bu yuzden
+   beklenen sonuctur. Olcum ile belge ayni yeri gosteriyor.
+
+   **Faz 2 acisindan sonuc:** `rastgele_kfold` varyantinin olctugu sisme
+   sensor/yontem degisiminden GELMIYOR. Bu, oturumun basindaki risk
+   sorusunun cevabidir.
+
+2. **Kapsamin 2022'de bitmesi dogru karardir.** Sahaya **2023'te batarya
+   kuruldu.** Batarya, olculen dizi gucu ile isinim arasindaki iliskiyi
+   degistirir; 2023 ve sonrasi, oncesiyle ayni fiziksel kurulum
+   degildir. Kapsam karari (bolum 0) veri indirilirken bagimsiz
+   gerekcelerle verilmisti; bu teyit onu guclendirir. **2022'nin
+   anormalligi hala kapsam disi birakma gerekcesi DEGILDIR** - orada
+   degisen hava, kurulum degil.
 
 ---
 
