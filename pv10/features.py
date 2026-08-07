@@ -172,8 +172,14 @@ def oznitelik_uret(ham: pd.DataFrame, eszaman: bool = False,
     # makalede oldugu gibi imputasyonla doldurulur. Onu zorunlu listeye
     # koymak butun gece satirlarini silerdi - egitim seti gece gozlemlerini
     # icermeli, gunduz filtresi yalnizca DEGERLENDIRMEDE uygulanir.
-    zorunlu = [f"{d}_lag{k}" for d in gecikmeli for k in GECIKMELER
-               if f"{d}_lag{k}" in o.columns]
+    # Hedef de zorunludur. PVGIS'te `P` hicbir satirda eksik olmadigi icin bu
+    # gorunmuyordu; DKASC'de eksik saatler var ve hedefi eksik bir satir
+    # tabloda kalirsa hata `hat.fit()` icinde, izgaranin ortasinda, o hucreyi
+    # kaybederek patlar. Burada dusurulur - PVGIS tarafinda ISLEMSIZDIR ve
+    # oyle oldugu `arac/oznitelik_regresyon.py` ile olculur.
+    zorunlu = ["y"]
+    zorunlu += [f"{d}_lag{k}" for d in gecikmeli for k in GECIKMELER
+                if f"{d}_lag{k}" in o.columns]
     zorunlu += [c for c in o.columns if "roll168" in c]
     o = o.dropna(subset=zorunlu).reset_index(drop=True)
 
