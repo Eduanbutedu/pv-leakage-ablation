@@ -48,7 +48,12 @@ BERRAK_GOK_KATSAYI = 1000.0
 #   rastgele_kfold: kronolojik bolme yerine karistirmali k-fold
 #   gece   : gece saatleri de degerlendirmeye dahil edilir
 #   olcekleyici: standardizasyon/imputasyon tum veriye fit edilir
-#   enkotu : eszaman + rastgele_kfold + gece birlikte
+#   enkotu : DORT mudahale birden - eszaman + rastgele_kfold + gece +
+#            OLCEKLEYICI. Asagidaki tanimda `olcekleyici_tum=True` de var.
+#            Bu yorum satiri 8 Agustos 2026'ya kadar "eszaman +
+#            rastgele_kfold + gece" diyordu; KOD dogruydu, YORUM eksikti.
+#            Yanlis tanimlanmis bir varyanti raporlamak sizinti
+#            makalesinde affedilmez, o yuzden kayda geciriliyor.
 # ----------------------------------------------------------------------------
 SIZINTI_VARYANTLARI = {
     "temiz":          dict(eszaman=False, rastgele_kfold=False, gece=False, olcekleyici_tum=False),

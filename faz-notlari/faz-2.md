@@ -78,7 +78,8 @@ birlikte:
     rastgele_kfold : kronolojik bolme yerine karistirmali k-fold
     gece           : gece saatleri de degerlendirmeye dahil edilir
     olcekleyici    : standardizasyon/imputasyon tum veriye fit edilir
-    enkotu         : eszaman + rastgele_kfold + gece birlikte
+    enkotu         : eszaman + rastgele_kfold + gece + OLCEKLEYICI
+                     (DORT mudahale - bkz. kusur 6)
 
 **Neden bu alti?** `pv10/experiment.py`'nin modul docstring'i (ayni
 commit'te, yani KAYITLI) tasarim ilkesini soyluyor: her varyant
@@ -90,13 +91,11 @@ commit'te, yani KAYITLI) tasarim ilkesini soyluyor: her varyant
 | rastgele_kfold | BOLMEYE (kronolojik yerine karistirmali) |
 | gece | DEGERLENDIRME MASKESINE (gece saatleri dahil) |
 | olcekleyici | ON-ISLEMEYE (imputasyon/olcekleme tum veriye fit) |
-| enkotu | ucunun BIRLESIMI |
+| enkotu | **DORDUNUN BIRLESIMI** (bkz. kusur 6) |
 
 Dort mudahale noktasi + referans + birlesim = alti. Kume, "literaturde
 sik gorulen hatalar" listesinden degil, **pipeline'in mudahale
-edilebilecek dort katmanindan** turetilmis. `olcekleyici`'nin
-`enkotu`'ye dahil edilip edilmedigi: `SIZINTI_VARYANTLARI["enkotu"]`
-`olcekleyici_tum=True` iceriyor, yani DORDU birden.
+edilebilecek dort katmanindan** turetilmis.
 
 `ESZAMAN_DEGISKEN = ("G_i", "T2m", "WS10m")` ve ayrica `H_sun_eszaman`
 - yani eszaman varyanti DORT kanal sizdirir.  [KAYITLI]
@@ -255,11 +254,16 @@ gurultu tabani") Faz 2 tablosunun bu iki satiri icin KARSILANMAMISTIR.
    kayitli ama secimin sonuca duyarli olup olmadigi Faz 2'de test
    edilmedi. Faz 4'un genis kosusu on modele cikip ayni yone isaret
    etti.
-6. **`enkotu` varyanti DORT mudahaleyi birden tasiyor** (eszaman +
-   rastgele_kfold + gece + olcekleyici) ama adi ucunu ima ediyor;
-   `config.py`'deki yorum satiri "eszaman + rastgele_kfold + gece
-   birlikte" diyor, `olcekleyici_tum=True` oldugunu yazmiyor. Kod dogru,
-   YORUM eksik.
+6. **`enkotu` varyanti DORT mudahaleyi birden tasir:** `eszaman` +
+   `rastgele_kfold` + `gece` + **`olcekleyici`**. `SIZINTI_VARYANTLARI`
+   tanimi `eszaman=True, rastgele_kfold=True, gece=True,
+   olcekleyici_tum=True` icerir.
+   `[8 Agustos 2026'da DUZELTILDI]` `config.py`'deki yorum satiri
+   o tarihe kadar yalnizca uc mudahale sayiyordu; **kod her zaman
+   dogruydu, YORUM eksikti** ve yorum duzeltildi. Makaleye girecek her
+   yerde bu varyant **DORT mudahale** olarak tanimlanacaktir. Yanlis
+   tanimlanmis bir varyanti raporlamak sizinti makalesinde affedilmez;
+   `enkotu`'nun -%96,66'lik degeri tek bir mekanizmaya atfedilemez.
 7. **`egitim_sn` ile olculen sure tek makineye ozgudur**; toplam 937,8
    saniye (15,6 dakika) yalnizca egitim, oznitelik uretimi haric.
 8. Ortam: pyarrow o gun 25.0.0'di (3 Agustos'ta 22.0.0'a indirildi).

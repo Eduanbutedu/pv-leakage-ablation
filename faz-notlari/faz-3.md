@@ -57,12 +57,18 @@ fark_GA_alt, fark_GA_ust`
 
 21 = 7 yil x 3 ikili (uc modelin ikili kombinasyonu).
 
-### Uretilip KAYDEDILMEYEN
+### `sonuclar/siralama_kendall.csv` - 7x7  `[8 Agustos 2026'da EKLENDI]`
 
 `pv10/ranking.py:kendall_tau_matrisi` ve `ozet` fonksiyonu
 `kendall_tau_ortalama / _min` hesapliyor, `run_siralama.py:52` bunlari
-EKRANA basiyor ama **hicbir CSV'ye yazmiyor.** O kosunun ciktisi kayip.
-Asagida yeniden hesaplandi.
+EKRANA basiyor ama **hicbir CSV'ye yazmiyordu**; orijinal kosunun ciktisi
+kayboldu ve bu notun ilk surumu tau'yu yeniden hesaplamak zorunda kaldi.
+
+`run_siralama.py` artik matrisi `sonuclar/siralama_kendall.csv`'ye
+yaziyor. Dosya `--ozet` moduyla, MEVCUT loglardan uretildi (model
+yeniden egitilmedi) ve bu nottaki yeniden hesapla **birebir ayni**
+cikti - iki yol da `siralama_rmse.csv` + ayni uretim fonksiyonundan
+geciyor.
 
 ---
 

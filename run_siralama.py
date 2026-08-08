@@ -29,6 +29,11 @@ KARS_LOG = SONUC / "siralama_karsilastirma.csv"
 RMSE_LOG = SONUC / "siralama_rmse.csv"
 TAHMIN_DIZIN = SONUC / "tahminler"
 
+# Kendall tau matrisi 8 Agustos 2026'ya kadar yalnizca EKRANA basiliyordu ve
+# orijinal kosunun ciktisi kayboldu; `faz-notlari/faz-3.md` bu yuzden onu
+# yeniden hesaplamak zorunda kaldi. Artik diske yaziliyor.
+KENDALL_LOG = SONUC / "siralama_kendall.csv"
+
 
 def ozetle(kars: pd.DataFrame, yil_rmse: pd.DataFrame) -> None:
     siralama = siralama_tablosu(yil_rmse)
@@ -51,6 +56,12 @@ def ozetle(kars: pd.DataFrame, yil_rmse: pd.DataFrame) -> None:
     print(f"  kazanan dagilimi               : {ozet['kazanan_dagilimi']}")
     print(f"  Kendall tau (yillar arasi ort.): {ozet['kendall_tau_ortalama']:.3f}"
           f"  (en dusuk {ozet['kendall_tau_min']:.3f})")
+
+    # tau matrisi DISKE de yazilir - ekrana basip kaybetmeyelim
+    tau = kendall_tau_matrisi(siralama)
+    tau.index.name = "test_yil"
+    tau.to_csv(KENDALL_LOG)
+    print(f"  Kendall tau matrisi yazildi     : {KENDALL_LOG.name}")
     print(f"\n  Ilk iki model arasindaki fark:")
     print(f"    anlamli cikan yil sayisi     : "
           f"{ozet['ilk_ikili_anlamli_yil']}/{ozet['yil_sayisi']}")
