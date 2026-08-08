@@ -100,10 +100,29 @@ tutulacak.
   (`experiment.py:bolme_indeksleri` / `ranking.py` vs
   `doygunluk.py:egitim_test_bolme` / `ozet_sonrasi.py:yil_ici_dm`), veri ve
   oznitelik katmani ortak. Invaryant 2'nin bagimsiz teyidi.
+- **DKASC replikasyonu (Faz 2'nin gercek olcum esdegeri) TAMAM.**
+  Ayrinti: `faz-notlari/dkasc-replikasyon.md`, etiket `dkasc-replikasyon`.
+  Veri surumu `f7f644df5e0d1618`, 52.584 saat, 46.857 hedef-gecerli
+  oznitelik satiri. Kurallar veri islenmeden once donduruldu:
+  `dokumanlar/dkasc-kalite-kurallari.md`.
+  **Manset: iki en onemli sizinti TERS YONLERE gidiyor.** Simule veri
+  `eszaman` etkisini ~4,5 kat ABARTIYOR (oran 0,046492 vs 0,208236),
+  `rastgele_kfold` etkisini ~7,5 kat KUCUMSUYOR (etki 0,010943 vs
+  0,082054). Simulasyonla sizinti buyuklugu kalibre edilemez.
+  Eslesmis kontrol (PVGIS verisi + DKASC oznitelik seti) farkin
+  kaynagini ayirdi: `eszaman`'daki 0,1617'nin 0,0227'si oznitelik
+  setinden, 0,1390'i veriden.
+  **Temel RMSE'ler KIYASLANAMAZ** (554 W vs 138 W; kapasite 5250 vs 1000,
+  tek berrak saha vs alti havuzlanmis saha). Yalnizca ORANLAR kiyaslanir.
 - Kalan:
-  1. `faz-2` / `faz-3` / `faz-4` anotasyonlu etiketler (repoda hic etiket yok).
-  2. Push (bugune kadarki commit'lerin hicbiri push EDILMEDI).
-  Sonra DKASC (opsiyonel) veya dogrudan yazim.
+  1. Faz 3'un DKASC esdegeri (siralama kararliligi) kosulmadi.
+  2. `ranking.py` ve `doygunluk.py` hala `KAPASITE_W = 1000` kullaniyor;
+     Faz 3/4 DKASC'ye tasinirsa `kapasite_w` oraya da gecirilmeli, yoksa
+     kapasiteye gore normalize edilen her sayi 5,25 kat kucuk cikar ve
+     hicbir yerde hata firlamaz.
+  3. PVGIS tarafinda ruzgarin permutasyon onemi olculmedi (kural 4
+     sapmasinin buyuklugunu okura gostermek icin gerekli).
+  Sonra yazim.
 
 ## Degismez kurallar
 

@@ -45,13 +45,22 @@ gurultusu degil.
     HEAD (not yazilirken)
                     : 2a0036f142768d9054e116ffb0bee92a74f01185
     agac            : bu not commit edildikten sonra temiz
-    etiket          : YOK - repoda hic etiket yok, bu fazda da eklenmedi
-    push            : YAPILMADI - Faz 2/3/4 ve bu fazin hicbir commit'i
-                      push edilmedi
+    etiket          : dkasc-replikasyon (anotasyonlu), bu notu iceren
+                      commit'e baglanir
+    push            : EDILDI
     veri surumu     : f7f644df5e0d1618  (onceki: 24d7f7c2e6e00585)
     PVGIS surumu    : f722a717bac502c2  (DEGISMEDI)
 
-Not kendi commit'inin hash'ini icermez.
+Not kendi commit'inin hash'ini icermez; `dkasc-replikasyon` etiketi o
+commit'e baglandigi icin `git show dkasc-replikasyon` ile bulunur.
+
+**Bu notun ilk surumu (`c24f908`) iki seyi YANLIS yaziyordu:** "etiket: YOK -
+repoda hic etiket yok" ve "push: YAPILMADI - Faz 2/3/4 ve bu fazin hicbir
+commit'i push edilmedi". Ikisi de CLAUDE.md'deki eskimis bir maddeden
+kopyalandi ve push oncesi dogrulanana kadar fark edilmedi. Gercek durum:
+`faz-2`, `faz-3`, `faz-4` anotasyonlu etiketleri hem yerelde hem uzakta
+MEVCUTTU, `origin/main` `bd3e120`'daydi ve Faz 2/3/4 push EDILMISTI.
+Push edilmemis olan yalnizca bu fazin dokuz commit'iydi.
 
 ### Commit'ler (8)
 
@@ -936,8 +945,10 @@ farkli deneyin hucreleri ayni tabloda karisirsa ozet ortalamalari kirlenir.
 14. **Faz 3'un esdegeri (siralama kararliligi) DKASC'de KOSULMADI.** Bu not
     yalnizca Faz 2'nin (sizinti ablasyonu) replikasyonunu kapsar.
 
-15. **Etiket yok.** Repoda hic anotasyonlu etiket yok; `faz-2`, `faz-3`,
-    `faz-4` ve bu faz icin etiket eklenmedi.
+15. ~~**Etiket yok.**~~ Bu madde YANLISTI, bkz. faz kunyesi. `faz-2`,
+    `faz-3` ve `faz-4` anotasyonlu etiketleri zaten mevcuttu ve uzakta da
+    vardi; bu faz `dkasc-replikasyon` etiketiyle kapandi. Madde silinmedi,
+    duzeltilerek birakildi.
 
 16. **Ortam:** kesif kosularinda `pandas._libs.parsers` DLL'i bir kez
     "Uygulama Denetimi ilkesi bu dosyayi engelledi" hatasiyla yuklenemedi,
