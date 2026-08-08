@@ -75,6 +75,15 @@ def _konum_oznitelikleri(g: pd.DataFrame, eszaman: bool,
     o["y"] = g["P"]                      # hedef
     o["H_sun"] = g["H_sun"]              # SADECE gunduz maskesi icin
 
+    # Dislama bayraklari - varsa tasinir, oznitelik OLMAZ (bkz.
+    # oznitelik_kolonlari). PVGIS tablosunda bu sutunlar yoktur ve kod
+    # yolu hic girilmez; DKASC'de kural 7 (`ariza`) ve kural 10 (`kismi`)
+    # uretir. Ikisinin de degeri satirin OZNITELIKLERINI degil, satirin
+    # ornek olarak KULLANILIP kullanilamayacagini belirler.
+    for bayrak in ("kismi", "ariza"):
+        if bayrak in g:
+            o[bayrak] = g[bayrak].fillna(False).astype(bool)
+
     # --- astronomik gunes geometrisi (hedef saat, sizinti degil) ---
     # PVGIS zaman damgasi uydu gozlem dakikasini tasir (:09, :10). Saat basina
     # yuvarlanmis damgayla hesap yapmak ~1.5 derece sistematik sapma verir;
@@ -188,5 +197,5 @@ def oznitelik_uret(ham: pd.DataFrame, eszaman: bool = False,
 
 def oznitelik_kolonlari(o: pd.DataFrame) -> list[str]:
     """Modele girecek sutunlar: hedef, kimlik ve yardimci sutunlar dislanir."""
-    haric = {"y", "konum", "time_utc", "H_sun", "persistence"}
+    haric = {"y", "konum", "time_utc", "H_sun", "persistence", "kismi", "ariza"}
     return [c for c in o.columns if c not in haric]

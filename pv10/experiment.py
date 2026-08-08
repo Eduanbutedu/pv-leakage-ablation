@@ -91,6 +91,14 @@ def hucre_kos(onbellek: OznitelikOnbellegi, varyant_ad: str, model_ad: str,
     v = SIZINTI_VARYANTLARI[varyant_ad]
     o, X = onbellek.al(v["eszaman"])
 
+    # Kural 10 (DKASC): `kismi` bayrakli satirlar gecikme KAYNAGIDIR ama
+    # ornek DEGILDIR - ne egitim hedefi ne test gozlemi olurlar. Oznitelikleri
+    # tam seri uzerinde zaten uretildi; burada yalnizca ornek havuzundan
+    # cikarilirlar. Bolmeden ONCE cikarilir ki kronolojik ve rastgele kollar
+    # AYNI havuzu bolsun. PVGIS tablosunda bu sutun yoktur, kod yolu girilmez.
+    if "kismi" in o.columns:
+        o = o[~o["kismi"].to_numpy()].reset_index(drop=True)
+
     tr, te = bolme_indeksleri(o, test_yil, v["rastgele_kfold"])
     Xtr, Xte = o.iloc[tr][X], o.iloc[te][X]
     ytr, yte = o.iloc[tr]["y"].to_numpy(), o.iloc[te]["y"].to_numpy()
@@ -117,6 +125,10 @@ def hucre_kos(onbellek: OznitelikOnbellegi, varyant_ad: str, model_ad: str,
     # --- degerlendirme maskesi ---
     test_satirlari = o.iloc[te]
     maske = gunduz_maskesi(test_satirlari, gece_dahil=v["gece"])
+    # Kural 7 (DKASC): ariza saatleri DEGERLENDIRMEDEN cikarilir, egitimden
+    # ASLA. Gece satiri dersinin aynisi - filtre yalnizca ciktida.
+    if "ariza" in test_satirlari.columns:
+        maske = maske & ~test_satirlari["ariza"].to_numpy()
     pers = test_satirlari["persistence"].to_numpy()
 
     m = metrikler(yte[maske], tahmin[maske], pers[maske], kapasite_w=kapasite_w)
