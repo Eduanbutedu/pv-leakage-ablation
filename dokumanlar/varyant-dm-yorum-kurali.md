@@ -198,7 +198,7 @@ Iki olcu, dort olasi bilesim. Dordunun de nasil raporlanacagi:
 | kesisim DM | bootstrap GA | okuma |
 |---|---|---|
 | anlamli | sifiri dislar | Iki soru da ayni yone: rastgele bolme hem raporlanan sayiyi degistiriyor hem ayni satirlarda modeli gercekten iyilestiriyor. |
-| anlamli | sifiri icerir | Sabit satirlarda model gercekten iyilesiyor, ama raporlanan manset sayisindaki degisim ornekleme gurultusu icinde. **Etki var, olcek kucuk.** |
+| anlamli | sifiri icerir | ~~Sabit satirlarda model gercekten iyilesiyor, ama raporlanan manset sayisindaki degisim ornekleme gurultusu icinde. **Etki var, olcek kucuk.**~~ **BU OKUMA EKSIK - 3.3b'ye bakin.** |
 | anlamsiz | sifiri dislar | Raporlanan sayi degisiyor ama kiyaslanabilir satirlarda model iyilesmiyor: degisim degerlendirme POPULASYONUNUN kaymasindan geliyor. Bu en ilginc sonuc olurdu ve boyle raporlanir. |
 | anlamsiz | sifiri icerir | Simule veride rastgele bolmenin etkisi HICBIR olcuyle gosterilemiyor. |
 
@@ -209,6 +209,72 @@ sabitleniyor:
 > arasindaki KARSITLIK**tir. PVGIS'te hangi sonuc cikarsa ciksin,
 > DKASC'nin 0,9179'u ile yan yana konacaktir. "PVGIS'te anlamsiz"
 > cikmasi karsitligi ZAYIFLATMAZ, KESKINLESTIRIR.
+
+### 3.3b POPULASYON MASKELEMESI  `[SONRADAN eklendi - 8 Agustos 2026]`
+
+**Neden sonradan:** 3.3'teki 2x2 tablosu bilesimlerin DORDUNU de sayiyordu
+ama "kesisim DM anlamli / bootstrap GA sifiri iceriyor" hucresini "etki
+var, olcek kucuk" diye okuyordu. Bu okuma EKSIK: kucuk olcek tek
+aciklama degil, hatta muhtemelen dogru aciklama da degil.
+
+**Bu madde `arac/ablasyon_dm.py` HIC KOSULMADAN once yazildi;** hicbir DM
+ya da bootstrap sayisi mevcut degildi (`sonuclar/ablasyon_belirsizlik_*`
+dosyalarinin hicbiri yoktu). Yeniden kosulan izgaralar yalnizca zaten
+bilinen RMSE'leri uretiyordu.
+
+**Sorun:** manset orani iki FARKLI POPULASYON uzerinde hesaplanan RMSE'leri
+kiyasliyor. `temiz` yalniz test yilinda olculuyor; `rastgele_kfold` butun
+havuzdan (`yil <= test_yil`) rastgele cekilmis bir orneklemde. Eski yillar
+sistematik olarak daha kolay ya da daha zorsa, populasyon farki gercek
+sizinti etkisini **MASKELEYEBILIR** - hatta ters yonde calisip sifira
+yakin bir manset orani uretebilir.
+
+**Ayirt edici arac - test degil, CEBIR.** Manset farki KESIN olarak uce
+ayrilir:
+
+    D  =  RMSE_v(tam) - RMSE_t(tam)
+       =  [ RMSE_v(kes) - RMSE_t(kes) ]      <- A: MODEL etkisi, populasyon SABIT
+        + [ RMSE_v(tam) - RMSE_v(kes) ]      <- B: varyantin populasyon terimi
+        - [ RMSE_t(tam) - RMSE_t(kes) ]      <- C: temizin populasyon terimi
+
+    (kes = kesisim, tam = kolun kendi tam gunduz test kumesi)
+
+Ozdeslik A + B - C = D cebirsel olarak KESINDIR; sadelestirme ile dogrudan
+cikar. Sinif B'nin gece ozdesligiyle ayni mantik: iliski kesin oldugunda
+test degil ayristirma raporlanir.
+
+**Beklenti - simdiden yazili:** kesisim, `temiz`in test yilinin duzgun
+rastgele bir alt kumesidir (rastgele kol havuzdan tekduze cekiyor), o
+yuzden **C terimi ornekleme gurultusu mertebesinde, ~0 olmali**;
+populasyon etkisi **B**'de yasamali. |C| kucuk cikmazsa kesisim rastgele
+bir alt kume gibi davranmiyor demektir ve bu KENDI BASINA bir bulgudur,
+arastirilir.
+
+**Okuma kurali:**
+
+| durum | okuma |
+|---|---|
+| \|A\| buyuk, \|B - C\| ~ 0 | Sizinti etkisi gercek ve mansete BIREBIR yansiyor. Populasyon farki onemsiz. |
+| \|A\| buyuk, (B - C) A'ya TERS isaretli ve benzer buyuklukte | **POPULASYON MASKELEMESI.** Rastgele bolme gercekten sizinti uretiyor ama raporlanan metrik bunu GIZLIYOR, cunku populasyon degisimi ters yonde calisiyor. |
+| \|A\| ~ 0, \|B - C\| buyuk | Manset sapmasi tamamen populasyon degisiminden; sizintidan DEGIL. Manset buna gore nitelenir. |
+| \|A\| ~ 0, \|B - C\| ~ 0 | Rastgele bolmenin hicbir yolla gosterilebilir etkisi yok. |
+
+**Ikinci satir cikarsa** makalenin cercevesi degisir ve soyle yazilir:
+
+> Rastgele bolme gercek sizinti uretmektedir; ancak yaygin olarak
+> raporlanan metrik bunu gostermemektedir, cunku bolme degistiginde
+> degerlendirme populasyonu da degismekte ve iki etki ters yonde
+> calismaktadir. Bu, "sizinti olcmek dusundugunuzden zordur" tezinin en
+> guclu ornegidir: hatanin varligi degil, OLCULEBILIRLIGI sorunludur.
+
+**Ucuncu satir cikarsa:**
+
+> Manset orani sizintiyi degil, degerlendirme populasyonunun degisimini
+> olcmektedir. Kronolojik olmayan bolmenin bu kurulumda tahmin
+> dogruluguna katkisi gosterilememis; raporlanan farkin kaynagi
+> metodolojik degil kompozisyoneldir.
+
+Her uc kaynak icin A, B, C ve D ayri ayri raporlanacaktir.
 
 ### 3.4 `rastgele_kfold` kesisim etkisi - PVGIS vs DKASC yan yana
 
