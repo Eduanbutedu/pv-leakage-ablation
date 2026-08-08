@@ -10,8 +10,45 @@ yeterli olcut degildir; "savunulabilir" olcuttur.
 
 ## Onceki calisma
 
-4 konum, 11 algoritma, tek test yili (2023). GUFBD'ye **25 Haziran 2026**'da
-gonderildi, halen degerlendirmede. Bu repo onun genisletilmis halini uretiyor:
+**Baslik:** "Veri Sizintisina Duyarli Gun Oncesi Fotovoltaik Guc Tahmini:
+Cografi Olarak Farkli Dort Konumda On Bir Makine Ogrenmesi Algoritmasinin
+Karsilastirmali Degerlendirmesi"
+
+**Tasarim:** 4 konum, 11 algoritma, **tek test yili** - Aralik 2023
+dokunulmamis test seti, genisleyen pencere dogrulama, 24 saat persistence
+referansi, yalniz gunduz degerlendirme.
+
+**Sonuc:** Polynomial Ridge secildi. Test RMSE **158,92 W**, R2 **0,553**,
+persistence becerisi **%14,47**.
+
+**Durum:** GUFBD'ye **25 Haziran 2026**'da gonderildi, HALEN DEGERLENDIRMEDE.
+
+### Kritik baglanti - bu makalenin en somut ornegi
+
+Faz 3'te yedi test yili (2017-2023) x 3 model kosuldu. Ilk-iki cifti
+(Polynomial Ridge vs Hist Gradient Boosting) **yedi yilin yalnizca
+2023'unde** anlamli fark veriyor (p = 0,038040); kalan alti yilda
+p = 0,1138 / 0,3986 / 0,2127 / 0,3142 / 0,4330 / 0,2705.
+
+**Onceki calismanin tek test yili da 2023'tur.**
+
+Yani onceki calismanin algoritma secimi, yedi yil icinde farkin
+anlamliliga ulastigi TEK yila denk gelmektedir. Kalan alti yilin herhangi
+biri secilseydi ayni kurulum ilk iki algoritmayi ayirt EDEMEZDI.
+
+**TON - degismez:** "onceki calismamiz yanlisti" DEGIL. Onceki calisma
+kendi kurulumu icinde dogru raporlanmistir ve halen degerlendirmededir.
+Soylenecek olan sudur: **tek yillik bir kurulumda elde edilen algoritma
+siralamasi o yilin bir yan urunu olabilir; bu makale tam olarak bunu
+olcmektedir.** Ayni gozlem baskasinin makalesi uzerinden yapilsa saldirgan
+olurdu; kendi onceki calismamiz uzerinden yapildiginda ikna edici olur.
+
+Faz 4 ayni sonucu bagimsiz olarak dogruluyor: on model x bes yilda
+kazanan-ikinci farki 0/5 anlamli (`sonuclar/doygunluk_ozet_dm_yil.csv`).
+
+### Kapsam farki
+
+Bu repo onceki calismanin genisletilmis halini uretiyor:
 
 | | onceki | bu repo |
 |---|---|---|

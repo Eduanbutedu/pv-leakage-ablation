@@ -22,6 +22,16 @@ tutulacak.
 - Faz 1 (veri) TAMAM. 525.888 satir, 6 konum, PVGIS-SARAH3.
 - Faz 2 (sizinti ablasyonu) TAMAM. `sonuclar/ablasyon.csv`
 - Faz 3 (siralama kararliligi) TAMAM. `sonuclar/siralama_*.csv`
+- **Faz notu ayrimi - karistirma.** `faz-4.md` ve `dkasc-replikasyon.md`
+  fazlarin KENDI oturumlarinda yazildi, ON-KAYIT IDDIASI TASIR.
+  `faz-2.md` ve `faz-3.md` 8 Agustos 2026'da GERIYE DONUK derlendi
+  (koddan, git log'dan, etiket mesajlarindan) ve **on-kayit iddiasi
+  TASIMAZ**; ikisinin de basliginda ve kunyesinde boyle yaziyor.
+  Faz 1+2+3 toplam UC commit ve hepsi 30 Temmuz 2026'da 16 dakika
+  icinde atildi; `sonuclar/ablasyon.csv` ve `siralama_*.csv` onlari
+  ureten kodla AYNI commit'te, yani kurulumun sonuclar gorulmeden
+  sabitlendigine dair dosya duzeyinde kanit YOK. DKASC kolundaki
+  on-kayit disiplini bu boslugun dogrudan sonucudur.
 - Faz 4 (veri hacmi doygunlugu) TAMAM.
   - K = 1/2/3/5/tum yillik egitim. 10 yillik pencere MUMKUN DEGIL: test yili
     disari cikinca en fazla 9 yil kalir.
