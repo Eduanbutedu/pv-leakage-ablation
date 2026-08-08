@@ -47,6 +47,9 @@ OZNITELIK_SETLERI = {
 }
 
 
+TAHMIN_DIZIN = SONUC / "tahminler" / "ablasyon"
+
+
 def log_yolu(etiket: str | None) -> Path:
     return SONUC / (f"ablasyon_{etiket}.csv" if etiket else "ablasyon.csv")
 
@@ -92,6 +95,10 @@ def main():
                     help="beyan edilen oznitelik seti (varsayilan gufbd)")
     ap.add_argument("--etiket", default=None,
                     help="ayri log dosyasi: ablasyon_<etiket>.csv")
+    ap.add_argument("--tahmin-kaydet", action="store_true",
+                    help="her hucrenin MASKESIZ tahmin vektorunu diske yaz "
+                         "(konum, time_utc, H_sun, y, persistence, tahmin). "
+                         "Esli DM ve gece ozdesligi bunsuz SONRADAN kosulamaz.")
     a = ap.parse_args()
 
     LOG = log_yolu(a.etiket)
@@ -153,11 +160,18 @@ def main():
     ham = pd.read_parquet(a.veri)
     print(f"Veri: {len(ham):,} satir, {ham.konum.nunique()} konum\n")
 
+    tahmin_dizin = None
+    if a.tahmin_kaydet:
+        tahmin_dizin = TAHMIN_DIZIN / (a.etiket or "ana")
+        tahmin_dizin.mkdir(parents=True, exist_ok=True)
+        print(f"Tahminler: {tahmin_dizin}  (MASKESIZ, H_sun ile birlikte)\n")
+
     t0 = time.time()
     sonuc = izgara_kos(ham, varyantlar, model_adlari, yillar, LOG,
                        gecikmeli=gecikmeli,
                        eszaman_degisken=eszaman_degisken,
-                       kapasite_w=kapasite_w)
+                       kapasite_w=kapasite_w,
+                       tahmin_dizin=tahmin_dizin)
     print(f"\nToplam sure: {(time.time() - t0) / 60:.1f} dakika")
     ozetle(sonuc)
 

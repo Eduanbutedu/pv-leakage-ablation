@@ -85,8 +85,14 @@ def bolme_indeksleri(o: pd.DataFrame, test_yil: int,
 # --------------------------------------------------------------------------- #
 # tek hucre
 # --------------------------------------------------------------------------- #
+def tahmin_dosyasi(dizin, varyant_ad: str, model_ad: str, test_yil: int):
+    """Hucre basina tahmin dosyasinin yolu. Model adindaki bosluklar `_`."""
+    return dizin / f"{varyant_ad}__{model_ad.replace(' ', '_')}__{test_yil}.parquet"
+
+
 def hucre_kos(onbellek: OznitelikOnbellegi, varyant_ad: str, model_ad: str,
-              test_yil: int, kapasite_w: float = KAPASITE_W) -> dict:
+              test_yil: int, kapasite_w: float = KAPASITE_W,
+              tahmin_dizin=None) -> dict:
     """Tek bir (varyant, model, yil) hucresini kosar ve metrikleri dondurur."""
     v = SIZINTI_VARYANTLARI[varyant_ad]
     o, X = onbellek.al(v["eszaman"])
@@ -132,6 +138,35 @@ def hucre_kos(onbellek: OznitelikOnbellegi, varyant_ad: str, model_ad: str,
     pers = test_satirlari["persistence"].to_numpy()
 
     m = metrikler(yte[maske], tahmin[maske], pers[maske], kapasite_w=kapasite_w)
+
+    # --- tahmin vektoru (metrikler HESAPLANDIKTAN sonra, onlara dokunmadan) ---
+    #
+    # Faz 4'ten FARKLI olarak MASKESIZ yazilir ve `H_sun` tasinir. Iki sebep:
+    #   1) `gece` varyantinin cebirsel ozdesligi gece satirlarini gerektiriyor
+    #      (RMSE^2(tumu) = [n_g*RMSE^2(gunduz) + n_c*RMSE^2(gece)] / n).
+    #   2) Maskeyi sonradan uygulamak, `enkotu` gibi maskesi farkli
+    #      varyantlari ORTAK bir maskeyle kiyaslayabilmeyi mumkun kiliyor.
+    # `(konum, time_utc)` de yaziliyor: `rastgele_kfold` kolunda test
+    # satirlari FARKLI oldugu icin eslestirme konumsal indeksle YAPILAMAZ.
+    if tahmin_dizin is not None:
+        yol = tahmin_dosyasi(tahmin_dizin, varyant_ad, model_ad, test_yil)
+        yol.parent.mkdir(parents=True, exist_ok=True)
+        # `ariza` de yazilir: kural 7 geregi o satirlar DEGERLENDIRMEDEN
+        # cikariliyor, dolayisiyla sonradan kurulan her olcu ayni
+        # populasyonu kullanabilmek icin bayragi gormek zorunda. PVGIS
+        # tablosunda sutun yoktur; orada False yazilir.
+        ar = (test_satirlari["ariza"].to_numpy() if "ariza" in test_satirlari
+              else np.zeros(len(test_satirlari), dtype=bool))
+        pd.DataFrame({
+            "konum": test_satirlari["konum"].to_numpy(),
+            "time_utc": test_satirlari["time_utc"].to_numpy(),
+            "H_sun": test_satirlari["H_sun"].to_numpy(),
+            "ariza": ar,
+            "y": yte,
+            "persistence": pers,
+            "tahmin": tahmin,
+        }).to_parquet(yol, index=False)
+
     return dict(varyant=varyant_ad, model=model_ad, test_yil=test_yil,
                 egitim_n=len(tr), **m, egitim_sn=round(sure, 1))
 
@@ -143,7 +178,8 @@ def izgara_kos(ham: pd.DataFrame, varyantlar: list[str], model_adlari: list[str]
                yillar: list[int], log_yolu, ilerleme=print,
                gecikmeli: tuple[str, ...] = GECIKMELI_DEGISKEN,
                eszaman_degisken: tuple[str, ...] = ESZAMAN_DEGISKEN,
-               kapasite_w: float = KAPASITE_W) -> pd.DataFrame:
+               kapasite_w: float = KAPASITE_W,
+               tahmin_dizin=None) -> pd.DataFrame:
     """Izgarayi kosar. Tamamlanmis hucreler log dosyasindan okunup atlanir."""
     onbellek = OznitelikOnbellegi(ham, gecikmeli, eszaman_degisken)
 
@@ -166,7 +202,8 @@ def izgara_kos(ham: pd.DataFrame, varyantlar: list[str], model_adlari: list[str]
                 etiket = f"[{sayac}/{toplam}] {varyant} / {model_ad} / {yil}"
                 try:
                     satir = hucre_kos(onbellek, varyant, model_ad, yil,
-                                      kapasite_w=kapasite_w)
+                                      kapasite_w=kapasite_w,
+                                      tahmin_dizin=tahmin_dizin)
                 except Exception as e:  # bir hucre patlarsa izgara devam etmeli
                     ilerleme(f"{etiket} -> HATA: {type(e).__name__}: {e}")
                     continue
