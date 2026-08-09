@@ -6,6 +6,16 @@ Yorum kurali olcumden ONCE ayri commit'tedir
 belge onun UYGULANMASINI ve sonuclarini tasir. Makalenin Yontem
 bolumune alt baslik olarak buradan tasinacaktir.
 
+**9 Agustos 2026 eki:** bolum 1'in "siniflar dislayici degildir" notu,
+bolum 3.4b (`enkotu` ayristirmasi) ve bolum 3.5'in yeniden yazimi
+sonradan eklendi. Sebep: `enkotu` T1'in enflasyon tablosuna girecekti
+ve sinif C oldugu icin onun da bir populasyon terimi vardi - olculmeden
+tabloya giremezdi. Yeni DM sayisi URETILMEDI; ayristirma sutunlari
+(`A_model`, `pop_terimi`, `D_manset`) 8 Agustos kosusunda zaten
+uretilmisti, eklenen sey `sinifB_payi` / `manset_esdeger` etiketleri ve
+okumadir. Yeniden kosu, mevcut 6.738 alanin hepsinde **sifir fark**
+verdi.
+
 ---
 
 ## 0. Iddia
@@ -35,6 +45,14 @@ bir sorundur.
 
 Bu calismadaki dagilim: A = `eszaman`, `olcekleyici`;
 B = `gece`; C = `rastgele_kfold`, `enkotu`.
+
+**Siniflar dislayici DEGILDIR.** `enkotu` dort mudahaleyi birden tasir
+ve hem bolmeyi hem degerlendirme maskesini degistirir; yani sinif C
+olarak siniflanir ama icinde bir sinif B bileseni de vardir. Boyle
+bilesik varyantlarda maske olcumun IKI tarafinda da sabitlenir ve
+sinif B payi ayri raporlanir (bolum 3.4b). Sabitlenmezse iki sinifin
+etkisi tek sayida toplanir ve hangisinin ne kadar katkida bulundugu
+geri cikarilamaz.
 
 ### Sinif A
 
@@ -198,21 +216,107 @@ Sayimlar:
 **PVGIS'te 21 hucrenin 10'unda gosterilebilir bir sizinti etkisi manset
 metriginde kayboluyor.** DKASC'de bu 15'te 4.
 
+### 3.4b Sinif C - `enkotu` ayristirmasi: manset SAGLAM
+
+`enkotu` dort mudahaleyi birden tasir (`eszaman`, `rastgele_kfold`,
+`gece`, `olcekleyici_tum`), yani hem sinif C hem sinif B bileseni
+vardir. Ayristirmada maske **iki tarafta da GUNDUZDE sabitlenmistir**;
+bu yuzden `D_manset` loglanan manset farki DEGILDIR ve aradaki fark
+ayri bir sutunda (`sinifB_payi`) tasinir. `manset_esdeger` sutunu bu
+ayrimi her satirda etiketler.
+
+Loglanan manset farkinin uc bilesene tam dagilimi (hucre ortalamasi, W):
+
+| kaynak | RMSE temiz | RMSE enkotu | **D (log)** | A (model) | (B−C) pop. | sinif B (gece) | A payi | pop payi | B payi |
+|---|---|---|---|---|---|---|---|---|---|
+| PVGIS tam | 138,146780 | 4,613977 | **−133,532803** | **−132,373740** | +0,572642 | −1,731705 | **%99,13** | **%−0,43** | %1,30 |
+| PVGIS indirgenmis | 138,206410 | 6,765264 | **−131,441146** | −129,286093 | +0,619851 | −2,774903 | %98,36 | %−0,47 | %2,11 |
+| DKASC | 554,005025 | 116,643961 | **−437,361064** | −461,433496 | +71,319291 | −47,246859 | **%105,50** | **%−16,31** | %10,80 |
+
+`A + (B−C) + sinifB = D` uc kaynakta da **tam** kapaniyor (kontrol
+0,000000).
+
+Populasyon terimi etkinin yaninda kucuktur:
+
+| kaynak | \|B−C\| / \|A\| medyan | A anlamli | A ile D **isaret TERS** |
+|---|---|---|---|
+| PVGIS tam | **0,0095** | **21/21** | **0/21** |
+| PVGIS indirgenmis | 0,0097 | 21/21 | **0/21** |
+| DKASC | **0,1654** | **15/15** | **0/15** |
+
+**Hicbir hucrede maskeleme yok.** `rastgele_kfold`'un tersine
+`enkotu`'nun populasyon terimi hicbir yerde isaret cevirecek
+buyuklukte degil - cunku model etkisi iki mertebe daha buyuk.
+
+Oranin populasyondan arinmis karsiligi (kesisimde, gunduzde,
+`RMSE_enkotu / RMSE_temiz` hucre ortalamasi):
+
+| kaynak | manset orani | manset degisim | **arinmis oran** | **arinmis degisim** |
+|---|---|---|---|---|
+| PVGIS tam | 0,033115 | **%−96,69** | 0,044977 | **%−95,50** |
+| PVGIS indirgenmis | 0,048798 | %−95,12 | 0,067638 | %−93,24 |
+| DKASC | 0,217019 | %−78,30 | 0,172974 | %−82,70 |
+
+**Sonuc: T1'in −%96,66'si populasyon artefakti DEGILDIR.** Populasyondan
+arindirildiginda −%95,50'ye geriliyor, yani sapma **1,19 puan** - PVGIS
+kolunda manset farkinin binde dordu. DKASC'de yon TERSINE doner: manset
+(%−78,30) gercek etkiyi (%−82,70) **kucuk** gosterir, cunku orada
+populasyon terimi (+71,3 W) ve sinif B payi (−47,2 W) birbirini
+tam gotururmez.
+
+**Karsit not:** DKASC'de bilesenler PVGIS'tekinden bir mertebe
+buyuktur (pop. payi %−16,31, sinif B payi %10,80). `enkotu` icin
+manset guvenli, ama bu **PVGIS'e ozgu degil kaynaga bagli** bir
+gozlemdir; ayristirilmadan varsayilamazdi.
+
 ### 3.5 Manset farkinin aciklamasi
 
 Faz 2 mansetinde `rastgele_kfold` PVGIS'te 0,9891, DKASC'de 0,9179 idi
 ve bu fark "simule veri etkiyi ~7,5 kat kucumsuyor" diye okunuyordu.
-Ayristirma nedenini gosteriyor:
+Ayristirma bunun eksik bir okuma oldugunu gosteriyor. Iki ayri sey var:
 
-- **PVGIS'te populasyon terimi (~+1 W) model etkisiyle (0,05-6,3 W)
-  AYNI MERTEBEDE**, dolayisiyla mansette birbirlerini buyuk olcude
-  goturuyorlar.
-- **DKASC'de model etkisi (2,8-127 W) populasyon teriminden (0,4-2,3 W)
-  bir-iki mertebe buyuk**, dolayisiyla mansete neredeyse tamamen
-  yansiyor.
+**NICELIKSEL fark - gercek etki DKASC'de daha buyuk.** Populasyon
+sabitken (`A`, kapasiteye gore %), DKASC / PVGIS orani:
 
-Yani simule veri etkiyi yalnizca kucultmuyor; **olculebilirligini de
-bozuyor.** Sizintinin varligi degil, GORUNURLUGU sorunlu.
+| model | PVGIS tam | DKASC | oran |
+|---|---|---|---|
+| Hist Gradient Boosting | %−0,6309 | %−2,4122 | **3,82** |
+| Polynomial Ridge | %−0,1088 | %−0,6118 | 5,62 |
+| Linear Regression | %−0,0050 | %−0,0527 | 10,54 |
+
+**Ana sayi olarak HGB'nin 3,82'si kullanilir.** Linear Regression'in
+10,54'u ve Polynomial Ridge'in 5,62'si bildirilir ama iddiaya
+YASLANMAZ: iki sayi da sifira cok yakin (%0,005 ve %0,05 mertebesinde,
+yani kapasitenin yuz binde besi ile binde birinden kucuk), dolayisiyla
+oran oynaktir - paydaki kucuk bir kayma orani buyuk olcude degistirir.
+LR'de etki 7 hucrenin yalnizca 1'inde anlamlidir. HGB her uc kaynakta
+da 7/7 ve 5/5 anlamli, etki buyuklugu en buyuk olan modeldir.
+
+**NITELIKSEL fark - asil bulgu budur.** Populasyon teriminin model
+etkisine ORANI:
+
+| model | PVGIS tam | PVGIS indirgenmis | DKASC | **PVGIS / DKASC** |
+|---|---|---|---|---|
+| Hist Gradient Boosting | 0,1540 | 0,1549 | **0,0031** | **50,0** |
+| Linear Regression | 22,9697 | 24,1746 | 0,8218 | **28,0** |
+| Polynomial Ridge | 0,7265 | 1,1261 | 0,0456 | **15,9** |
+
+(`|B−C| / |A|`, model-ortalamalari uzerinde.)
+
+**Uc modelin ucunde de populasyon terimi PVGIS'te DKASC'dekinin 16-50
+kati agirliktadir.** PVGIS'te bu terim etkiyle karsilastirilabilir
+buyukluktedir - LR ve PolyRidge'de etkiden BUYUK - dolayisiyla mansette
+onu buyuk olcude goturur. DKASC'de bir-iki mertebe kucuktur, dolayisiyla
+etki mansete neredeyse tamamen yansir.
+
+Sonucu sayilabilir: **manset isaretinin gercek etkiyle TERS dustugu
+hucre sayisi PVGIS'te 9/21, DKASC'de 3/15.**
+
+Yani "simule veri etkiyi kucumsuyor" eksik bir ozettir. Dogrusu:
+**simule veri etkinin OLCULEBILIRLIGINI bozar.** Sizintinin varligi
+degil, raporlanan metrikte GORUNURLUGU sorunludur. Tek yillik
+kiyaslama calismalarinin sizinti kontrolunu simulasyonla dogrulamasi
+tam bu yuzden yetersizdir: etki oradadir, metrik gostermez.
 
 ### 3.6 Ezberleme hipotezi - populasyon farkindan ARINMIS sinama
 
@@ -229,6 +333,11 @@ degerlendirme populasyonu sabitken:
 kaynagin ucunde de model esnekligiyle monoton artiyor ve DKASC'nin HGB
 etkisi PVGIS'inkinin **3,82 kati**. Tam kumedeki model kirilimi bir
 populasyon kompozisyonu artefakti DEGILDIR.
+
+**Ana sayi 3,82'dir (HGB).** PolyRidge 5,62 ve LR 10,54 de bildirilir
+ama iddiaya yaslanmaz - gerekcesi 3.5'te: iki modelde de her iki sayi
+sifira cok yakin oldugu icin oran oynak. HGB hem etki buyuklugu en
+buyuk hem uc kaynakta da 7/7, 7/7, 5/5 anlamli olan modeldir.
 
 ---
 
@@ -302,15 +411,25 @@ raporlanacakti.
 ## 6. Makaleye ne gider
 
 Ana metin (Yontem, alt baslik):
-- Bolum 1'in tablosu (uc sinif, gecerli olcu)
+- Bolum 1'in tablosu (uc sinif, gecerli olcu) + siniflarin dislayici
+  olmadigi notu
 - Sinif B'nin dejenere oldugu ve yerine ozdeslik kondugu - iki cumle
 - Bolum 2'nin ayristirmasi (`A + B - C = D`) - bir denklem
 
 Ana metin (Sonuclar):
-- 3.4'un tablosu ya da 3.5'in iki maddesi
+- 3.5'in NICELIKSEL / NITELIKSEL ayrimi ve iki tablosu - **manset budur**
 - 3.6'nin uc satirlik tablosu
+- 3.4b'nin tek satiri: T1'in enflasyon orani populasyondan
+  arindirildiginda %1,19 puan degisiyor (yani T1 saglam)
 
 Ek dosya:
 - 3.1, 3.2, 3.3'un tam tablolari
+- 3.4'un hucre bazli tablosu
+- 3.4b'nin tam ayristirma tablolari
 - Bolum 4'un iki sapmasi
 - Bolum 5'in kapi kaydi
+
+**T1'e girmeden once yapilmasi gerekeni yaptik:** `enkotu` de sinif
+C'dir, dolayisiyla onun da bir populasyon terimi vardir ve
+ayristirilmadan enflasyon tablosuna giremezdi. Ayristirildi; sonuc
+PVGIS kolunda ihmal edilebilir (%0,43), DKASC kolunda degil (%16,31).

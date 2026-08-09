@@ -43,6 +43,12 @@ SINIF = {
     "gece": "B",
     "rastgele_kfold": "C", "enkotu": "C",
 }
+
+# Degerlendirme MASKESINI degistiren varyantlar (gece=True). Esli DM maskeyi
+# iki tarafta da GUNDUZDE sabitledigi icin bunlarin `D_manset`'i loglanan
+# manset farki DEGILDIR; aradaki fark sinif B bilesenidir. Etiket ciktiya
+# yazilir - okuyanin iki sayiyi karistirmamasi icin.
+MASKE_DEGISTIREN = {"gece", "enkotu"}
 BOOTSTRAP_TEKRAR = 1000
 ALFA = 0.05
 
@@ -117,6 +123,7 @@ def esli_dm(temiz: pd.DataFrame, varyant: pd.DataFrame, kapasite_w: float
     D = rv_tam - rt_tam
 
     return {
+        "maske": "gunduz",
         "n_kesisim": len(m),
         "n_kume": int(pd.unique(m["time_utc"]).size),
         "kesisim_orani": len(m) / len(a),
@@ -244,13 +251,35 @@ def main() -> int:
             ozd = gece_ozdesligi(temiz, g_log)
             ozd_satir.append(dict(test_yil=yil, model=model, **ozd))
 
+            def log_rmse(varyant: str) -> float:
+                s = log[(log.varyant == varyant) & (log.model == model)
+                        & (log.test_yil == yil)]["RMSE"]
+                if len(s) != 1:
+                    raise ValueError(
+                        f"{varyant}/{model}/{yil} icin {len(s)} log satiri "
+                        "var, 1 bekleniyordu")
+                return float(s.iloc[0])
+
             for varyant, sinif in SINIF.items():
                 if sinif == "B":
                     continue
                 v = oku(dizin, varyant, model, yil)
                 r = esli_dm(temiz, v, a.kapasite)
-                dm_satir.append(dict(test_yil=yil, model=model,
-                                     varyant=varyant, sinif=sinif, **r))
+
+                # Loglanan manset ile ayristirmanin D'si ayni sey mi?
+                # `enkotu` gece=True tasidigi icin loglanan RMSE'si TUM
+                # satirlar uzerindedir; `D_manset` ise gunduzde. Fark sinif B
+                # bilesenidir ve populasyon maskelemesiyle KARISTIRILMAZ.
+                rt_log, rv_log = log_rmse("temiz"), log_rmse(varyant)
+                d_log = rv_log - rt_log
+                esdeger = varyant not in MASKE_DEGISTIREN
+                dm_satir.append(dict(
+                    test_yil=yil, model=model, varyant=varyant, sinif=sinif,
+                    **r,
+                    manset_esdeger=esdeger,
+                    RMSE_temiz_log=rt_log, RMSE_varyant_log=rv_log,
+                    D_log_tumsatir=d_log,
+                    sinifB_payi=d_log - r["D_manset"]))
                 if sinif == "C":
                     b = iki_ornekli_bootstrap(temiz, v)
                     boot_satir.append(dict(test_yil=yil, model=model,
@@ -307,20 +336,37 @@ def main() -> int:
     print("Beklenti: C ~ 0 (kesisim, test yilinin tekduze rastgele alt kumesi)")
     print()
     c = dm[dm.sinif == "C"]
-    print(c[["test_yil", "model", "varyant", "A_model", "B_pop_varyant",
-             "C_pop_temiz", "pop_terimi", "D_manset", "ayristirma_hatasi"]]
+    print(c[["test_yil", "model", "varyant", "maske", "A_model",
+             "B_pop_varyant", "C_pop_temiz", "pop_terimi", "D_manset",
+             "ayristirma_hatasi", "manset_esdeger", "D_log_tumsatir",
+             "sinifB_payi"]]
           .to_string(index=False, float_format=lambda v: f"{v:.6f}"))
     print(f"\n  maks ayristirma hatasi = {c['ayristirma_hatasi'].max():.3e} "
           f"(cebirsel ozdeslik; 0 olmali)")
     print(f"  |C| ortalama = {c['C_pop_temiz'].abs().mean():.6f} W   "
           f"|B| ortalama = {c['B_pop_varyant'].abs().mean():.6f} W")
+
+    # KAPI: maskesi degismeyen varyantta `D_manset` loglanan farkin TA KENDISI
+    # olmali. Bu ayni zamanda maske etiketinin negatif kontroludur - `enkotu`
+    # icin sifirdan UZAK cikmasi beklenir, cikmazsa etiket anlamsizdir.
+    esd = c[c.manset_esdeger]
+    print(f"\n  KAPI (maske esdeger varyantlar): maks |sinifB_payi| = "
+          f"{esd['sinifB_payi'].abs().max():.3e}  "
+          f"({'GECTI' if esd['sinifB_payi'].abs().max() < 1e-9 else 'DUSTU'})")
+
     for v in sorted(c["varyant"].unique()):
         s = c[c.varyant == v]
-        print(f"  {v:16s} A ort={s.A_model.mean():+.6f}  "
-              f"(B-C) ort={s.pop_terimi.mean():+.6f}  "
-              f"D ort={s.D_manset.mean():+.6f}  "
-              f"ters isaret={int((np.sign(s.A_model) != np.sign(s.pop_terimi)).sum())}"
-              f"/{len(s)}")
+        oran = (s.pop_terimi.abs() / s.A_model.abs())
+        print(f"  {v:16s} A ort={s.A_model.mean():+12.6f}  "
+              f"(B-C) ort={s.pop_terimi.mean():+11.6f}  "
+              f"D(gunduz) ort={s.D_manset.mean():+12.6f}  "
+              f"D(log) ort={s.D_log_tumsatir.mean():+12.6f}  "
+              f"sinifB ort={s.sinifB_payi.mean():+10.6f}")
+        print(f"  {'':16s} anlamli={int(s.anlamli.sum())}/{len(s)}  "
+              f"(B-C) ters isaret={int((np.sign(s.A_model) != np.sign(s.pop_terimi)).sum())}/{len(s)}  "
+              f"A ile D_manset TERS (maskeleme)="
+              f"{int((np.sign(s.A_model) != np.sign(s.D_manset)).sum())}/{len(s)}  "
+              f"|B-C|/|A| medyan={oran.median():.4f} maks={oran.max():.4f}")
 
     print()
     print("=" * 100)
