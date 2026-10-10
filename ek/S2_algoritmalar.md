@@ -58,11 +58,39 @@ the ablation grid alone is 6 variants × 7 test years × *N* models, and the
 saturation grid is 255 cells. Two subsets are declared as constants, before
 any run.
 
-| Subset | Constant | Members | Used for |
+| Subset | Constant | Members | Actually used for |
 |---|---|---|---|
-| **Fast 3** | `models.HIZLI_ALTKUME` | Linear Regression, Polynomial Ridge, Hist Gradient Boosting | smoke test, Phase 3 ranking, Phase 4 main grid, all Phase 2 uncertainty measurement |
-| Ablation subset | `models.ABLASYON_ALTKUMESI` | the fast 3 plus Random Forest, Neural Network | Phase 2 leakage ablation |
+| **Fast 3** | `models.HIZLI_ALTKUME` | Linear Regression, Polynomial Ridge, Hist Gradient Boosting | **every reported grid except the wide run**: Phase 2 ablation (PVGIS, DKASC, matched control, regression proofs, uncertainty measurement), Phase 3 ranking, Phase 4 main grid, invariant gate, smoke test |
 | Wide run | all except `config.GENIS_KOSU_HARIC` | 10 of 11 | Phase 4 wide run, `K = all` only |
+| Ablation subset | `models.ABLASYON_ALTKUMESI` | the fast 3 plus Random Forest, Neural Network | **declared but never run** — see below |
+
+### `ABLASYON_ALTKUMESI` was never used
+
+The constant exists and is wired to a CLI option
+(`run_ablasyon.py --modeller ablasyon`), but **no committed result was
+produced with it**. `--modeller` defaults to `hizli` in all three runners
+(`run_ablasyon.py:83`, `run_siralama.py:93`, `run_doygunluk.py:470`) and
+the default is what was run.
+
+Verified by counting model names in every Phase 2 output:
+
+| File | Rows | Distinct models |
+|---|---|---|
+| `ablasyon.csv` | 126 | 3 |
+| `ablasyon_dkasc.csv` | 90 | 3 |
+| `ablasyon_pvgis_indirgenmis.csv` | 126 | 3 |
+| `ablasyon_regresyon.csv`, `ablasyon_regresyon2.csv` | 126 each | 3 |
+| `ablasyon_dm_*.csv` (3 files) | 126 / 126 / 90 | 3 |
+| `ablasyon_belirsizlik_dm_*.csv` (9 files) | 15–84 | 3 |
+
+126 = 6 variants × 7 test years × **3** models. With the five-model subset
+it would have been 210. Random Forest and Neural Network appear in **no**
+ablation output; in this project they occur only in the Phase 4 wide run
+(`doygunluk_genis.csv`, 10 models, `K = all`).
+
+This is recorded in `faz-notlari/faz-2.md` lines 119–121. The practical
+consequence for the paper: **the leakage ablation rests on three algorithms,
+not five**, and that is what the Methods section must say.
 
 ### Why the fast 3
 
