@@ -14,7 +14,7 @@ siralamasi iddialarinin gecersizligini gostermek.
 
 Hedef dergi: Solar Energy (APC yok) -> Energy Reports -> Energies.
 Daha once ayni yazarlarin tek yillik, dort konumlu versiyonu GUFBD'ye gonderildi
-ve halen degerlendirmede. Yeni makale ona atif verecek, ortusme %25'in altinda
+ve 12 Ekim 2026'da kabul edildi, yayin sirasinda. Yeni makale ona atif verecek, ortusme %25'in altinda
 tutulacak.
 
 ## Durum

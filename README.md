@@ -222,8 +222,16 @@ python -m arac.ablasyon_dm --etiket dm_pvgis_indirgenmis --log sonuclar/ablasyon
 python -m arac.ablasyon_dm --etiket dm_dkasc --log sonuclar/ablasyon_dm_dkasc.csv --kapasite 5250
 ```
 
-Outputs: `sonuclar/ablasyon_belirsizlik_dm_<source>_{dm,bootstrap,gece_ozdeslik}.csv`. The
-re-run grids reproduce `ablasyon*.csv` exactly. The interpretation rules were fixed
+The three labels and what each one writes:
+
+| Label | Data / features | Grid log | Saved predictions | Uncertainty tables |
+|---|---|---|---|---|
+| `dm_ana` | PVGIS, full feature set, 2017-2023 | `sonuclar/ablasyon_dm_ana.csv` | `sonuclar/tahminler/ablasyon/dm_ana/` | `sonuclar/ablasyon_belirsizlik_dm_ana_*.csv` |
+| `dm_pvgis_indirgenmis` | PVGIS, DKASC (reduced) feature set, 2017-2023 | `sonuclar/ablasyon_dm_pvgis_indirgenmis.csv` | `sonuclar/tahminler/ablasyon/dm_pvgis_indirgenmis/` | `sonuclar/ablasyon_belirsizlik_dm_pvgis_indirgenmis_*.csv` |
+| `dm_dkasc` | DKASC, reduced feature set, 2018-2022 | `sonuclar/ablasyon_dm_dkasc.csv` | `sonuclar/tahminler/ablasyon/dm_dkasc/` | `sonuclar/ablasyon_belirsizlik_dm_dkasc_*.csv` |
+
+`*` is `dm`, `bootstrap` and `gece_ozdeslik`. The re-run grid logs reproduce
+`ablasyon.csv`, `ablasyon_pvgis_indirgenmis.csv` and `ablasyon_dkasc.csv` exactly. The interpretation rules were fixed
 before the first test statistic existed: `dokumanlar/varyant-dm-yorum-kurali.md`.
 
 **Phase 3 (Section 5.4, ranking across seven test years).**

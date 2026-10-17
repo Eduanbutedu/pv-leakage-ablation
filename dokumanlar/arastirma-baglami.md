@@ -21,7 +21,7 @@ referansi, yalniz gunduz degerlendirme.
 **Sonuc:** Polynomial Ridge secildi. Test RMSE **158,92 W**, R2 **0,553**,
 persistence becerisi **%14,47**.
 
-**Durum:** GUFBD'ye **25 Haziran 2026**'da gonderildi, HALEN DEGERLENDIRMEDE.
+**Durum:** GUFBD'ye **25 Haziran 2026**'da gonderildi, **12 Ekim 2026**'da KABUL EDILDI, yayin sirasinda.
 
 ### Kritik baglanti - bu makalenin en somut ornegi
 
@@ -37,7 +37,7 @@ anlamliliga ulastigi TEK yila denk gelmektedir. Kalan alti yilin herhangi
 biri secilseydi ayni kurulum ilk iki algoritmayi ayirt EDEMEZDI.
 
 **TON - degismez:** "onceki calismamiz yanlisti" DEGIL. Onceki calisma
-kendi kurulumu icinde dogru raporlanmistir ve halen degerlendirmededir.
+kendi kurulumu icinde dogru raporlanmistir ve 12 Ekim 2026'da kabul edilmistir (yayin sirasinda).
 Soylenecek olan sudur: **tek yillik bir kurulumda elde edilen algoritma
 siralamasi o yilin bir yan urunu olabilir; bu makale tam olarak bunu
 olcmektedir.** Ayni gozlem baskasinin makalesi uzerinden yapilsa saldirgan
