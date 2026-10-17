@@ -1,0 +1,13 @@
+# Kural (arac/ornek_gunler.py, tahminlere bakilmadan commit edildi):
+# gun = yerel standart saat takvim gunu; aday = 24 saatinin hepsi test kumesinde, isinim bos degil, ariza yok;
+# DKASC berraklik = Kt = sum(GHI)/sum(G0); PVGIS = egik_duzlem_berraklik_proxy = sum(G_i)/sum(G0) (gercek Kt degil);
+# G0 = 1367*(1+0.033cos(2pi n/365))*max(sin h,0);
+# PVGIS sahasi = proxy P90-P10 araligi en genis saha (esitlikte KONUMLAR sirasi); DKASC tek saha;
+# gunler = P90 (acik), P50 (parcali), P10 (kapali) yuzdeligine en yakin gun, esitlikte takvimde ilk.
+kaynak,saha,test_yil,berraklik_olcusu,gun_turu,yuzdelik,hedef_deger,gun,gun_degeri,esit_uzaklikta_gun,aday_gun
+PVGIS tam,konya,2023,egik_duzlem_berraklik_proxy,acik,90,1.17287531411857,2023-11-15,1.173087914654963,1,364
+PVGIS tam,konya,2023,egik_duzlem_berraklik_proxy,parcali,50,0.7286864980853107,2023-05-14,0.7288725982299861,1,364
+PVGIS tam,konya,2023,egik_duzlem_berraklik_proxy,kapali,10,0.3385204848271901,2023-04-27,0.3377708847856413,1,364
+DKASC,dkasc_m6b,2022,Kt,acik,90,0.8366803823655983,2022-09-03,0.8361316850108491,1,168
+DKASC,dkasc_m6b,2022,Kt,parcali,50,0.7378855778537163,2022-03-01,0.7369375489672766,1,168
+DKASC,dkasc_m6b,2022,Kt,kapali,10,0.3201789342168603,2022-08-28,0.32267879316964093,1,168

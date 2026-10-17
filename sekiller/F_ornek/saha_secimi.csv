@@ -1,0 +1,13 @@
+# Kural (arac/ornek_gunler.py, tahminlere bakilmadan commit edildi):
+# gun = yerel standart saat takvim gunu; aday = 24 saatinin hepsi test kumesinde, isinim bos degil, ariza yok;
+# DKASC berraklik = Kt = sum(GHI)/sum(G0); PVGIS = egik_duzlem_berraklik_proxy = sum(G_i)/sum(G0) (gercek Kt degil);
+# G0 = 1367*(1+0.033cos(2pi n/365))*max(sin h,0);
+# PVGIS sahasi = proxy P90-P10 araligi en genis saha (esitlikte KONUMLAR sirasi); DKASC tek saha;
+# gunler = P90 (acik), P50 (parcali), P10 (kapali) yuzdeligine en yakin gun, esitlikte takvimde ilk.
+konum,aday_gun,P10,P90,aralik_P90_P10,secildi
+adana,364,0.4012579321880786,1.055134829164631,0.6538768969765524,False
+konya,364,0.3385204848271901,1.17287531411857,0.8343548292913798,True
+braila,364,0.1629859975637774,0.9849289458487592,0.8219429482849818,False
+portimao,365,0.4974365112130501,1.133528367575218,0.6360918563621678,False
+leipzig,364,0.1806184746644046,0.9058262303566347,0.7252077556922301,False
+ouarzazate,364,0.614646595205098,1.19324123548338,0.5785946402782819,False
