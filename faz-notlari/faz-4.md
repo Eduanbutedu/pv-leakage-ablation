@@ -414,6 +414,23 @@ Regression) 13 alanin 13'unde de TAM ESIT. `egitim_n`, `n`, `isinma`,
 Bu, pyarrow surum degisiminin metrikleri kimildatmadiginin kanitidir: surum
 degisseydi butun modeller etkilenirdi, sekiz model bit duzeyinde ayni cikmazdi.
 
+### 2022 dogrulama kosusu vs genis kosu `[sonradan eklendi - 17 Ekim 2026]`
+
+Bu oturumda kaydi tutulan "99/100 alan birebir" sayisi 10 alan uzerindendi
+(yukaridaki listeden `RMSE_persistence`, `RMSE_GA_alt`, `RMSE_GA_ust`
+haric; kaydedilmemis bir oturum betigiyle). 13 alanla 127/130 (2 fark
+Extra Trees guven araligi sinirlarinda, ~1 ULP, bilinen nondeterminizm).
+Yeniden kiyas: `arac/regresyon_kiyas.py`, round_trip okuma, negatif kontrol
+gecti; kayit `sonuclar/regresyon_kiyas_dogrulama.csv`.
+
+| alan | yil | model | referans | yeni | fark | bagil |
+|---|---|---|---|---|---|---|
+| R2 | 2022 | Extra Trees | 0.71267991754062854 | 0.71267991754062843 | -1.110223e-16 | -1.558e-16 |
+| RMSE_GA_alt | 2022 | Extra Trees | 136.34379624860702 | 136.34379624860705 | 2.842171e-14 | 2.085e-16 |
+| RMSE_GA_ust | 2022 | Extra Trees | 145.38181363957437 | 145.3818136395744 | 2.842171e-14 | 1.955e-16 |
+
+Beklenmeyen fark 0; dokuz model 13 alanin 13'unde tam esit.
+
 ## Nondeterminizm olcumu
 
 Sorun: yukaridaki 10 alan. Iki aday - surec ici paralel hesap, ya da pyarrow

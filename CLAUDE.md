@@ -46,7 +46,9 @@ tutulacak.
     Kirilim model bagimli - LR 5/15, PolyRidge 15/15, HGB 15/15.
     `sonuclar/doygunluk_ozet_dm.csv`
   - 2022 dogrulama kosusu TAMAM: 10 hucre, 19,6 dk, tahmin kaydiyla.
-    Genis kosuyla 99/100 alan birebir (tek istisna asagida).
+    Genis kosuyla 99/100 alan birebir - 10 alan; 13 alanla 127/130 (2 fark
+    Extra Trees guven araligi sinirlarinda, ~1 ULP, bilinen nondeterminizm;
+    ayrinti `faz-4.md`).
   - 2022 dogrulama kosusu TAMAM: 10 hucre, 19,6 dk, tahmin kaydiyla.
   - Kalan dort yilin kosusu TAMAM: 40 hucre, 96,5 dk, tahmin kaydiyla,
     K=tum x 2019/2020/2021/2023 x 10 model. `sonuclar/doygunluk_dm_kalan.csv`
