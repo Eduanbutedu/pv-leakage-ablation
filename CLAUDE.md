@@ -256,10 +256,29 @@ sekiller/
   f1_veri.py               F1 cizim verisi -> sekiller/F1_veri/*.csv
 ```
 
-`arac/` DENEY DEGIL TESHIS icindir; makalenin hicbir sayisini uretmez ve
-ana akistan cagrilmaz. `pv10/` ile `run_*.py` yalnizca deney kodu kalsin
-diye ayri tutuldu - faz notunda hangi dosyanin makale sayisi urettigi
-bulanmasin.
+`arac/` ana akistan cagrilmaz ve MODEL EGITMEZ: ya diskteki tahminleri ya da
+sonuc CSV'lerini okur. `pv10/` ile `run_*.py` yalnizca deney kodu kalsin diye
+ayri tutuldu. **Ama `arac/` makale sayisi URETIR** - eski "hicbir sayisini
+uretmez" ifadesi `dm_yil.py`'den beri yanlisti (17 Ekim 2026'da duzeltildi).
+Makale sayisi ureten betikler:
+
+- `ablasyon_dm.py` -> `ablasyon_belirsizlik_dm_*_{dm,bootstrap,gece_ozdeslik}.csv`:
+  Tablo 7, F2 sekli, Bolum 4.4 (kesisim orani, ayristirma artigi), 5.1
+  (olcekleyici 19/57, gece ozdesligi), 5.2 (10/21 kaybolan, 5 ters; DKASC 4
+  ve 2; 2023 HGB hucresi), 5.3, ek S5.
+- `dm_yil.py` -> `doygunluk_ozet_dm_yil.csv`: Bolum 5.4 on modelli havuz,
+  kazanan-ikinci 0/5 ve bes p-degeri (ozetteki "none of five years").
+- `uc_dm.py` -> `doygunluk_ozet_dm.csv`: Bolum 5.5 hacim etkisi (HGB 15/15,
+  PolyRidge 15/15, LR 5/15; esli 35/45 vs marjinal GA 45/45 cakisma).
+- `coklu_test.py` -> `coklu_test_{ozet,iddialar,detay}.csv`: coklu test
+  duzeltmesi alt bolumu [on-kayit SONRASI].
+- `tablolari_uret.py` -> yeni sayi uretmez; Tablo 5-9'u CSV'lerden yeniden
+  hesaplayip makaleyle kiyaslar (65/65).
+
+Yalnizca teshis, makale sayisi URETMEYEN: `nondeterminizm*.py` (makalede
+yalnizca Bolum 4.5 sinirlilik beyani ve S2), `oznitelik_regresyon.py`,
+`regresyon_kiyas.py`, `csv_karsilastir.py`. Faz notunda hangi dosyanin
+makale sayisi urettigi bu listeden okunur.
 
 `ozet.py` ile `ozet_sonrasi.py` ayri tutulur; sebep kayit duzenidir. `ozet.py`
 izgara kosulmadan once yazildi ve o gunden beri dokunulmadi - bunu
