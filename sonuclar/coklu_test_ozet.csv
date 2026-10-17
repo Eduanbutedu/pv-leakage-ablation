@@ -1,0 +1,18 @@
+aile,faz,test_sayisi,ham_anlamli,holm_anlamli,bh_anlamli,ham_sinir,holm_sinir,bh_sinir
+F2 PVGIS tam / eszaman,Faz 2 kaynak x varyant,21,21,21,21,0,0,0
+F2 PVGIS tam / olcekleyici,Faz 2 kaynak x varyant,21,7,2,3,0,0,0
+F2 PVGIS tam / rastgele_kfold,Faz 2 kaynak x varyant,21,15,15,15,0,0,0
+F2 PVGIS tam / enkotu,Faz 2 kaynak x varyant,21,21,21,21,0,0,0
+F2 PVGIS indirgenmis / eszaman,Faz 2 kaynak x varyant,21,21,21,21,0,0,0
+F2 PVGIS indirgenmis / olcekleyici,Faz 2 kaynak x varyant,21,8,3,4,0,0,0
+F2 PVGIS indirgenmis / rastgele_kfold,Faz 2 kaynak x varyant,21,15,15,15,0,0,0
+F2 PVGIS indirgenmis / enkotu,Faz 2 kaynak x varyant,21,21,21,21,0,0,0
+F2 DKASC / eszaman,Faz 2 kaynak x varyant,15,15,15,15,0,0,0
+F2 DKASC / olcekleyici,Faz 2 kaynak x varyant,15,4,1,1,0,0,0
+F2 DKASC / rastgele_kfold,Faz 2 kaynak x varyant,15,13,7,12,0,0,0
+F2 DKASC / enkotu,Faz 2 kaynak x varyant,15,15,15,15,0,0,0
+F2 olcekleyici uc kaynak,Faz 2 olcekleyici (57),57,19,5,8,0,0,0
+F2 tumu,Faz 2 tumu (228),228,176,151,170,0,0,0
+F3 ilk-iki x 7 yil,Faz 3,7,1,0,0,0,0,0
+F4 yil ici 5 yil x 3 cift,Faz 4 yil ici,15,1,0,0,0,0,0
+F4 hacim 45 esli,Faz 4 hacim,45,35,33,35,0,0,0

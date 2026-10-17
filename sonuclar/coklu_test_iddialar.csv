@@ -1,0 +1,29 @@
+iddia,aile,makaledeki,ham,ham_sinir,holm,holm_sinir,bh,bh_sinir,holm_ayakta,bh_ayakta
+"olcekleyici anlamli hucre, uc kaynak",F2 kaynak x varyant (3 aile toplami),19/57,19,0,6,0,8,0,False,False
+"olcekleyici anlamli hucre, uc kaynak",F2 olcekleyici uc kaynak,19/57,19,0,5,0,8,0,False,False
+"olcekleyici anlamli hucre, uc kaynak",F2 tumu,19/57,19,0,3,0,14,0,False,False
+rastgele_kfold A anlamli - PVGIS tam,F2 PVGIS tam / rastgele_kfold,15/21,15,0,15,0,15,0,True,True
+rastgele_kfold A anlamli VE bootstrap GA sifiri iceriyor (etki kayboluyor) - PVGIS tam,F2 PVGIS tam / rastgele_kfold,10/21,10,0,10,0,10,0,True,True
+rastgele_kfold kaybolanlarin icinde isaret ters - PVGIS tam,F2 PVGIS tam / rastgele_kfold,5/21,5,0,5,0,5,0,True,True
+rastgele_kfold A anlamli - PVGIS tam,F2 tumu,15/21,15,0,14,0,15,0,False,True
+rastgele_kfold A anlamli VE bootstrap GA sifiri iceriyor (etki kayboluyor) - PVGIS tam,F2 tumu,10/21,10,0,9,0,10,0,False,True
+rastgele_kfold kaybolanlarin icinde isaret ters - PVGIS tam,F2 tumu,5/21,5,0,4,0,5,0,False,True
+rastgele_kfold A anlamli - PVGIS indirgenmis,F2 PVGIS indirgenmis / rastgele_kfold,15/21,15,0,15,0,15,0,True,True
+rastgele_kfold A anlamli VE bootstrap GA sifiri iceriyor (etki kayboluyor) - PVGIS indirgenmis,F2 PVGIS indirgenmis / rastgele_kfold,10/21,10,0,10,0,10,0,True,True
+rastgele_kfold kaybolanlarin icinde isaret ters - PVGIS indirgenmis,F2 PVGIS indirgenmis / rastgele_kfold,5/21,5,0,5,0,5,0,True,True
+rastgele_kfold A anlamli - PVGIS indirgenmis,F2 tumu,15/21,15,0,13,0,15,0,False,True
+rastgele_kfold A anlamli VE bootstrap GA sifiri iceriyor (etki kayboluyor) - PVGIS indirgenmis,F2 tumu,10/21,10,0,8,0,10,0,False,True
+rastgele_kfold kaybolanlarin icinde isaret ters - PVGIS indirgenmis,F2 tumu,5/21,5,0,4,0,5,0,False,True
+rastgele_kfold A anlamli - DKASC,F2 DKASC / rastgele_kfold,13/15,13,0,7,0,12,0,False,False
+rastgele_kfold A anlamli VE bootstrap GA sifiri iceriyor (etki kayboluyor) - DKASC,F2 DKASC / rastgele_kfold,4/15,4,0,2,0,3,0,False,False
+rastgele_kfold A anlamli VE isaret ters (kaybolanlardan FARKLI hucreler) - DKASC,F2 DKASC / rastgele_kfold,2/15,2,0,1,0,2,0,False,True
+rastgele_kfold A anlamli - DKASC,F2 tumu,13/15,13,0,7,0,12,0,False,False
+rastgele_kfold A anlamli VE bootstrap GA sifiri iceriyor (etki kayboluyor) - DKASC,F2 tumu,4/15,4,0,2,0,3,0,False,False
+rastgele_kfold A anlamli VE isaret ters (kaybolanlardan FARKLI hucreler) - DKASC,F2 tumu,2/15,2,0,1,0,2,0,False,True
+"Faz 3 ilk-iki farki anlamli yil (2023, p=0.038)",F3 ilk-iki x 7 yil,1/7,1,0,0,0,0,0,False,False
+Faz 4 yil ici kazanan-ikinci farki anlamli yil,F4 yil ici 5 yil x 3 cift,0/5,0,0,0,0,0,0,True,True
+"Faz 4 yil ici anlamli cift, toplam",F4 yil ici 5 yil x 3 cift,1/15,1,0,0,0,0,0,False,False
+Faz 4 hacim etkisi anlamli - Hist Gradient Boosting,F4 hacim 45 esli,15/15,15,0,15,0,15,0,True,True
+Faz 4 hacim etkisi anlamli - Polynomial Ridge,F4 hacim 45 esli,15/15,15,0,15,0,15,0,True,True
+Faz 4 hacim etkisi anlamli - Linear Regression,F4 hacim 45 esli,5/15,5,0,3,0,5,0,False,True
+"Faz 4 hacim etkisi anlamli, toplam",F4 hacim 45 esli,35/45,35,0,33,0,35,0,False,True
