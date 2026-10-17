@@ -242,14 +242,23 @@ python run_doygunluk.py --modeller tumu --kol kaydirmali --pencere tum \
     --yillar 2022 --etiket dm2022 --tahmin-kaydet                             # 10 cells
 python run_doygunluk.py --modeller tumu --kol kaydirmali --pencere tum \
     --yillar 2019,2020,2021,2023 --etiket dm_kalan --tahmin-kaydet            # 40 cells
+python -m arac.uc_dm         # learning-curve ends, 45 paired DM -> sonuclar/doygunluk_ozet_dm.csv
 python -m arac.dm_yil        # within-year DM, five years -> sonuclar/doygunluk_ozet_dm_yil.csv
 python run_doygunluk.py --ozet
 ```
 
-`sonuclar/doygunluk_ozet_dm.csv` (45 paired tests between the two ends of the learning
-curve) is computed by `pv10/ozet_sonrasi.py:uc_dm` from the `dm` predictions. **No
-script in this repository calls that function and writes the file**; the driver that
-produced it was not retained. This is a known gap.
+`arac/uc_dm.py` and `arac/dm_yil.py` train nothing; they read the saved prediction
+vectors and overwrite their output table. To check a committed table instead of
+replacing it, write to a separate file and compare without tolerance:
+
+```bash
+python -m arac.uc_dm --cikti sonuclar/doygunluk_ozet_dm_dogrulama.csv \
+    --referans sonuclar/doygunluk_ozet_dm.csv
+```
+
+`doygunluk_ozet_dm.csv` was originally produced by a session script that was not
+retained. `arac/uc_dm.py` replaces it and reproduces the committed table byte for byte
+(630 of 630 fields identical; `sonuclar/doygunluk_ozet_dm_dogrulama.csv`).
 
 **Multiple-testing correction (robustness, added after the results).**
 `python -m arac.coklu_test` applies Holm and Benjamini-Hochberg corrections to the

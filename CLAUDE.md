@@ -96,8 +96,18 @@ tutulacak.
   ayri gunlerde, dort surecte verdi.
 - Faz 4 notu TAMAM: `faz-notlari/faz-4.md` bastan yazildi (eski surum izgara
   kosulmadan onceydi ve "uretilen deney sonucu YOK" diyordu).
-- **Dort teshis betiginin dordu de repodaki haliyle kosuldu; kalicilastirma
-  boslugu YOK.** `dm_yil.py` dogrulamasi 285/285 alan birebir
+- **Kalicilastirma boslugu VARDI, 17 Ekim 2026'da kapatildi.** Asagidaki
+  "dort betigin dordu de kosuldu" tespiti dogruydu ama eksikti: makaledeki
+  hacim iddiasinin (HGB 15/15, PolyRidge 15/15, LR 5/15) kaynagi
+  `doygunluk_ozet_dm.csv`'yi yazan surucu HIC repoya alinmamisti
+  (`3d15cce`/`8c84b11` scratchpad betigi; `4be6a45` yalnizca dm_yil ve
+  regresyon_kiyas'i tasidi). `arac/uc_dm.py` yazildi, kayitli `dm/`
+  tahminlerinden tabloyu yeniden uretti: 630/630 alan birebir, dosya bayt
+  duzeyinde ayni (`sonuclar/doygunluk_ozet_dm_dogrulama.csv`). Kiyas
+  `float_precision="round_trip"` ile okur; pandas'in varsayilan ayristiricisi
+  son basamakta kayipli ve 1 ULP farki gizleyebilir (negatif kontrol: 1 ULP
+  bozulma yakalandi).
+- Dort teshis betiginin dordu de repodaki haliyle kosuldu. `dm_yil.py` dogrulamasi 285/285 alan birebir
   (`sonuclar/doygunluk_ozet_dm_yil_dogrulama.csv`). Beklenen tek sapma - 2021'in
   Extra Trees satirlarinin son basamagi - GERCEKLESMEDI: betik model egitmez,
   diskteki tahminleri okur. Nondeterminizm `hucre_kos` icinde, model FIT
@@ -237,6 +247,7 @@ pv10/
 arac/
   nondeterminizm.py        teshis: ayni hucre x tekrar x surec, tahmin sha256
   nondeterminizm_karar.py  yorum kurali (sonuc gorulmeden) + karar tablosu
+  uc_dm.py                 egri uclari esli DM surucusu -> doygunluk_ozet_dm.csv
   coklu_test.py            Holm/BH, mevcut p'ler uzerinden [on-kayit SONRASI]
   tablolari_uret.py        Tablo 5-9'u CSV'lerden uretir, makaleyle kiyaslar
 sekiller/
@@ -307,11 +318,12 @@ python -m arac.nondeterminizm --surec p1
 python -m arac.nondeterminizm --surec p2
 python -m arac.nondeterminizm_karar     # sonuclar/nondeterminizm_olcum.csv
 
+python -m arac.uc_dm                    # egri uclari esli DM, 45 karsilastirma
 python -m arac.dm_yil                   # yil ici DM, bes yil
 python -m arac.regresyon_kiyas          # iki izgara logu, toleranssiz kiyas
 ```
 
-`nondeterminizm.py` CSV'ye EKLER, `dm_yil.py` UZERINE YAZAR. Ikisinde de
+`nondeterminizm.py` CSV'ye EKLER, `dm_yil.py` ve `uc_dm.py` UZERINE YAZAR. Hepsinde
 mevcut bir tabloyu korumak icin `--cikti <yol>` ver; karar tarafinda karsiligi
 `--olcum <yol>`. Dogrulama kosulari `_dogrulama` sonekli dosyaya yazildi; ana
 tablo her zaman soneksiz olandir.
