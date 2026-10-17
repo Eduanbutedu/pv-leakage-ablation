@@ -294,6 +294,32 @@ existing p-values without recomputing them → `sonuclar/coklu_test_ozet.csv`,
 Both scripts embed the manuscript values and refuse to write output if any of them
 fails to match.
 
+Example days (`sekiller/F_ornek/ornek_gunler.csv`: observed power, `temiz` and
+`eszaman` forecasts, Hist Gradient Boosting; PVGIS full feature set test year 2023
+from `dm_ana`, DKASC test year 2022 from `dm_dkasc`) are chosen by a fixed rule that
+was committed before any prediction file was read (`git log -- arac/ornek_gunler.py
+sekiller/F_ornek` shows the order: rule, selected days, series):
+
+```bash
+python -m arac.ornek_gunler --sec    # rule -> sekiller/F_ornek/secilen_gunler.csv, saha_secimi.csv
+python -m arac.ornek_gunler --seri   # predictions for the committed days -> ornek_gunler.csv
+```
+
+- A day is a local standard-time calendar day whose 24 hours are all in the
+  experiment's test set, with irradiance present and (DKASC) no fault flag.
+- Daily clearness: DKASC uses the standard clearness index Kt = ΣGHI / ΣG0, with G0
+  the horizontal extraterrestrial irradiance. PVGIS has no horizontal global
+  irradiance, so it uses ΣG(i) / ΣG0, named `egik_duzlem_berraklik_proxy`. This is
+  a tilted-over-horizontal proxy, not a true Kt.
+- PVGIS site: the site with the widest P90-P10 range of the proxy in 2023, ties
+  broken by the `pvgis_pipeline.KONUMLAR` order. This picks Konya (0.834), because
+  the three day types separate most clearly there. DKASC has a single site.
+- Days: the day nearest the P90 (clear), P50 (partly cloudy) and P10 (overcast)
+  value, ties broken by the earliest date.
+
+rastgele_kfold is not in this figure: its test set consists of random hours, so it
+gives no daily series.
+
 ### 7. Supplementary material
 
 | Item | File | Built from |

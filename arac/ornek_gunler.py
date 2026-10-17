@@ -40,6 +40,12 @@ KURAL
 
 Kullanim (kok dizinden):
     python -m arac.ornek_gunler --sec    # kural -> sekiller/F_ornek/secilen_gunler.csv
+    python -m arac.ornek_gunler --seri   # secilen gunlerin tahminleri -> ornek_gunler.csv
+
+--seri secimi YENIDEN YAPMAZ; commit edilmis secilen_gunler.csv'yi okur.
+Kontroller (tutmazsa hata, dosya yazilmaz): her gun ve varyant icin 24
+tahmin satiri; temiz ve eszaman dosyalarindaki `y` birebir ayni; `y`
+verideki `P` ile birebir ayni.
 """
 import argparse
 from pathlib import Path
@@ -47,7 +53,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from pv10.config import DKASC_GUNES_SABITI, DKASC_VERI, KOK, VERI
+from pv10.config import DKASC_GUNES_SABITI, DKASC_VERI, KOK, SONUC, VERI
 from pv10.experiment import OznitelikOnbellegi
 from pvgis_pipeline import KONUMLAR
 from run_ablasyon import OZNITELIK_SETLERI
@@ -55,6 +61,14 @@ from run_ablasyon import OZNITELIK_SETLERI
 CIKTI_DIZIN = KOK / "sekiller" / "F_ornek"
 SECIM = CIKTI_DIZIN / "secilen_gunler.csv"
 SAHA_SECIMI = CIKTI_DIZIN / "saha_secimi.csv"
+SERI = CIKTI_DIZIN / "ornek_gunler.csv"
+MODEL = "Hist Gradient Boosting"
+VARYANTLAR = ("temiz", "eszaman")
+# kaynak -> ablasyon tahmin dizini (README'deki etiket tablosu)
+TAHMIN_DIZIN = {
+    "PVGIS tam": SONUC / "tahminler" / "ablasyon" / "dm_ana",
+    "DKASC": SONUC / "tahminler" / "ablasyon" / "dm_dkasc",
+}
 
 # kaynak -> (veri, oznitelik seti, test yili, isinim alani, berraklik olcusu)
 KAYNAK = {
@@ -197,16 +211,82 @@ def secim() -> pd.DataFrame:
     return d
 
 
+def tahmin_oku(kaynak: str, varyant: str, yil: int) -> pd.DataFrame:
+    yol = (TAHMIN_DIZIN[kaynak]
+           / f"{varyant}__{MODEL.replace(' ', '_')}__{yil}.parquet")
+    if not yol.exists():
+        raise FileNotFoundError(f"{yol} yok")
+    return pd.read_parquet(yol, columns=["konum", "time_utc", "y", "tahmin"])
+
+
+def seriler() -> pd.DataFrame:
+    sec = pd.read_csv(SECIM, comment="#")
+    parca = []
+    for (kaynak, saha, yil), s in sec.groupby(["kaynak", "saha", "test_yil"],
+                                              sort=False):
+        veri = KAYNAK[kaynak][0]
+        ham = pd.read_parquet(veri, columns=["konum", "time_utc", "time_local", "P"])
+        ham = ham[ham.konum == saha]
+        ham = ham.assign(gun=ham["time_local"].dt.normalize())
+        ham = ham[ham["gun"].isin(pd.to_datetime(s["gun"]))]
+
+        d = ham
+        for v in VARYANTLAR:
+            t = tahmin_oku(kaynak, v, int(yil)).rename(
+                columns={"y": f"y_{v}", "tahmin": v})
+            d = d.merge(t, on=["konum", "time_utc"], how="left")
+        eksik = d[list(VARYANTLAR)].isna().any(axis=1)
+        if (eksik.any() or d.groupby("gun").size().ne(SAAT_N).any()
+                or d["gun"].nunique() != len(s)):
+            raise ValueError(f"{kaynak}/{saha}: secilen gunlerde eksik tahmin "
+                             f"({int(eksik.sum())} saat) - aday tanimi tutmadi")
+        if not np.array_equal(d["y_temiz"].to_numpy(), d["y_eszaman"].to_numpy()):
+            raise ValueError(f"{kaynak}: temiz ve eszaman y serileri farkli")
+        if not np.array_equal(d["y_temiz"].to_numpy(), d["P"].to_numpy()):
+            raise ValueError(f"{kaynak}: tahmin dosyasindaki y verideki P degil")
+
+        tur = dict(zip(pd.to_datetime(s["gun"]), s["gun_turu"]))
+        parca.append(pd.DataFrame({
+            "kaynak": kaynak, "saha": saha,
+            "gun_turu": d["gun"].map(tur).to_numpy(),
+            "zaman": d["time_local"].dt.strftime("%Y-%m-%d %H:%M").to_numpy(),
+            "gercek": d["P"].to_numpy(),
+            "temiz": d["temiz"].to_numpy(),
+            "eszaman": d["eszaman"].to_numpy()}))
+        print(f"{kaynak:9s} {saha:10s} {yil}: {d['gun'].nunique()} gun x "
+              f"{SAAT_N} saat, kontroller gecti")
+
+    out = pd.concat(parca, ignore_index=True)
+    sira = {t: i for i, t in enumerate(GUN_TURU)}
+    out = out.sort_values(["kaynak", "gun_turu", "zaman"],
+                          key=lambda c: c.map(sira) if c.name == "gun_turu" else c,
+                          kind="stable").reset_index(drop=True)
+    baslik = KURAL_OZET + [
+        "Saha: PVGIS'te 2023 proxy P90-P10 araligi en genis saha (konya), "
+        "uc gun turu en belirgin orada ayrisir; DKASC'de tek saha (dkasc_m6b).",
+        "Model: Hist Gradient Boosting; PVGIS test 2023 (dm_ana), DKASC test "
+        "2022 (dm_dkasc). zaman = yerel standart saat; gercek/temiz/eszaman W "
+        "(PVGIS 1 kWp, DKASC 5,25 kWp).",
+        "rastgele_kfold bu sekilde yok; test kumesi rastgele saatlerden "
+        "olustugu icin gun bazinda seri vermez.",
+    ]
+    basligi_yaz(SERI, baslik, out)
+    print(f"\nyazildi -> {SERI}  ({len(out)} satir)")
+    return out
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(
         description=__doc__,
         formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--sec", action="store_true",
                     help="kurali uygula, secilen gunleri yaz (tahmin okunmaz)")
+    ap.add_argument("--seri", action="store_true",
+                    help="commit edilmis secimin tahmin serilerini yaz")
     a = ap.parse_args()
-    if not a.sec:
-        ap.error("bir islem ver: --sec")
-    secim()
+    if a.sec == a.seri:
+        ap.error("tam olarak bir islem ver: --sec ya da --seri")
+    secim() if a.sec else seriler()
     return 0
 
 

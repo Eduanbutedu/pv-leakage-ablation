@@ -249,6 +249,7 @@ arac/
   nondeterminizm_karar.py  yorum kurali (sonuc gorulmeden) + karar tablosu
   uc_dm.py                 egri uclari esli DM surucusu -> doygunluk_ozet_dm.csv
   dm_matris.py             yil ici DM, 10 modelin 45 ciftinin hepsi -> dm_matris_havuz10.csv [on-kayit SONRASI]
+  ornek_gunler.py          kuralla secilen ornek gunler (--sec) ve tahmin serileri (--seri) -> sekiller/F_ornek/ [sunum]
   csv_karsilastir.py       toleranssiz tablo kiyasi: bayt + alan (round_trip) + negatif kontrol
   coklu_test.py            Holm/BH, mevcut p'ler uzerinden [on-kayit SONRASI]
   tablolari_uret.py        Tablo 5-9'u CSV'lerden uretir, makaleyle kiyaslar
