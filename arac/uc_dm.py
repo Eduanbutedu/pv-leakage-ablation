@@ -34,8 +34,10 @@ Kullanim (kok dizinden):
         --referans sonuclar/doygunluk_ozet_dm.csv
 
 Betik cikti dosyasinin UZERINE YAZAR. Mevcut tabloyu korumak icin
-`--cikti <yol>` ver. `--referans` verilirse yeni tablo onunla alan alan,
-TOLERANSSIZ (`==`) kiyaslanir; tek fark bile varsa 1 ile doner.
+`--cikti <yol>` ver. `--referans` verilirse yeni tablo onunla
+arac/csv_karsilastir.py uzerinden kiyaslanir (bayt + alan alan `==`,
+round_trip okuma, her kosuda negatif kontrol); tek fark bile varsa 1 ile
+doner. `--rapor` alan duzeyindeki kiyasi CSV olarak yazar.
 """
 import argparse
 import os
@@ -47,12 +49,13 @@ from pv10.config import OMP_THREAD_SAYISI
 for _ad in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS"):
     os.environ[_ad] = str(OMP_THREAD_SAYISI)
 
-import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
 from pv10.config import (DOYGUNLUK_TEST_YILLARI, ORNEKLEME_TOHUMLARI,  # noqa: E402
                          SONUC)
 from pv10.ozet_sonrasi import uc_dm  # noqa: E402
+
+from arac.csv_karsilastir import karsilastir  # noqa: E402
 
 CIKTI = SONUC / "doygunluk_ozet_dm.csv"
 TAHMIN_DIZIN = SONUC / "tahminler" / "doygunluk" / "dm"
@@ -70,45 +73,6 @@ def model_sirasi() -> list[str]:
     return list(dict.fromkeys(g["model"]))
 
 
-def kiyasla(yeni: Path, referans: Path) -> int:
-    """Iki tabloyu CSV'den okuyup anahtar uzerinden alan alan `==` kiyaslar."""
-    # round_trip: varsayilan ayristirici son basamakta kayipli; 1 ULP'lik bir
-    # farki iki tarafta ayni float'a esleyip gizleyebilir.
-    a = pd.read_csv(referans, float_precision="round_trip")
-    b = pd.read_csv(yeni, float_precision="round_trip")
-    if list(a.columns) != list(b.columns):
-        print(f"SUTUNLAR FARKLI:\n  ref : {list(a.columns)}\n  yeni: {list(b.columns)}")
-        return 1
-    if len(a) != len(b):
-        print(f"SATIR SAYISI FARKLI: ref {len(a)}, yeni {len(b)}")
-        return 1
-    sira_ayni = a[ANAHTAR].equals(b[ANAHTAR])
-    m = a.merge(b, on=ANAHTAR, suffixes=("_ref", "_yeni"), validate="1:1")
-    if len(m) != len(a):
-        print("ANAHTARLAR ESLESMEDI")
-        return 1
-
-    alanlar = [c for c in a.columns if c not in ANAHTAR]
-    fark = []
-    for c in alanlar:
-        r, y = m[f"{c}_ref"], m[f"{c}_yeni"]
-        esit = (r == y) | (r.isna() & y.isna())
-        for i in np.flatnonzero(~esit.to_numpy()):
-            fark.append((*m.loc[i, ANAHTAR], c, r.iloc[i], y.iloc[i]))
-
-    toplam = len(m) * len(alanlar)
-    print(f"\nKIYAS  {yeni.name}  vs  {referans.name}")
-    print(f"  satir sirasi ayni : {sira_ayni}")
-    print(f"  alan              : {len(m)} satir x {len(alanlar)} alan = {toplam}")
-    print(f"  birebir           : {toplam - len(fark)}/{toplam}")
-    if fark:
-        print("  FARKLI ALANLAR:")
-        for yil, model, tohum, c, r, y in fark:
-            print(f"    {yil} {model} t{tohum} {c}: ref {r!r}  yeni {y!r}")
-        return 1
-    return 0 if sira_ayni else 1
-
-
 def main() -> int:
     ap = argparse.ArgumentParser(
         description=__doc__,
@@ -118,6 +82,8 @@ def main() -> int:
                          "Dosya UZERINE YAZILIR.")
     ap.add_argument("--referans", default=None,
                     help="yeni tabloyu bu CSV ile toleranssiz kiyasla")
+    ap.add_argument("--rapor", default=None,
+                    help="alan duzeyindeki kiyas raporunun CSV yolu (--referans ile)")
     a = ap.parse_args()
     cikti = Path(a.cikti) if a.cikti else CIKTI
 
@@ -142,7 +108,8 @@ def main() -> int:
     print(f"\nyazildi -> {cikti}  ({len(d)} satir)")
 
     if a.referans:
-        return kiyasla(cikti, Path(a.referans))
+        return karsilastir(cikti, Path(a.referans), ANAHTAR,
+                           Path(a.rapor) if a.rapor else None)
     return 0
 
 

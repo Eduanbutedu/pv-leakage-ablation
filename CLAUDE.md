@@ -248,6 +248,7 @@ arac/
   nondeterminizm.py        teshis: ayni hucre x tekrar x surec, tahmin sha256
   nondeterminizm_karar.py  yorum kurali (sonuc gorulmeden) + karar tablosu
   uc_dm.py                 egri uclari esli DM surucusu -> doygunluk_ozet_dm.csv
+  csv_karsilastir.py       toleranssiz tablo kiyasi: bayt + alan (round_trip) + negatif kontrol
   coklu_test.py            Holm/BH, mevcut p'ler uzerinden [on-kayit SONRASI]
   tablolari_uret.py        Tablo 5-9'u CSV'lerden uretir, makaleyle kiyaslar
 sekiller/

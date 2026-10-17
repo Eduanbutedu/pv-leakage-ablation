@@ -40,6 +40,11 @@ Kullanim (kok dizinden):
 Betik cikti dosyasinin UZERINE YAZAR. Mevcut bir tabloyu korumak icin
 `--cikti <yol>` ver.
 
+Dogrulama (repodaki tabloyla toleranssiz kiyas, arac/csv_karsilastir.py):
+    python -m arac.dm_yil --cikti <gecici>.csv \\
+        --referans sonuclar/doygunluk_ozet_dm_yil.csv \\
+        --rapor sonuclar/doygunluk_ozet_dm_yil_kiyas.csv
+
 Ilk kosu: 3 Agustos 2026. 15 karsilastirma, 1 anlamli
 (2023 Polynomial Ridge vs Hist Gradient Boosting, p=0,038040 - birinci
 UCUNCU cifti). Kazanan-ikinci: 0/5 anlamli, p = 0,155011 / 0,742136 /
@@ -62,6 +67,8 @@ import pandas as pd  # noqa: E402
 from pv10.config import SONUC  # noqa: E402
 from pv10.ozet_sonrasi import DM_KUMELENME_BIRIMI, yil_ici_dm  # noqa: E402
 
+from arac.csv_karsilastir import karsilastir  # noqa: E402
+
 CIKTI = SONUC / "doygunluk_ozet_dm_yil.csv"
 ILK_N = 3  # yil basina kiyaslanan model sayisi
 # yil -> (log dosyasi, tahmin dizini)
@@ -74,6 +81,7 @@ KAYNAK = {
 }
 # Surec ici nondeterminist modeller - olculdu, bkz. arac/nondeterminizm.py
 NONDET = {"Extra Trees", "Random Forest"}
+ANAHTAR = ["test_yil", "model_a", "model_b"]
 
 
 def main() -> int:
@@ -84,6 +92,11 @@ def main() -> int:
                     help="cikti CSV yolu; varsayilan "
                          "sonuclar/doygunluk_ozet_dm_yil.csv. Dosya UZERINE "
                          "YAZILIR - mevcut bir tabloyu korumak icin ayri yol ver.")
+    ap.add_argument("--referans", default=None,
+                    help="yeni tabloyu bu CSV ile toleranssiz kiyasla "
+                         "(bayt + alan, negatif kontrollu)")
+    ap.add_argument("--rapor", default=None,
+                    help="alan duzeyindeki kiyas raporunun CSV yolu (--referans ile)")
     a = ap.parse_args()
     cikti = Path(a.cikti) if a.cikti else CIKTI
 
@@ -153,6 +166,9 @@ def main() -> int:
 
     d.to_csv(cikti, index=False)
     print(f"\nyazildi -> {cikti}  ({len(d)} satir)")
+    if a.referans:
+        return karsilastir(cikti, Path(a.referans), ANAHTAR,
+                           Path(a.rapor) if a.rapor else None)
     return 0
 
 

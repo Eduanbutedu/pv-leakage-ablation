@@ -262,11 +262,20 @@ replacing it, write to a separate file and compare without tolerance:
 ```bash
 python -m arac.uc_dm --cikti sonuclar/doygunluk_ozet_dm_dogrulama.csv \
     --referans sonuclar/doygunluk_ozet_dm.csv
+python -m arac.dm_yil --cikti <scratch>.csv \
+    --referans sonuclar/doygunluk_ozet_dm_yil.csv \
+    --rapor sonuclar/doygunluk_ozet_dm_yil_kiyas.csv
 ```
 
+Both scripts compare through `arac/csv_karsilastir.py`. It checks byte identity,
+compares every field with `==` after round-trip parsing (pandas' default float parser
+can hide a one-ULP difference), and runs a negative control on every call: an
+untouched read and write must give zero differences, and a one-ULP change to a single
+field must give exactly one. Current state: both tables reproduce byte for byte, with
+630 of 630 fields identical for `doygunluk_ozet_dm.csv` and 285 of 285 for
+`doygunluk_ozet_dm_yil.csv` (field-level report: `sonuclar/doygunluk_ozet_dm_yil_kiyas.csv`).
 `doygunluk_ozet_dm.csv` was originally produced by a session script that was not
-retained. `arac/uc_dm.py` replaces it and reproduces the committed table byte for byte
-(630 of 630 fields identical; `sonuclar/doygunluk_ozet_dm_dogrulama.csv`).
+retained; `arac/uc_dm.py` replaces it.
 
 **Multiple-testing correction (robustness, added after the results).**
 `python -m arac.coklu_test` applies Holm and Benjamini-Hochberg corrections to the

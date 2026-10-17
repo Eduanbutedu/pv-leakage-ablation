@@ -1,0 +1,286 @@
+test_yil,model_a,model_b,alan,referans,yeni,esit
+2019,Polynomial Ridge,Neural Network,RMSE_a,136.50292867804177,136.50292867804177,True
+2019,Polynomial Ridge,Hist Gradient Boosting,RMSE_a,136.50292867804177,136.50292867804177,True
+2019,Neural Network,Hist Gradient Boosting,RMSE_a,137.0970650575597,137.0970650575597,True
+2020,Polynomial Ridge,Neural Network,RMSE_a,136.3793189338747,136.3793189338747,True
+2020,Polynomial Ridge,Hist Gradient Boosting,RMSE_a,136.3793189338747,136.3793189338747,True
+2020,Neural Network,Hist Gradient Boosting,RMSE_a,136.52628249309137,136.52628249309137,True
+2021,Polynomial Ridge,Hist Gradient Boosting,RMSE_a,136.82647149596892,136.82647149596892,True
+2021,Polynomial Ridge,Extra Trees,RMSE_a,136.82647149596892,136.82647149596892,True
+2021,Hist Gradient Boosting,Extra Trees,RMSE_a,137.0991275871606,137.0991275871606,True
+2022,Neural Network,Polynomial Ridge,RMSE_a,139.44476650011856,139.44476650011856,True
+2022,Neural Network,Hist Gradient Boosting,RMSE_a,139.44476650011856,139.44476650011856,True
+2022,Polynomial Ridge,Hist Gradient Boosting,RMSE_a,139.75614396966736,139.75614396966736,True
+2023,Polynomial Ridge,Neural Network,RMSE_a,132.61471409623294,132.61471409623294,True
+2023,Polynomial Ridge,Hist Gradient Boosting,RMSE_a,132.61471409623294,132.61471409623294,True
+2023,Neural Network,Hist Gradient Boosting,RMSE_a,133.34752030125907,133.34752030125907,True
+2019,Polynomial Ridge,Neural Network,RMSE_b,137.0970650575597,137.0970650575597,True
+2019,Polynomial Ridge,Hist Gradient Boosting,RMSE_b,137.16896736972845,137.16896736972845,True
+2019,Neural Network,Hist Gradient Boosting,RMSE_b,137.16896736972845,137.16896736972845,True
+2020,Polynomial Ridge,Neural Network,RMSE_b,136.52628249309137,136.52628249309137,True
+2020,Polynomial Ridge,Hist Gradient Boosting,RMSE_b,136.80422460091566,136.80422460091566,True
+2020,Neural Network,Hist Gradient Boosting,RMSE_b,136.80422460091566,136.80422460091566,True
+2021,Polynomial Ridge,Hist Gradient Boosting,RMSE_b,137.0991275871606,137.0991275871606,True
+2021,Polynomial Ridge,Extra Trees,RMSE_b,137.68555187464014,137.68555187464014,True
+2021,Hist Gradient Boosting,Extra Trees,RMSE_b,137.68555187464014,137.68555187464014,True
+2022,Neural Network,Polynomial Ridge,RMSE_b,139.75614396966736,139.75614396966736,True
+2022,Neural Network,Hist Gradient Boosting,RMSE_b,140.2230651615558,140.2230651615558,True
+2022,Polynomial Ridge,Hist Gradient Boosting,RMSE_b,140.2230651615558,140.2230651615558,True
+2023,Polynomial Ridge,Neural Network,RMSE_b,133.34752030125907,133.34752030125907,True
+2023,Polynomial Ridge,Hist Gradient Boosting,RMSE_b,133.4042007222262,133.4042007222262,True
+2023,Neural Network,Hist Gradient Boosting,RMSE_b,133.4042007222262,133.4042007222262,True
+2019,Polynomial Ridge,Neural Network,RMSE_fark_W,-0.59413637951792,-0.59413637951792,True
+2019,Polynomial Ridge,Hist Gradient Boosting,RMSE_fark_W,-0.6660386916866798,-0.6660386916866798,True
+2019,Neural Network,Hist Gradient Boosting,RMSE_fark_W,-0.07190231216875986,-0.07190231216875986,True
+2020,Polynomial Ridge,Neural Network,RMSE_fark_W,-0.14696355921665827,-0.14696355921665827,True
+2020,Polynomial Ridge,Hist Gradient Boosting,RMSE_fark_W,-0.4249056670409459,-0.4249056670409459,True
+2020,Neural Network,Hist Gradient Boosting,RMSE_fark_W,-0.27794210782428763,-0.27794210782428763,True
+2021,Polynomial Ridge,Hist Gradient Boosting,RMSE_fark_W,-0.272656091191692,-0.272656091191692,True
+2021,Polynomial Ridge,Extra Trees,RMSE_fark_W,-0.8590803786712229,-0.8590803786712229,True
+2021,Hist Gradient Boosting,Extra Trees,RMSE_fark_W,-0.5864242874795309,-0.5864242874795309,True
+2022,Neural Network,Polynomial Ridge,RMSE_fark_W,-0.31137746954880186,-0.31137746954880186,True
+2022,Neural Network,Hist Gradient Boosting,RMSE_fark_W,-0.7782986614372476,-0.7782986614372476,True
+2022,Polynomial Ridge,Hist Gradient Boosting,RMSE_fark_W,-0.4669211918884457,-0.4669211918884457,True
+2023,Polynomial Ridge,Neural Network,RMSE_fark_W,-0.7328062050261224,-0.7328062050261224,True
+2023,Polynomial Ridge,Hist Gradient Boosting,RMSE_fark_W,-0.7894866259932485,-0.7894866259932485,True
+2023,Neural Network,Hist Gradient Boosting,RMSE_fark_W,-0.05668042096712611,-0.05668042096712611,True
+2019,Polynomial Ridge,Neural Network,RMSE_fark_kapasite_yuzde,-0.059413637951792,-0.059413637951792,True
+2019,Polynomial Ridge,Hist Gradient Boosting,RMSE_fark_kapasite_yuzde,-0.06660386916866798,-0.06660386916866798,True
+2019,Neural Network,Hist Gradient Boosting,RMSE_fark_kapasite_yuzde,-0.007190231216875986,-0.007190231216875986,True
+2020,Polynomial Ridge,Neural Network,RMSE_fark_kapasite_yuzde,-0.014696355921665826,-0.014696355921665826,True
+2020,Polynomial Ridge,Hist Gradient Boosting,RMSE_fark_kapasite_yuzde,-0.04249056670409459,-0.04249056670409459,True
+2020,Neural Network,Hist Gradient Boosting,RMSE_fark_kapasite_yuzde,-0.027794210782428764,-0.027794210782428764,True
+2021,Polynomial Ridge,Hist Gradient Boosting,RMSE_fark_kapasite_yuzde,-0.0272656091191692,-0.0272656091191692,True
+2021,Polynomial Ridge,Extra Trees,RMSE_fark_kapasite_yuzde,-0.08590803786712228,-0.08590803786712228,True
+2021,Hist Gradient Boosting,Extra Trees,RMSE_fark_kapasite_yuzde,-0.05864242874795309,-0.05864242874795309,True
+2022,Neural Network,Polynomial Ridge,RMSE_fark_kapasite_yuzde,-0.031137746954880186,-0.031137746954880186,True
+2022,Neural Network,Hist Gradient Boosting,RMSE_fark_kapasite_yuzde,-0.07782986614372475,-0.07782986614372475,True
+2022,Polynomial Ridge,Hist Gradient Boosting,RMSE_fark_kapasite_yuzde,-0.04669211918884457,-0.04669211918884457,True
+2023,Polynomial Ridge,Neural Network,RMSE_fark_kapasite_yuzde,-0.07328062050261223,-0.07328062050261223,True
+2023,Polynomial Ridge,Hist Gradient Boosting,RMSE_fark_kapasite_yuzde,-0.07894866259932484,-0.07894866259932484,True
+2023,Neural Network,Hist Gradient Boosting,RMSE_fark_kapasite_yuzde,-0.005668042096712611,-0.005668042096712611,True
+2019,Polynomial Ridge,Neural Network,RMSE_fark_bagil_yuzde,-0.4333691456257463,-0.4333691456257463,True
+2019,Polynomial Ridge,Hist Gradient Boosting,RMSE_fark_bagil_yuzde,-0.48556076819578553,-0.48556076819578553,True
+2019,Neural Network,Hist Gradient Boosting,RMSE_fark_bagil_yuzde,-0.052418789429939126,-0.052418789429939126,True
+2020,Polynomial Ridge,Neural Network,RMSE_fark_bagil_yuzde,-0.10764488458410566,-0.10764488458410566,True
+2020,Polynomial Ridge,Hist Gradient Boosting,RMSE_fark_bagil_yuzde,-0.31059396614430423,-0.31059396614430423,True
+2020,Neural Network,Hist Gradient Boosting,RMSE_fark_bagil_yuzde,-0.20316778128387367,-0.20316778128387367,True
+2021,Polynomial Ridge,Hist Gradient Boosting,RMSE_fark_bagil_yuzde,-0.19887514675711646,-0.19887514675711646,True
+2021,Polynomial Ridge,Extra Trees,RMSE_fark_bagil_yuzde,-0.6239437377230386,-0.6239437377230386,True
+2021,Hist Gradient Boosting,Extra Trees,RMSE_fark_bagil_yuzde,-0.42591563130273696,-0.42591563130273696,True
+2022,Neural Network,Polynomial Ridge,RMSE_fark_bagil_yuzde,-0.22280055867624907,-0.22280055867624907,True
+2022,Neural Network,Hist Gradient Boosting,RMSE_fark_bagil_yuzde,-0.5550432523640408,-0.5550432523640408,True
+2022,Polynomial Ridge,Hist Gradient Boosting,RMSE_fark_bagil_yuzde,-0.33298458520393187,-0.33298458520393187,True
+2023,Polynomial Ridge,Neural Network,RMSE_fark_bagil_yuzde,-0.5495461808142849,-0.5495461808142849,True
+2023,Polynomial Ridge,Hist Gradient Boosting,RMSE_fark_bagil_yuzde,-0.5918004243637838,-0.5918004243637838,True
+2023,Neural Network,Hist Gradient Boosting,RMSE_fark_bagil_yuzde,-0.0424877332649711,-0.0424877332649711,True
+2019,Polynomial Ridge,Neural Network,DM,-1.4220525670720654,-1.4220525670720654,True
+2019,Polynomial Ridge,Hist Gradient Boosting,DM,-1.2461464656442651,-1.2461464656442651,True
+2019,Neural Network,Hist Gradient Boosting,DM,-0.13882228233196836,-0.13882228233196836,True
+2020,Polynomial Ridge,Neural Network,DM,-0.3290260120812961,-0.3290260120812961,True
+2020,Polynomial Ridge,Hist Gradient Boosting,DM,-1.0064246079938106,-1.0064246079938106,True
+2020,Neural Network,Hist Gradient Boosting,DM,-0.5584952163421834,-0.5584952163421834,True
+2021,Polynomial Ridge,Hist Gradient Boosting,DM,-0.7841118428157935,-0.7841118428157935,True
+2021,Polynomial Ridge,Extra Trees,DM,-1.882369637303262,-1.882369637303262,True
+2021,Hist Gradient Boosting,Extra Trees,DM,-1.3333926537596603,-1.3333926537596603,True
+2022,Neural Network,Polynomial Ridge,DM,-0.8183903926621156,-0.8183903926621156,True
+2022,Neural Network,Hist Gradient Boosting,DM,-1.5369274026963438,-1.5369274026963438,True
+2022,Polynomial Ridge,Hist Gradient Boosting,DM,-1.1018972849932647,-1.1018972849932647,True
+2023,Polynomial Ridge,Neural Network,DM,-1.577434414967976,-1.577434414967976,True
+2023,Polynomial Ridge,Hist Gradient Boosting,DM,-2.0744185759403537,-2.0744185759403537,True
+2023,Neural Network,Hist Gradient Boosting,DM,-0.007254841295321558,-0.007254841295321558,True
+2019,Polynomial Ridge,Neural Network,p,0.15501099118405828,0.15501099118405828,True
+2019,Polynomial Ridge,Hist Gradient Boosting,p,0.21271062869990634,0.21271062869990634,True
+2019,Neural Network,Hist Gradient Boosting,p,0.8895905857193969,0.8895905857193969,True
+2020,Polynomial Ridge,Neural Network,p,0.7421360268767256,0.7421360268767256,True
+2020,Polynomial Ridge,Hist Gradient Boosting,p,0.3142113611761714,0.3142113611761714,True
+2020,Neural Network,Hist Gradient Boosting,p,0.5765062701534419,0.5765062701534419,True
+2021,Polynomial Ridge,Hist Gradient Boosting,p,0.4329744869778431,0.4329744869778431,True
+2021,Polynomial Ridge,Extra Trees,p,0.05978584544446083,0.05978584544446083,True
+2021,Hist Gradient Boosting,Extra Trees,p,0.18240298192613974,0.18240298192613974,True
+2022,Neural Network,Polynomial Ridge,p,0.4131343058254604,0.4131343058254604,True
+2022,Neural Network,Hist Gradient Boosting,p,0.12431108818966774,0.12431108818966774,True
+2022,Polynomial Ridge,Hist Gradient Boosting,p,0.27050632907610134,0.27050632907610134,True
+2023,Polynomial Ridge,Neural Network,p,0.1146956018835031,0.1146956018835031,True
+2023,Polynomial Ridge,Hist Gradient Boosting,p,0.03804045360045688,0.03804045360045688,True
+2023,Neural Network,Hist Gradient Boosting,p,0.9942115249166326,0.9942115249166326,True
+2019,Polynomial Ridge,Neural Network,anlamli,False,False,True
+2019,Polynomial Ridge,Hist Gradient Boosting,anlamli,False,False,True
+2019,Neural Network,Hist Gradient Boosting,anlamli,False,False,True
+2020,Polynomial Ridge,Neural Network,anlamli,False,False,True
+2020,Polynomial Ridge,Hist Gradient Boosting,anlamli,False,False,True
+2020,Neural Network,Hist Gradient Boosting,anlamli,False,False,True
+2021,Polynomial Ridge,Hist Gradient Boosting,anlamli,False,False,True
+2021,Polynomial Ridge,Extra Trees,anlamli,False,False,True
+2021,Hist Gradient Boosting,Extra Trees,anlamli,False,False,True
+2022,Neural Network,Polynomial Ridge,anlamli,False,False,True
+2022,Neural Network,Hist Gradient Boosting,anlamli,False,False,True
+2022,Polynomial Ridge,Hist Gradient Boosting,anlamli,False,False,True
+2023,Polynomial Ridge,Neural Network,anlamli,False,False,True
+2023,Polynomial Ridge,Hist Gradient Boosting,anlamli,True,True,True
+2023,Neural Network,Hist Gradient Boosting,anlamli,False,False,True
+2019,Polynomial Ridge,Neural Network,n_ham,25776,25776,True
+2019,Polynomial Ridge,Hist Gradient Boosting,n_ham,25776,25776,True
+2019,Neural Network,Hist Gradient Boosting,n_ham,25776,25776,True
+2020,Polynomial Ridge,Neural Network,n_ham,25887,25887,True
+2020,Polynomial Ridge,Hist Gradient Boosting,n_ham,25887,25887,True
+2020,Neural Network,Hist Gradient Boosting,n_ham,25887,25887,True
+2021,Polynomial Ridge,Hist Gradient Boosting,n_ham,25798,25798,True
+2021,Polynomial Ridge,Extra Trees,n_ham,25798,25798,True
+2021,Hist Gradient Boosting,Extra Trees,n_ham,25798,25798,True
+2022,Neural Network,Polynomial Ridge,n_ham,25774,25774,True
+2022,Neural Network,Hist Gradient Boosting,n_ham,25774,25774,True
+2022,Polynomial Ridge,Hist Gradient Boosting,n_ham,25774,25774,True
+2023,Polynomial Ridge,Neural Network,n_ham,25792,25792,True
+2023,Polynomial Ridge,Hist Gradient Boosting,n_ham,25792,25792,True
+2023,Neural Network,Hist Gradient Boosting,n_ham,25792,25792,True
+2019,Polynomial Ridge,Neural Network,n_kume,5418,5418,True
+2019,Polynomial Ridge,Hist Gradient Boosting,n_kume,5418,5418,True
+2019,Neural Network,Hist Gradient Boosting,n_kume,5418,5418,True
+2020,Polynomial Ridge,Neural Network,n_kume,5441,5441,True
+2020,Polynomial Ridge,Hist Gradient Boosting,n_kume,5441,5441,True
+2020,Neural Network,Hist Gradient Boosting,n_kume,5441,5441,True
+2021,Polynomial Ridge,Hist Gradient Boosting,n_kume,5421,5421,True
+2021,Polynomial Ridge,Extra Trees,n_kume,5421,5421,True
+2021,Hist Gradient Boosting,Extra Trees,n_kume,5421,5421,True
+2022,Neural Network,Polynomial Ridge,n_kume,5419,5419,True
+2022,Neural Network,Hist Gradient Boosting,n_kume,5419,5419,True
+2022,Polynomial Ridge,Hist Gradient Boosting,n_kume,5419,5419,True
+2023,Polynomial Ridge,Neural Network,n_kume,5422,5422,True
+2023,Polynomial Ridge,Hist Gradient Boosting,n_kume,5422,5422,True
+2023,Neural Network,Hist Gradient Boosting,n_kume,5422,5422,True
+2019,Polynomial Ridge,Neural Network,kumelenme,'time_utc (zaman damgasi); alti konum ayni damgada','time_utc (zaman damgasi); alti konum ayni damgada',True
+2019,Polynomial Ridge,Hist Gradient Boosting,kumelenme,'time_utc (zaman damgasi); alti konum ayni damgada','time_utc (zaman damgasi); alti konum ayni damgada',True
+2019,Neural Network,Hist Gradient Boosting,kumelenme,'time_utc (zaman damgasi); alti konum ayni damgada','time_utc (zaman damgasi); alti konum ayni damgada',True
+2020,Polynomial Ridge,Neural Network,kumelenme,'time_utc (zaman damgasi); alti konum ayni damgada','time_utc (zaman damgasi); alti konum ayni damgada',True
+2020,Polynomial Ridge,Hist Gradient Boosting,kumelenme,'time_utc (zaman damgasi); alti konum ayni damgada','time_utc (zaman damgasi); alti konum ayni damgada',True
+2020,Neural Network,Hist Gradient Boosting,kumelenme,'time_utc (zaman damgasi); alti konum ayni damgada','time_utc (zaman damgasi); alti konum ayni damgada',True
+2021,Polynomial Ridge,Hist Gradient Boosting,kumelenme,'time_utc (zaman damgasi); alti konum ayni damgada','time_utc (zaman damgasi); alti konum ayni damgada',True
+2021,Polynomial Ridge,Extra Trees,kumelenme,'time_utc (zaman damgasi); alti konum ayni damgada','time_utc (zaman damgasi); alti konum ayni damgada',True
+2021,Hist Gradient Boosting,Extra Trees,kumelenme,'time_utc (zaman damgasi); alti konum ayni damgada','time_utc (zaman damgasi); alti konum ayni damgada',True
+2022,Neural Network,Polynomial Ridge,kumelenme,'time_utc (zaman damgasi); alti konum ayni damgada','time_utc (zaman damgasi); alti konum ayni damgada',True
+2022,Neural Network,Hist Gradient Boosting,kumelenme,'time_utc (zaman damgasi); alti konum ayni damgada','time_utc (zaman damgasi); alti konum ayni damgada',True
+2022,Polynomial Ridge,Hist Gradient Boosting,kumelenme,'time_utc (zaman damgasi); alti konum ayni damgada','time_utc (zaman damgasi); alti konum ayni damgada',True
+2023,Polynomial Ridge,Neural Network,kumelenme,'time_utc (zaman damgasi); alti konum ayni damgada','time_utc (zaman damgasi); alti konum ayni damgada',True
+2023,Polynomial Ridge,Hist Gradient Boosting,kumelenme,'time_utc (zaman damgasi); alti konum ayni damgada','time_utc (zaman damgasi); alti konum ayni damgada',True
+2023,Neural Network,Hist Gradient Boosting,kumelenme,'time_utc (zaman damgasi); alti konum ayni damgada','time_utc (zaman damgasi); alti konum ayni damgada',True
+2019,Polynomial Ridge,Neural Network,fark_GA_alt,-1.2477085212513521,-1.2477085212513521,True
+2019,Polynomial Ridge,Hist Gradient Boosting,fark_GA_alt,-1.435065387704738,-1.435065387704738,True
+2019,Neural Network,Hist Gradient Boosting,fark_GA_alt,-0.9737515912230783,-0.9737515912230783,True
+2020,Polynomial Ridge,Neural Network,fark_GA_alt,-1.0017569651272702,-1.0017569651272702,True
+2020,Polynomial Ridge,Hist Gradient Boosting,fark_GA_alt,-1.2182409976206336,-1.2182409976206336,True
+2020,Neural Network,Hist Gradient Boosting,fark_GA_alt,-1.204924873750508,-1.204924873750508,True
+2021,Polynomial Ridge,Hist Gradient Boosting,fark_GA_alt,-1.017831443927543,-1.017831443927543,True
+2021,Polynomial Ridge,Extra Trees,fark_GA_alt,-1.7182710898488132,-1.7182710898488132,True
+2021,Hist Gradient Boosting,Extra Trees,fark_GA_alt,-1.2460786511608917,-1.2460786511608917,True
+2022,Neural Network,Polynomial Ridge,fark_GA_alt,-1.0556410047801201,-1.0556410047801201,True
+2022,Neural Network,Hist Gradient Boosting,fark_GA_alt,-1.70351676245186,-1.70351676245186,True
+2022,Polynomial Ridge,Hist Gradient Boosting,fark_GA_alt,-1.2014319036620142,-1.2014319036620142,True
+2023,Polynomial Ridge,Neural Network,fark_GA_alt,-1.70812911660992,-1.70812911660992,True
+2023,Polynomial Ridge,Hist Gradient Boosting,fark_GA_alt,-1.5055220933988522,-1.5055220933988522,True
+2023,Neural Network,Hist Gradient Boosting,fark_GA_alt,-0.9392073954275488,-0.9392073954275488,True
+2019,Polynomial Ridge,Neural Network,fark_GA_ust,0.0973248923628025,0.0973248923628025,True
+2019,Polynomial Ridge,Hist Gradient Boosting,fark_GA_ust,0.14336013167465325,0.14336013167465325,True
+2019,Neural Network,Hist Gradient Boosting,fark_GA_ust,0.7890641963386958,0.7890641963386958,True
+2020,Polynomial Ridge,Neural Network,fark_GA_ust,0.6774353627158773,0.6774353627158773,True
+2020,Polynomial Ridge,Hist Gradient Boosting,fark_GA_ust,0.34995220764781987,0.34995220764781987,True
+2020,Neural Network,Hist Gradient Boosting,fark_GA_ust,0.7215023625984478,0.7215023625984478,True
+2021,Polynomial Ridge,Hist Gradient Boosting,fark_GA_ust,0.42291343942490794,0.42291343942490794,True
+2021,Polynomial Ridge,Extra Trees,fark_GA_ust,-0.0847340449260766,-0.0847340449260766,True
+2021,Hist Gradient Boosting,Extra Trees,fark_GA_ust,0.12023771793993489,0.12023771793993489,True
+2022,Neural Network,Polynomial Ridge,fark_GA_ust,0.4129866335179001,0.4129866335179001,True
+2022,Neural Network,Hist Gradient Boosting,fark_GA_ust,0.15589406802287156,0.15589406802287156,True
+2022,Polynomial Ridge,Hist Gradient Boosting,fark_GA_ust,0.2172901676525959,0.2172901676525959,True
+2023,Polynomial Ridge,Neural Network,fark_GA_ust,0.16734802791620476,0.16734802791620476,True
+2023,Polynomial Ridge,Hist Gradient Boosting,fark_GA_ust,-0.09738996364109556,-0.09738996364109556,True
+2023,Neural Network,Hist Gradient Boosting,fark_GA_ust,0.7735629035546772,0.7735629035546772,True
+2019,Polynomial Ridge,Neural Network,GA_sifiri_iceriyor,True,True,True
+2019,Polynomial Ridge,Hist Gradient Boosting,GA_sifiri_iceriyor,True,True,True
+2019,Neural Network,Hist Gradient Boosting,GA_sifiri_iceriyor,True,True,True
+2020,Polynomial Ridge,Neural Network,GA_sifiri_iceriyor,True,True,True
+2020,Polynomial Ridge,Hist Gradient Boosting,GA_sifiri_iceriyor,True,True,True
+2020,Neural Network,Hist Gradient Boosting,GA_sifiri_iceriyor,True,True,True
+2021,Polynomial Ridge,Hist Gradient Boosting,GA_sifiri_iceriyor,True,True,True
+2021,Polynomial Ridge,Extra Trees,GA_sifiri_iceriyor,False,False,True
+2021,Hist Gradient Boosting,Extra Trees,GA_sifiri_iceriyor,True,True,True
+2022,Neural Network,Polynomial Ridge,GA_sifiri_iceriyor,True,True,True
+2022,Neural Network,Hist Gradient Boosting,GA_sifiri_iceriyor,True,True,True
+2022,Polynomial Ridge,Hist Gradient Boosting,GA_sifiri_iceriyor,True,True,True
+2023,Polynomial Ridge,Neural Network,GA_sifiri_iceriyor,True,True,True
+2023,Polynomial Ridge,Hist Gradient Boosting,GA_sifiri_iceriyor,False,False,True
+2023,Neural Network,Hist Gradient Boosting,GA_sifiri_iceriyor,True,True,True
+2019,Polynomial Ridge,Neural Network,kaynak_dizin,'dm_kalan','dm_kalan',True
+2019,Polynomial Ridge,Hist Gradient Boosting,kaynak_dizin,'dm_kalan','dm_kalan',True
+2019,Neural Network,Hist Gradient Boosting,kaynak_dizin,'dm_kalan','dm_kalan',True
+2020,Polynomial Ridge,Neural Network,kaynak_dizin,'dm_kalan','dm_kalan',True
+2020,Polynomial Ridge,Hist Gradient Boosting,kaynak_dizin,'dm_kalan','dm_kalan',True
+2020,Neural Network,Hist Gradient Boosting,kaynak_dizin,'dm_kalan','dm_kalan',True
+2021,Polynomial Ridge,Hist Gradient Boosting,kaynak_dizin,'dm_kalan','dm_kalan',True
+2021,Polynomial Ridge,Extra Trees,kaynak_dizin,'dm_kalan','dm_kalan',True
+2021,Hist Gradient Boosting,Extra Trees,kaynak_dizin,'dm_kalan','dm_kalan',True
+2022,Neural Network,Polynomial Ridge,kaynak_dizin,'dm2022','dm2022',True
+2022,Neural Network,Hist Gradient Boosting,kaynak_dizin,'dm2022','dm2022',True
+2022,Polynomial Ridge,Hist Gradient Boosting,kaynak_dizin,'dm2022','dm2022',True
+2023,Polynomial Ridge,Neural Network,kaynak_dizin,'dm_kalan','dm_kalan',True
+2023,Polynomial Ridge,Hist Gradient Boosting,kaynak_dizin,'dm_kalan','dm_kalan',True
+2023,Neural Network,Hist Gradient Boosting,kaynak_dizin,'dm_kalan','dm_kalan',True
+2019,Polynomial Ridge,Neural Network,en_iyi,'Polynomial Ridge','Polynomial Ridge',True
+2019,Polynomial Ridge,Hist Gradient Boosting,en_iyi,'Polynomial Ridge','Polynomial Ridge',True
+2019,Neural Network,Hist Gradient Boosting,en_iyi,'Polynomial Ridge','Polynomial Ridge',True
+2020,Polynomial Ridge,Neural Network,en_iyi,'Polynomial Ridge','Polynomial Ridge',True
+2020,Polynomial Ridge,Hist Gradient Boosting,en_iyi,'Polynomial Ridge','Polynomial Ridge',True
+2020,Neural Network,Hist Gradient Boosting,en_iyi,'Polynomial Ridge','Polynomial Ridge',True
+2021,Polynomial Ridge,Hist Gradient Boosting,en_iyi,'Polynomial Ridge','Polynomial Ridge',True
+2021,Polynomial Ridge,Extra Trees,en_iyi,'Polynomial Ridge','Polynomial Ridge',True
+2021,Hist Gradient Boosting,Extra Trees,en_iyi,'Polynomial Ridge','Polynomial Ridge',True
+2022,Neural Network,Polynomial Ridge,en_iyi,'Neural Network','Neural Network',True
+2022,Neural Network,Hist Gradient Boosting,en_iyi,'Neural Network','Neural Network',True
+2022,Polynomial Ridge,Hist Gradient Boosting,en_iyi,'Neural Network','Neural Network',True
+2023,Polynomial Ridge,Neural Network,en_iyi,'Polynomial Ridge','Polynomial Ridge',True
+2023,Polynomial Ridge,Hist Gradient Boosting,en_iyi,'Polynomial Ridge','Polynomial Ridge',True
+2023,Neural Network,Hist Gradient Boosting,en_iyi,'Polynomial Ridge','Polynomial Ridge',True
+2019,Polynomial Ridge,Neural Network,ikinci,'Neural Network','Neural Network',True
+2019,Polynomial Ridge,Hist Gradient Boosting,ikinci,'Neural Network','Neural Network',True
+2019,Neural Network,Hist Gradient Boosting,ikinci,'Neural Network','Neural Network',True
+2020,Polynomial Ridge,Neural Network,ikinci,'Neural Network','Neural Network',True
+2020,Polynomial Ridge,Hist Gradient Boosting,ikinci,'Neural Network','Neural Network',True
+2020,Neural Network,Hist Gradient Boosting,ikinci,'Neural Network','Neural Network',True
+2021,Polynomial Ridge,Hist Gradient Boosting,ikinci,'Hist Gradient Boosting','Hist Gradient Boosting',True
+2021,Polynomial Ridge,Extra Trees,ikinci,'Hist Gradient Boosting','Hist Gradient Boosting',True
+2021,Hist Gradient Boosting,Extra Trees,ikinci,'Hist Gradient Boosting','Hist Gradient Boosting',True
+2022,Neural Network,Polynomial Ridge,ikinci,'Polynomial Ridge','Polynomial Ridge',True
+2022,Neural Network,Hist Gradient Boosting,ikinci,'Polynomial Ridge','Polynomial Ridge',True
+2022,Polynomial Ridge,Hist Gradient Boosting,ikinci,'Polynomial Ridge','Polynomial Ridge',True
+2023,Polynomial Ridge,Neural Network,ikinci,'Neural Network','Neural Network',True
+2023,Polynomial Ridge,Hist Gradient Boosting,ikinci,'Neural Network','Neural Network',True
+2023,Neural Network,Hist Gradient Boosting,ikinci,'Neural Network','Neural Network',True
+2019,Polynomial Ridge,Neural Network,kazanan_ikinci_cifti,True,True,True
+2019,Polynomial Ridge,Hist Gradient Boosting,kazanan_ikinci_cifti,False,False,True
+2019,Neural Network,Hist Gradient Boosting,kazanan_ikinci_cifti,False,False,True
+2020,Polynomial Ridge,Neural Network,kazanan_ikinci_cifti,True,True,True
+2020,Polynomial Ridge,Hist Gradient Boosting,kazanan_ikinci_cifti,False,False,True
+2020,Neural Network,Hist Gradient Boosting,kazanan_ikinci_cifti,False,False,True
+2021,Polynomial Ridge,Hist Gradient Boosting,kazanan_ikinci_cifti,True,True,True
+2021,Polynomial Ridge,Extra Trees,kazanan_ikinci_cifti,False,False,True
+2021,Hist Gradient Boosting,Extra Trees,kazanan_ikinci_cifti,False,False,True
+2022,Neural Network,Polynomial Ridge,kazanan_ikinci_cifti,True,True,True
+2022,Neural Network,Hist Gradient Boosting,kazanan_ikinci_cifti,False,False,True
+2022,Polynomial Ridge,Hist Gradient Boosting,kazanan_ikinci_cifti,False,False,True
+2023,Polynomial Ridge,Neural Network,kazanan_ikinci_cifti,True,True,True
+2023,Polynomial Ridge,Hist Gradient Boosting,kazanan_ikinci_cifti,False,False,True
+2023,Neural Network,Hist Gradient Boosting,kazanan_ikinci_cifti,False,False,True
+2019,Polynomial Ridge,Neural Network,dipnot,nan,nan,True
+2019,Polynomial Ridge,Hist Gradient Boosting,dipnot,nan,nan,True
+2019,Neural Network,Hist Gradient Boosting,dipnot,nan,nan,True
+2020,Polynomial Ridge,Neural Network,dipnot,nan,nan,True
+2020,Polynomial Ridge,Hist Gradient Boosting,dipnot,nan,nan,True
+2020,Neural Network,Hist Gradient Boosting,dipnot,nan,nan,True
+2021,Polynomial Ridge,Hist Gradient Boosting,dipnot,nan,nan,True
+2021,Polynomial Ridge,Extra Trees,dipnot,'son basamagi baska kosuda birebir tekrarlanmayabilir: Extra Trees','son basamagi baska kosuda birebir tekrarlanmayabilir: Extra Trees',True
+2021,Hist Gradient Boosting,Extra Trees,dipnot,'son basamagi baska kosuda birebir tekrarlanmayabilir: Extra Trees','son basamagi baska kosuda birebir tekrarlanmayabilir: Extra Trees',True
+2022,Neural Network,Polynomial Ridge,dipnot,nan,nan,True
+2022,Neural Network,Hist Gradient Boosting,dipnot,nan,nan,True
+2022,Polynomial Ridge,Hist Gradient Boosting,dipnot,nan,nan,True
+2023,Polynomial Ridge,Neural Network,dipnot,nan,nan,True
+2023,Polynomial Ridge,Hist Gradient Boosting,dipnot,nan,nan,True
+2023,Neural Network,Hist Gradient Boosting,dipnot,nan,nan,True
