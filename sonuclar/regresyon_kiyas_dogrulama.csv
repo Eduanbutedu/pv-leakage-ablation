@@ -1,0 +1,9 @@
+referans,yeni,anahtar,nondet,hucre,alan,karsilastirma,birebir,fark,fark_beklenen_nondet,fark_beklenmeyen,fark_modeller,maks_bagil_fark,okuma,negatif_kontrol
+sonuclar/ablasyon.csv,sonuclar/ablasyon_regresyon.csv,"varyant,model,test_yil",,126,9,1134,1134,0,0,0,,0.0,round_trip,gecti (oku-yaz fark kumesini korudu; `RMSE` +1 ULP -> 1 yeni fark)
+sonuclar/ablasyon.csv,sonuclar/ablasyon_regresyon2.csv,"varyant,model,test_yil",,126,9,1134,1134,0,0,0,,0.0,round_trip,gecti (oku-yaz fark kumesini korudu; `RMSE` +1 ULP -> 1 yeni fark)
+sonuclar/ablasyon.csv,sonuclar/ablasyon_dm_ana.csv,"varyant,model,test_yil",,126,9,1134,1134,0,0,0,,0.0,round_trip,gecti (oku-yaz fark kumesini korudu; `RMSE` +1 ULP -> 1 yeni fark)
+sonuclar/ablasyon_pvgis_indirgenmis.csv,sonuclar/ablasyon_dm_pvgis_indirgenmis.csv,"varyant,model,test_yil",,126,9,1134,1134,0,0,0,,0.0,round_trip,gecti (oku-yaz fark kumesini korudu; `RMSE` +1 ULP -> 1 yeni fark)
+sonuclar/ablasyon_dkasc.csv,sonuclar/ablasyon_dm_dkasc.csv,"varyant,model,test_yil",,90,9,810,810,0,0,0,,0.0,round_trip,gecti (oku-yaz fark kumesini korudu; `RMSE` +1 ULP -> 1 yeni fark)
+sonuclar/doygunluk.csv,sonuclar/doygunluk_dm.csv,"kol,pencere,test_yil,model,tohum",,75,13,975,975,0,0,0,,0.0,round_trip,gecti (oku-yaz fark kumesini korudu; `RMSE` +1 ULP -> 1 yeni fark)
+sonuclar/doygunluk_genis.csv,sonuclar/doygunluk_dm2022.csv,"kol,pencere,test_yil,model,tohum","Extra Trees,Random Forest",10,13,130,127,3,3,0,Extra Trees,2.0845619831928644e-16,round_trip,gecti (oku-yaz fark kumesini korudu; `RMSE` +1 ULP -> 1 yeni fark)
+sonuclar/doygunluk_genis.csv,sonuclar/doygunluk_dm_kalan.csv,"kol,pencere,test_yil,model,tohum","Extra Trees,Random Forest",40,13,520,510,10,10,0,Extra Trees;Random Forest,1.069431665966084e-15,round_trip,gecti (oku-yaz fark kumesini korudu; `RMSE` +1 ULP -> 1 yeni fark)
