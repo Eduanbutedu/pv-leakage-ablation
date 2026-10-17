@@ -237,6 +237,11 @@ pv10/
 arac/
   nondeterminizm.py        teshis: ayni hucre x tekrar x surec, tahmin sha256
   nondeterminizm_karar.py  yorum kurali (sonuc gorulmeden) + karar tablosu
+  coklu_test.py            Holm/BH, mevcut p'ler uzerinden [on-kayit SONRASI]
+  tablolari_uret.py        Tablo 5-9'u CSV'lerden uretir, makaleyle kiyaslar
+sekiller/
+  sekil_uret.py            F1, F2 (sunum; gomulu kontrol tutmazsa cizmez)
+  f1_veri.py               F1 cizim verisi -> sekiller/F1_veri/*.csv
 ```
 
 `arac/` DENEY DEGIL TESHIS icindir; makalenin hicbir sayisini uretmez ve

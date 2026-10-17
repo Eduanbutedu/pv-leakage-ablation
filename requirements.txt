@@ -8,3 +8,7 @@ scikit-learn==1.9.0
 # f722a717bac502c2 iki surumde de ayni; invaryant kapisi 18/18 gecti.
 pyarrow==22.0.0
 requests==2.34.2
+# Eksikti: pv10/ranking.py (Faz 3) ve arac/coklu_test.py scipy kullaniyor;
+# sekiller/sekil_uret.py matplotlib kullaniyor. Surumler kosu ortamindan.
+scipy==1.18.0
+matplotlib==3.11.2
