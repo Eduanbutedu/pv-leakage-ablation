@@ -54,6 +54,7 @@ tutulacak.
     K=tum x 2019/2020/2021/2023 x 10 model. `sonuclar/doygunluk_dm_kalan.csv`
     Genis kosuyla 510/520 alan birebir; farkli cikan 10 alanin hepsi 1-2 ULP
     ve yalnizca Random Forest ile Extra Trees'te (asagiya bak).
+    [sonradan eklendi - 17 Ekim 2026] "1-2 ULP" eksik: bagil fark 1,5e-15'in altinda: dogrudan hesaplanan metriklerde 1-2 ULP, turetilmis `skill` alaninda 8 ULP'ye kadar (Random Forest 2020: 19.932346077995252 -> 19.932346077995280, bagil 1,43e-15).
   - **Yil ici DM (bes yil, ilk uc model) TAMAM. 15 karsilastirma, 1 anlamli.**
     KAZANAN-IKINCI FARKI HICBIR YILDA ANLAMLI DEGIL - 0/5:
     2019 p=0,155011 | 2020 p=0,742136 | 2021 p=0,432974 |
@@ -86,6 +87,7 @@ tutulacak.
   oynamasinin sebebi bu - hucre sayisi degil, yuvarlamanin nereye dustugu.
   Etkilenen alanlar 1-2 ULP (bagil ~2e-16); `egitim_n`, `n`, `isinma`,
   `egitim_basla`, `RMSE_persistence` her hucrede TAM ESIT.
+  [sonradan eklendi - 17 Ekim 2026] "1-2 ULP (bagil ~2e-16)" eksik: bagil fark 1,5e-15'in altinda: dogrudan hesaplanan metriklerde 1-2 ULP, turetilmis `skill` alaninda 8 ULP'ye kadar (Random Forest 2020: 19.932346077995252 -> 19.932346077995280, bagil 1,43e-15).
   Raporlanan hicbir sayi etkilenmiyor. Yalniz 2021'in ucuncu modeli Extra
   Trees oldugu icin o DM satirinin son basamagi baska kosuda birebir
   tekrarlanmayabilir; kazanan-ikinci ciftleri etkilenmiyor.

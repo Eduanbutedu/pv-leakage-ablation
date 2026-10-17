@@ -411,6 +411,8 @@ Neighbours, Linear Regression, Neural Network, Polynomial Ridge, SGD
 Regression) 13 alanin 13'unde de TAM ESIT. `egitim_n`, `n`, `isinma`,
 `egitim_basla`, `RMSE_persistence` her hucrede tam esit.
 
+`[sonradan eklendi - 17 Ekim 2026]` "Hepsi 1-2 ULP" eksik: bagil fark 1,5e-15'in altinda: dogrudan hesaplanan metriklerde 1-2 ULP, turetilmis `skill` alaninda 8 ULP'ye kadar (Random Forest 2020: 19.932346077995252 -> 19.932346077995280, bagil 1,43e-15). Tablodaki `skill` satirinin farki (2.842171e-14) o degerde 8 ULP'dir; `nRMSE_kapasite` 2 ULP, kalan sekiz alan 1 ULP.
+
 Bu, pyarrow surum degisiminin metrikleri kimildatmadiginin kanitidir: surum
 degisseydi butun modeller etkilenirdi, sekiz model bit duzeyinde ayni cikmazdi.
 
@@ -1156,6 +1158,7 @@ sabite karsi kontrol eder. Veri sessizce degisirse ozet bunu yazar.
 1. **Random Forest ve Extra Trees surec ici nondeterminist.** Olculdu ve
    kapatildi (yukariya bak). Sapma 1-2 ULP (bagil ~2e-16) ve raporlanan
    hicbir sayiyi etkilemiyor.
+   `[sonradan eklendi - 17 Ekim 2026]` "1-2 ULP (bagil ~2e-16)" eksik: bagil fark 1,5e-15'in altinda: dogrudan hesaplanan metriklerde 1-2 ULP, turetilmis `skill` alaninda 8 ULP'ye kadar (Random Forest 2020: 19.932346077995252 -> 19.932346077995280, bagil 1,43e-15).
 
    Belirsizligin siniri OLCULDU: nondeterminizm `hucre_kos` icinde, model FIT
    edilirken doguyor. Ondan sonraki zincir (kaydedilmis tahmin -> DM -> ozet)
