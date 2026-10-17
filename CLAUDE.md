@@ -248,6 +248,7 @@ arac/
   nondeterminizm.py        teshis: ayni hucre x tekrar x surec, tahmin sha256
   nondeterminizm_karar.py  yorum kurali (sonuc gorulmeden) + karar tablosu
   uc_dm.py                 egri uclari esli DM surucusu -> doygunluk_ozet_dm.csv
+  dm_matris.py             yil ici DM, 10 modelin 45 ciftinin hepsi -> dm_matris_havuz10.csv [on-kayit SONRASI]
   csv_karsilastir.py       toleranssiz tablo kiyasi: bayt + alan (round_trip) + negatif kontrol
   coklu_test.py            Holm/BH, mevcut p'ler uzerinden [on-kayit SONRASI]
   tablolari_uret.py        Tablo 5-9'u CSV'lerden uretir, makaleyle kiyaslar
@@ -270,6 +271,9 @@ Makale sayisi ureten betikler:
   kazanan-ikinci 0/5 ve bes p-degeri (ozetteki "none of five years").
 - `uc_dm.py` -> `doygunluk_ozet_dm.csv`: Bolum 5.5 hacim etkisi (HGB 15/15,
   PolyRidge 15/15, LR 5/15; esli 35/45 vs marjinal GA 45/45 cakisma).
+- `dm_matris.py` -> `dm_matris_havuz10.csv`: yil ici DM matrisi, 5 yil x 45
+  cift, yil ici Holm [on-kayit SONRASI]; kazanan-ikinci p'leri dm_yil ile
+  birebir.
 - `coklu_test.py` -> `coklu_test_{ozet,iddialar,detay}.csv`: coklu test
   duzeltmesi alt bolumu [on-kayit SONRASI].
 - `tablolari_uret.py` -> yeni sayi uretmez; Tablo 5-9'u CSV'lerden yeniden

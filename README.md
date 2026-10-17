@@ -252,6 +252,7 @@ python run_doygunluk.py --modeller tumu --kol kaydirmali --pencere tum \
     --yillar 2019,2020,2021,2023 --etiket dm_kalan --tahmin-kaydet            # 40 cells
 python -m arac.uc_dm         # learning-curve ends, 45 paired DM -> sonuclar/doygunluk_ozet_dm.csv
 python -m arac.dm_yil        # within-year DM, five years -> sonuclar/doygunluk_ozet_dm_yil.csv
+python -m arac.dm_matris     # all 45 pairs x five years, Holm within year -> sonuclar/dm_matris_havuz10.csv [post-pre-registration]
 python run_doygunluk.py --ozet
 ```
 
