@@ -70,8 +70,17 @@ def _arizasiz(d: pd.DataFrame) -> pd.DataFrame:
     ozdeslik ariza satirlarini iceriyordu, loglanan RMSE icermiyordu ve
     DKASC 2018'in uc hucresi (o yilin tek ariza saati) dustu.
     PVGIS tablosunda bu sutun yoktur; orada filtre islemsizdir.
+
+    `k8a` (kural 8a, on-kayit SONRASI duyarlilik analizi): sutun yalnizca
+    `--kural-8a` ile kosulmus izgaranin tahminlerinde vardir ve ayni
+    sebeple ayni yerde dislanir. Ana tahminlerde sutun yok; filtre
+    islemsizdir.
     """
-    return d[~d["ariza"].to_numpy()] if "ariza" in d.columns else d
+    if "ariza" in d.columns:
+        d = d[~d["ariza"].to_numpy()]
+    if "k8a" in d.columns:
+        d = d[~d["k8a"].to_numpy()]
+    return d
 
 
 def gunduz(d: pd.DataFrame) -> pd.DataFrame:

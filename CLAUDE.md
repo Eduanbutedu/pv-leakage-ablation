@@ -147,6 +147,10 @@ tutulacak.
   harfiyen tuttu, kullanici karariyla kosuldu: `ablasyon_dkasc_m3a.csv`,
   `ablasyon_belirsizlik_dm_dkasc_m3a_*`.
   **Kural 8a hic uygulanmadi** (M6_B dahil); sapma olarak kaydedildi.
+  On-kayit SONRASI 8a duyarlilik analizi (yalniz M6_B, bayrakli gun yalniz
+  degerlendirmeden cikar): `run_ablasyon.py --kural-8a`,
+  `ablasyon_dkasc_k8a.csv`, `ablasyon_belirsizlik_dm_dkasc_k8a_*`. Ana
+  sonuclar 8a'SIZ kalir; ayrinti DKASC faz notu.
   `dkasc_pipeline.py ... --dizi m6b|m15a|m3a`; kapasite veriden secilir
   (`evaluate.kapasite_w_bul`).
 - Kalan:

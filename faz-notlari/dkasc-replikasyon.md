@@ -979,6 +979,80 @@ farkli deneyin hucreleri ayni tabloda karisirsa ozet ortalamalari kirlenir.
 
 ---
 
+## On-kayit SONRASI duyarlilik analizi: kural 8a  `[SONRADAN eklendi - 22 Ekim 2026]`
+
+**Bu bir on-kayit SONRASI duyarlilik analizidir.** Kural 8a on-kayitta
+vardi ama hic uygulanmadi (madde 17). Kural bu analiz icin, M6_B'nin 8a'siz
+sonuclari GORULDUKTEN SONRA kodlandi. Ana sonuclar (Tablo 6-7, F2, ozet
+sayilari) 8a'SIZ kalir; bu bolum yalnizca o sonuclarin 8a'ya duyarliligini
+gosterir.
+
+**Kural 8a'nin ne yaptigi on-kayitta yazmiyordu.** Esik tanimliydi, bayrakli
+gunun akibeti tanimli degildi. Kullanici karari (22 Ekim 2026, 8a sonucu
+gorulmeden): kural 7 ile ayni desen - bayrakli gun **degerlendirmeden
+cikar, egitimden ASLA**.
+
+Uygulama (`pv10/experiment.py:k8a_bayragi`, `hucre_kos(kural_8a=True)`,
+`run_ablasyon.py --kural-8a`):
+- esik = `DKASC_K8A_ORAN` (0,3) x egitim bolmesinin gunduz medyani
+  (`H_sun > 0`, `ariza` disi, `kismi` disi); hucre basina yeniden, bolme
+  `rastgele_kfold` ise karistirilmis egitim bolmesinden;
+- gunun medyani o yerel takvim gununun gunduz satirlarindan; medyani esigin
+  altindaki gunun butun satirlari test maskesinden duser;
+- tahmin dosyalarina `k8a` sutunu yazilir, `ablasyon_dm._arizasiz` onu da
+  disar.
+
+**Kapilar:**
+- Kontrol: kronolojik bolmede bayrakli test gunu sayisi bagimsiz olcumle
+  (kurallar belgesi, karar 6) bes yilda da birebir: 11 / 3 / 8 / 12 / 15.
+  Negatif kontrol: oran 0,6'ya zorlaninca 2018 36 gun verdi (11 degil).
+- Varsayilan yol degismedi: 8a KAPALI M6_B izgarasi
+  (`ablasyon_dkasc_k8a_kapali_regresyon.csv`) ana logla 810/810 alan,
+  `egitim_sn` dusuldugunde bayt duzeyinde ayni; `ablasyon_dm` yeni filtreyle
+  ana tahminlerden uc tabloyu bayt duzeyinde ayni uretti.
+- 8a kosusu: `dkasc_k8a` (4,0 dk) ve `dm_dkasc_k8a` (3,0 dk, tahmin
+  kaydiyla) 810/810 birebir; sinif B kapisi GECTI (maks |sinifB_payi|
+  5,684e-14), ayristirma hatasi maks 5,684e-14.
+
+**Degerlendirmeden dusen satir** (Linear Regression hucreleri; `n` farki):
+
+| test yili | temiz | eszaman | rastgele_kfold | gece | olcekleyici | enkotu |
+|---|---|---|---|---|---|---|
+| 2018 | 123 | 123 | 132 | 243 | 123 | 246 |
+| 2019 | 35 | 35 | 89 | 72 | 35 | 167 |
+| 2020 | 90 | 90 | 100 | 177 | 90 | 195 |
+| 2021 | 127 | 127 | 96 | 261 | 127 | 185 |
+| 2022 | 175 | 175 | 111 | 357 | 175 | 221 |
+
+`temiz` toplam degerlendirme satiri 19.285 -> 18.735 (-550, %2,85).
+
+**Tablo 6 - sisme orani** (hucre basina RMSE_varyant / RMSE_temiz, ortalama):
+
+| varyant | M6_B ana | M6_B 8a |
+|---|---|---|
+| eszaman | 0,208245 | 0,234864 |
+| rastgele_kfold | 0,917927 | 0,927155 |
+| gece | 0,707752 | 0,708707 |
+| olcekleyici | 1,001597 | 1,001554 |
+| enkotu | 0,217019 | 0,218582 |
+
+**Tablo 7 - `rastgele_kfold` A etkisi** (% kapasite; oran = / PVGIS tam):
+
+| model | M6_B ana | M6_B 8a | oran ana | oran 8a |
+|---|---|---|---|---|
+| Linear Regression | -0,052666 | -0,049649 | 10,54 | 9,94 |
+| Polynomial Ridge | -0,611809 | -0,460246 | 5,62 | 4,23 |
+| Hist Gradient Boosting | -2,412188 | -1,940770 | 3,82 | 3,08 |
+
+**Maskeleme** (`rastgele_kfold`, ham p < 0,05): A anlamli 13/15 -> 11/15;
+kaybolan 4 -> 4; kaybolan ve isaret ters 0 -> 0; anlamli ve isaret ters
+2 -> 2.
+
+Cikti: `sonuclar/ablasyon_dkasc_k8a.csv`, `ablasyon_dm_dkasc_k8a.csv`,
+`ablasyon_belirsizlik_dm_dkasc_k8a_{dm,bootstrap,gece_ozdeslik}.csv`.
+
+---
+
 ## Calistirma
 
     python dkasc_pipeline.py dogrula ham/dkasc

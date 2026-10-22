@@ -20,8 +20,8 @@ import pandas as pd
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
 
-from .config import (ESZAMAN_DEGISKEN, GECIKMELI_DEGISKEN, KAPASITE_W, SEED,
-                     SIZINTI_VARYANTLARI)
+from .config import (DKASC_K8A_ORAN, DKASC_UTC_OFSET, ESZAMAN_DEGISKEN,
+                     GECIKMELI_DEGISKEN, KAPASITE_W, SEED, SIZINTI_VARYANTLARI)
 from .evaluate import gunduz_maskesi, metrikler
 from .features import oznitelik_kolonlari, oznitelik_uret
 from .models import modeller
@@ -90,10 +90,40 @@ def tahmin_dosyasi(dizin, varyant_ad: str, model_ad: str, test_yil: int):
     return dizin / f"{varyant_ad}__{model_ad.replace(' ', '_')}__{test_yil}.parquet"
 
 
+def k8a_bayragi(o: pd.DataFrame, tr: np.ndarray) -> np.ndarray:
+    """Kural 8a - kismi ariza gunu bayragi, satir basina (o ile hizali).
+
+    Esik = DKASC_K8A_ORAN x EGITIM bolmesinin gunduz medyani (`H_sun > 0`,
+    `ariza` disi); yalnizca `tr` satirlarindan, hucre basina yeniden - bolme
+    `rastgele_kfold` ise karistirilmis egitim bolmesi. Gunun medyani o yerel
+    takvim gununun gunduz satirlarindan alinir; bir gunun medyani yalnizca
+    o gunun kendi verisini kullanir. Medyani altinda kalan gunun BUTUN
+    satirlari bayraklanir. Gunduz satiri olmayan gun bayraklanmaz.
+
+    ON-KAYIT SONRASI duyarlilik analizi icindir; ana sonuclar 8a'SIZDIR.
+    """
+    if "ariza" not in o.columns:
+        raise ValueError("kural 8a yalnizca DKASC tablosunda tanimli "
+                         "(`ariza` sutunu yok)")
+    gunduz = ((o["H_sun"] > 0) & ~o["ariza"]).to_numpy()
+    egitim = np.zeros(len(o), dtype=bool)
+    egitim[tr] = True
+    esik = DKASC_K8A_ORAN * float(np.median(o["y"].to_numpy()[gunduz & egitim]))
+    gun = (o["time_utc"] + pd.Timedelta(hours=DKASC_UTC_OFSET)).dt.normalize()
+    medyan = o["y"][gunduz].groupby(gun[gunduz]).median()
+    bayrakli = set(medyan.index[medyan < esik])
+    return gun.isin(bayrakli).to_numpy()
+
+
 def hucre_kos(onbellek: OznitelikOnbellegi, varyant_ad: str, model_ad: str,
               test_yil: int, kapasite_w: float = KAPASITE_W,
-              tahmin_dizin=None) -> dict:
-    """Tek bir (varyant, model, yil) hucresini kosar ve metrikleri dondurur."""
+              tahmin_dizin=None, kural_8a: bool = False) -> dict:
+    """Tek bir (varyant, model, yil) hucresini kosar ve metrikleri dondurur.
+
+    kural_8a=True: kismi ariza gunleri (`k8a_bayragi`) DEGERLENDIRMEDEN
+    cikarilir, egitimden ASLA. Varsayilan False; kapaliyken kod yolu
+    degismez.
+    """
     v = SIZINTI_VARYANTLARI[varyant_ad]
     o, X = onbellek.al(v["eszaman"])
 
@@ -135,6 +165,9 @@ def hucre_kos(onbellek: OznitelikOnbellegi, varyant_ad: str, model_ad: str,
     # ASLA. Gece satiri dersinin aynisi - filtre yalnizca ciktida.
     if "ariza" in test_satirlari.columns:
         maske = maske & ~test_satirlari["ariza"].to_numpy()
+    if kural_8a:
+        k8a = k8a_bayragi(o, tr)[te]
+        maske = maske & ~k8a
     pers = test_satirlari["persistence"].to_numpy()
 
     m = metrikler(yte[maske], tahmin[maske], pers[maske], kapasite_w=kapasite_w)
@@ -157,7 +190,7 @@ def hucre_kos(onbellek: OznitelikOnbellegi, varyant_ad: str, model_ad: str,
         # tablosunda sutun yoktur; orada False yazilir.
         ar = (test_satirlari["ariza"].to_numpy() if "ariza" in test_satirlari
               else np.zeros(len(test_satirlari), dtype=bool))
-        pd.DataFrame({
+        kayit = pd.DataFrame({
             "konum": test_satirlari["konum"].to_numpy(),
             "time_utc": test_satirlari["time_utc"].to_numpy(),
             "H_sun": test_satirlari["H_sun"].to_numpy(),
@@ -165,10 +198,18 @@ def hucre_kos(onbellek: OznitelikOnbellegi, varyant_ad: str, model_ad: str,
             "y": yte,
             "persistence": pers,
             "tahmin": tahmin,
-        }).to_parquet(yol, index=False)
+        })
+        # 8a acikken bayrak da yazilir; `ablasyon_dm` sutun varsa dislar.
+        # Kapaliyken sutun YOK - eski tahmin dosyalariyla ayni sema.
+        if kural_8a:
+            kayit["k8a"] = k8a
+        kayit.to_parquet(yol, index=False)
 
-    return dict(varyant=varyant_ad, model=model_ad, test_yil=test_yil,
-                egitim_n=len(tr), **m, egitim_sn=round(sure, 1))
+    satir = dict(varyant=varyant_ad, model=model_ad, test_yil=test_yil,
+                 egitim_n=len(tr), **m, egitim_sn=round(sure, 1))
+    if kural_8a:
+        satir["k8a_test_saat"] = int(k8a.sum())
+    return satir
 
 
 # --------------------------------------------------------------------------- #
@@ -179,7 +220,7 @@ def izgara_kos(ham: pd.DataFrame, varyantlar: list[str], model_adlari: list[str]
                gecikmeli: tuple[str, ...] = GECIKMELI_DEGISKEN,
                eszaman_degisken: tuple[str, ...] = ESZAMAN_DEGISKEN,
                kapasite_w: float = KAPASITE_W,
-               tahmin_dizin=None) -> pd.DataFrame:
+               tahmin_dizin=None, kural_8a: bool = False) -> pd.DataFrame:
     """Izgarayi kosar. Tamamlanmis hucreler log dosyasindan okunup atlanir."""
     onbellek = OznitelikOnbellegi(ham, gecikmeli, eszaman_degisken)
 
@@ -203,7 +244,8 @@ def izgara_kos(ham: pd.DataFrame, varyantlar: list[str], model_adlari: list[str]
                 try:
                     satir = hucre_kos(onbellek, varyant, model_ad, yil,
                                       kapasite_w=kapasite_w,
-                                      tahmin_dizin=tahmin_dizin)
+                                      tahmin_dizin=tahmin_dizin,
+                                      kural_8a=kural_8a)
                 except Exception as e:  # bir hucre patlarsa izgara devam etmeli
                     ilerleme(f"{etiket} -> HATA: {type(e).__name__}: {e}")
                     continue

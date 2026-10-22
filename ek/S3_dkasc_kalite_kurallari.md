@@ -146,6 +146,23 @@ the training split never saw that month.
 > Indicative per-fold counts (threshold from the training split; evaluation
 > population) are 3-19 flagged test days per year for M6_B and M15_A
 > (decision 6 in the rules document).
+>
+> **Post-registration sensitivity analysis** `[added later — 22 Oct 2026]`.
+> Rule 8a was coded afterwards, *after* the M6_B results without it had been
+> seen, and the M6_B ablation was re-run once with it. This is a sensitivity
+> analysis, not a pre-registered result; the reported numbers stay without
+> rule 8a. The pre-registration fixed the threshold but not what a flagged
+> day does; following rule 7, a flagged day is **excluded from evaluation,
+> never from training** (decided before the rule-8a result existed). The
+> threshold is recomputed per cell from that cell's training split (the
+> shuffled one under *shuffled split*). It removed 550 of 19,285 clean
+> evaluation hours (2.85 %). With rule 8a, M6_B: inflation ratio
+> contemporaneous 0.2082 → 0.2349, shuffled split 0.9179 → 0.9272, night
+> 0.7078 → 0.7087, global scaling 1.0016 → 1.0016, worst case 0.2170 →
+> 0.2186; population-free effect A of shuffled splitting, % of capacity:
+> LR −0.0527 → −0.0496, Polynomial Ridge −0.6118 → −0.4602, HGB −2.4122 →
+> −1.9408; A significant 13/15 → 11/15, vanishing 4 → 4, sign reversed
+> 2 → 2.
 
 *(Rule 8b — a physical `power / GTI` threshold — was evaluated and
 **rejected**, because it rests on GTI, whose plane was measured and found

@@ -255,6 +255,11 @@ DKASC_ARIZA_GHI = 200.0        # kural 7: GHI > 200 iken P == 0 -> ariza
 DKASC_T_ALT, DKASC_T_UST = -10.0, 50.0   # kural 9: gecerli sicaklik araligi
 DKASC_T_RAY = -39.0            # kural 9: analog ray; RH de bu satirlarda duser
 DKASC_GUNES_SABITI = 1367.0    # G0 icin (kural 6)
+# Kural 8a: gunun gunduz medyani < ORAN x egitim bolmesinin gunduz medyani ->
+# gun DEGERLENDIRMEDEN cikar (egitimden ASLA). On-kayitta vardi ama hic
+# uygulanmadi; 22 Ekim 2026'dan beri yalnizca on-kayit SONRASI duyarlilik
+# analizi icin, `run_ablasyon.py --kural-8a` ile. Ana sonuclar 8a'SIZDIR.
+DKASC_K8A_ORAN = 0.3
 
 # --- transpozisyon (karar 2 + karar 4) ---
 DKASC_EGIM = 20.0              # dizi duzlemi: Tilt 20 / Azi 0 (Solar North)

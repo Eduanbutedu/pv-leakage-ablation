@@ -107,7 +107,13 @@ def main():
                     help="her hucrenin MASKESIZ tahmin vektorunu diske yaz "
                          "(konum, time_utc, H_sun, y, persistence, tahmin). "
                          "Esli DM ve gece ozdesligi bunsuz SONRADAN kosulamaz.")
+    ap.add_argument("--kural-8a", action="store_true",
+                    help="kismi ariza gunlerini DEGERLENDIRMEDEN cikar (yalniz "
+                         "DKASC). On-kayit SONRASI duyarlilik analizi; ana "
+                         "sonuclar 8a'SIZDIR. --etiket zorunlu.")
     a = ap.parse_args()
+    if a.kural_8a and not a.etiket:
+        raise SystemExit("--kural-8a ana logu kirletmemeli: --etiket verin.")
 
     LOG = log_yolu(a.etiket)
     gecikmeli, eszaman_degisken = OZNITELIK_SETLERI[a.set_ad]
@@ -150,6 +156,9 @@ def main():
     print(f"  veri      : {a.veri}")
     print(f"  oznitelik : --set {a.set_ad}  gecikmeli={gecikmeli}  "
           f"eszaman={eszaman_degisken}  kapasite={kapasite_w:.0f} W")
+    if a.kural_8a:
+        print("  kural 8a  : ACIK - kismi ariza gunleri degerlendirmeden "
+              "cikar (on-kayit SONRASI duyarlilik analizi)")
 
     if a.tahmin:
         print("\nMaliyet tahmini icin tek hucre olculuyor...")
@@ -180,7 +189,8 @@ def main():
                        gecikmeli=gecikmeli,
                        eszaman_degisken=eszaman_degisken,
                        kapasite_w=kapasite_w,
-                       tahmin_dizin=tahmin_dizin)
+                       tahmin_dizin=tahmin_dizin,
+                       kural_8a=a.kural_8a)
     print(f"\nToplam sure: {(time.time() - t0) / 60:.1f} dakika")
     ozetle(sonuc)
 
