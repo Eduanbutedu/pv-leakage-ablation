@@ -11,8 +11,16 @@ F2 DKASC / eszaman,Faz 2 kaynak x varyant,15,15,15,15,0,0,0
 F2 DKASC / olcekleyici,Faz 2 kaynak x varyant,15,4,1,1,0,0,0
 F2 DKASC / rastgele_kfold,Faz 2 kaynak x varyant,15,13,7,12,0,0,0
 F2 DKASC / enkotu,Faz 2 kaynak x varyant,15,15,15,15,0,0,0
+F2 DKASC CdTe / eszaman,Faz 2 kaynak x varyant,15,15,15,15,0,0,0
+F2 DKASC CdTe / olcekleyici,Faz 2 kaynak x varyant,15,6,1,1,0,0,0
+F2 DKASC CdTe / rastgele_kfold,Faz 2 kaynak x varyant,15,12,11,12,0,0,0
+F2 DKASC CdTe / enkotu,Faz 2 kaynak x varyant,15,15,15,15,0,0,0
+F2 DKASC poly-Si / eszaman,Faz 2 kaynak x varyant,15,15,15,15,0,0,0
+F2 DKASC poly-Si / olcekleyici,Faz 2 kaynak x varyant,15,7,1,1,0,0,0
+F2 DKASC poly-Si / rastgele_kfold,Faz 2 kaynak x varyant,15,14,11,14,0,0,0
+F2 DKASC poly-Si / enkotu,Faz 2 kaynak x varyant,15,15,15,15,0,0,0
 F2 olcekleyici uc kaynak,Faz 2 olcekleyici (57),57,19,5,8,0,0,0
-F2 tumu,Faz 2 tumu (228),228,176,151,170,0,0,0
+F2 tumu,Faz 2 tumu (348),348,275,222,269,0,0,0
 F3 ilk-iki x 7 yil,Faz 3,7,1,0,0,0,0,0
 F4 yil ici 5 yil x 3 cift,Faz 4 yil ici,15,1,0,0,0,0,0
 F4 hacim 45 esli,Faz 4 hacim,45,35,33,35,0,0,0

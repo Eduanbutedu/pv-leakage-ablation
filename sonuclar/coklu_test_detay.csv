@@ -227,6 +227,126 @@ F2 DKASC / enkotu,Faz 2 kaynak x varyant,F2|DKASC|enkotu|Polynomial Ridge|2021,1
 F2 DKASC / enkotu,Faz 2 kaynak x varyant,F2|DKASC|enkotu|Hist Gradient Boosting|2022,2.5870538978890612e-09,True,False,2.587053897889061e-08,True,False,5.608839855180023e-09,True,False
 F2 DKASC / enkotu,Faz 2 kaynak x varyant,F2|DKASC|enkotu|Linear Regression|2022,3.017180450447885e-11,True,False,3.620616540537462e-10,True,False,1.1314426689179569e-10,True,False
 F2 DKASC / enkotu,Faz 2 kaynak x varyant,F2|DKASC|enkotu|Polynomial Ridge|2022,2.617458599084011e-09,True,False,2.587053897889061e-08,True,False,5.608839855180023e-09,True,False
+F2 DKASC CdTe / eszaman,Faz 2 kaynak x varyant,F2|DKASC CdTe|eszaman|Hist Gradient Boosting|2018,2.736997752148791e-13,True,False,1.915898426504154e-12,True,False,4.561662920247986e-13,True,False
+F2 DKASC CdTe / eszaman,Faz 2 kaynak x varyant,F2|DKASC CdTe|eszaman|Linear Regression|2018,1.4690294136574226e-09,True,False,4.407088240972268e-09,True,False,1.6950339388354878e-09,True,False
+F2 DKASC CdTe / eszaman,Faz 2 kaynak x varyant,F2|DKASC CdTe|eszaman|Polynomial Ridge|2018,5.179510233823557e-12,True,False,2.5897551169117784e-11,True,False,7.062968500668487e-12,True,False
+F2 DKASC CdTe / eszaman,Faz 2 kaynak x varyant,F2|DKASC CdTe|eszaman|Hist Gradient Boosting|2019,1.381032786315163e-10,True,False,5.524131145260652e-10,True,False,1.7262909828939535e-10,True,False
+F2 DKASC CdTe / eszaman,Faz 2 kaynak x varyant,F2|DKASC CdTe|eszaman|Linear Regression|2019,9.18736134347988e-07,True,False,9.18736134347988e-07,True,False,9.18736134347988e-07,True,False
+F2 DKASC CdTe / eszaman,Faz 2 kaynak x varyant,F2|DKASC CdTe|eszaman|Polynomial Ridge|2019,3.88902291557968e-07,True,False,7.77804583115936e-07,True,False,4.1668102666925144e-07,True,False
+F2 DKASC CdTe / eszaman,Faz 2 kaynak x varyant,F2|DKASC CdTe|eszaman|Hist Gradient Boosting|2020,8.387461652199758e-15,True,False,9.526717618380975e-14,True,False,2.387838577550758e-14,True,False
+F2 DKASC CdTe / eszaman,Faz 2 kaynak x varyant,F2|DKASC CdTe|eszaman|Linear Regression|2020,1.0282992284638023e-14,True,False,1.0282992284638023e-13,True,False,2.387838577550758e-14,True,False
+F2 DKASC CdTe / eszaman,Faz 2 kaynak x varyant,F2|DKASC CdTe|eszaman|Polynomial Ridge|2020,6.6148236158401e-14,True,False,5.29185889267208e-13,True,False,1.2402794279700188e-13,True,False
+F2 DKASC CdTe / eszaman,Faz 2 kaynak x varyant,F2|DKASC CdTe|eszaman|Hist Gradient Boosting|2021,1.1143246695236872e-14,True,False,1.0282992284638023e-13,True,False,2.387838577550758e-14,True,False
+F2 DKASC CdTe / eszaman,Faz 2 kaynak x varyant,F2|DKASC CdTe|eszaman|Linear Regression|2021,7.938931348650813e-15,True,False,9.526717618380975e-14,True,False,2.387838577550758e-14,True,False
+F2 DKASC CdTe / eszaman,Faz 2 kaynak x varyant,F2|DKASC CdTe|eszaman|Polynomial Ridge|2021,1.3101373381218789e-12,True,False,7.860824028731274e-12,True,False,1.965206007182818e-12,True,False
+F2 DKASC CdTe / eszaman,Faz 2 kaynak x varyant,F2|DKASC CdTe|eszaman|Hist Gradient Boosting|2022,2.056026079406263e-17,True,False,2.878436511168768e-16,True,False,1.5420195595546972e-16,True,False
+F2 DKASC CdTe / eszaman,Faz 2 kaynak x varyant,F2|DKASC CdTe|eszaman|Linear Regression|2022,4.874345606137338e-20,True,False,7.311518409206007e-19,True,False,7.311518409206007e-19,True,False
+F2 DKASC CdTe / eszaman,Faz 2 kaynak x varyant,F2|DKASC CdTe|eszaman|Polynomial Ridge|2022,1.0236350724020926e-16,True,False,1.3307255941227202e-15,True,False,5.118175362010463e-16,True,False
+F2 DKASC CdTe / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC CdTe|olcekleyici|Hist Gradient Boosting|2018,0.0081340817040047,True,False,0.11387714385606579,False,False,0.061005612780035245,False,False
+F2 DKASC CdTe / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC CdTe|olcekleyici|Linear Regression|2018,0.0322095439174606,True,False,0.3510614588444359,False,False,0.0805238597936515,False,False
+F2 DKASC CdTe / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC CdTe|olcekleyici|Polynomial Ridge|2018,0.8523661804866812,False,False,1.0,False,False,0.93603267157057,False,False
+F2 DKASC CdTe / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC CdTe|olcekleyici|Hist Gradient Boosting|2019,0.1146344962140202,False,False,0.6932154189536478,False,False,0.156319767564573,False,False
+F2 DKASC CdTe / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC CdTe|olcekleyici|Linear Regression|2019,0.0004816903682243,True,False,0.0072253555233645,True,False,0.0072253555233645,True,False
+F2 DKASC CdTe / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC CdTe|olcekleyici|Polynomial Ridge|2019,0.93603267157057,False,False,1.0,False,False,0.93603267157057,False,False
+F2 DKASC CdTe / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC CdTe|olcekleyici|Hist Gradient Boosting|2020,0.0262597192567048,True,False,0.3151166310804576,False,False,0.0805238597936515,False,False
+F2 DKASC CdTe / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC CdTe|olcekleyici|Linear Regression|2020,0.0956463893356381,False,False,0.6932154189536478,False,False,0.156319767564573,False,False
+F2 DKASC CdTe / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC CdTe|olcekleyici|Polynomial Ridge|2020,0.0319146780767669,True,False,0.3510614588444359,False,False,0.0805238597936515,False,False
+F2 DKASC CdTe / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC CdTe|olcekleyici|Hist Gradient Boosting|2021,0.0787080375948408,False,False,0.6932154189536478,False,False,0.1475775704903265,False,False
+F2 DKASC CdTe / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC CdTe|olcekleyici|Linear Regression|2021,0.1061645661103068,False,False,0.6932154189536478,False,False,0.156319767564573,False,False
+F2 DKASC CdTe / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC CdTe|olcekleyici|Polynomial Ridge|2021,0.0770239354392942,False,False,0.6932154189536478,False,False,0.1475775704903265,False,False
+F2 DKASC CdTe / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC CdTe|olcekleyici|Hist Gradient Boosting|2022,0.569600051581486,False,False,1.0,False,False,0.7120000644768575,False,False
+F2 DKASC CdTe / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC CdTe|olcekleyici|Linear Regression|2022,0.0177859498523423,True,False,0.23121734808044989,False,False,0.0805238597936515,False,False
+F2 DKASC CdTe / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC CdTe|olcekleyici|Polynomial Ridge|2022,0.9195107647434608,False,False,1.0,False,False,0.93603267157057,False,False
+F2 DKASC CdTe / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC CdTe|rastgele_kfold|Hist Gradient Boosting|2018,7.734774263599065e-10,True,False,1.1602161395398598e-08,True,False,1.1602161395398598e-08,True,False
+F2 DKASC CdTe / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC CdTe|rastgele_kfold|Linear Regression|2018,3.3892091804849525e-08,True,False,4.7448928526789334e-07,True,False,2.541906885363714e-07,True,False
+F2 DKASC CdTe / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC CdTe|rastgele_kfold|Polynomial Ridge|2018,4.747999385315292e-06,True,False,4.7479993853152916e-05,True,False,1.1869998463288229e-05,True,False
+F2 DKASC CdTe / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC CdTe|rastgele_kfold|Hist Gradient Boosting|2019,2.195069801993315e-07,True,False,2.8535907425913096e-06,True,False,1.094143252498943e-06,True,False
+F2 DKASC CdTe / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC CdTe|rastgele_kfold|Linear Regression|2019,0.6547205339869924,False,False,0.6547205339869924,False,False,0.6547205339869924,False,False
+F2 DKASC CdTe / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC CdTe|rastgele_kfold|Polynomial Ridge|2019,8.534000604753055e-05,True,False,0.000768060054427775,True,False,0.0001715155521284379,True,False
+F2 DKASC CdTe / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC CdTe|rastgele_kfold|Hist Gradient Boosting|2020,2.9177153399971813e-07,True,False,3.5012584079966175e-06,True,False,1.094143252498943e-06,True,False
+F2 DKASC CdTe / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC CdTe|rastgele_kfold|Linear Regression|2020,0.3027850594092523,False,False,0.6055701188185046,False,False,0.3244125636527703,False,False
+F2 DKASC CdTe / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC CdTe|rastgele_kfold|Polynomial Ridge|2020,0.0299514803577599,True,False,0.1198059214310396,False,False,0.03743935044719988,True,False
+F2 DKASC CdTe / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC CdTe|rastgele_kfold|Hist Gradient Boosting|2021,2.677144302034665e-06,True,False,2.9448587322381315e-05,True,False,8.031432906103995e-06,True,False
+F2 DKASC CdTe / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC CdTe|rastgele_kfold|Linear Regression|2021,0.1206450689991168,False,False,0.3619352069973504,False,False,0.13920584884513476,False,False
+F2 DKASC CdTe / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC CdTe|rastgele_kfold|Polynomial Ridge|2021,0.0057475438583627,True,False,0.028737719291813502,True,False,0.007837559806858229,True,False
+F2 DKASC CdTe / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC CdTe|rastgele_kfold|Hist Gradient Boosting|2022,9.147496113516688e-05,True,False,0.000768060054427775,True,False,0.0001715155521284379,True,False
+F2 DKASC CdTe / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC CdTe|rastgele_kfold|Linear Regression|2022,0.0033257065925079,True,False,0.023279946147555297,True,False,0.0055428443208464994,True,False
+F2 DKASC CdTe / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC CdTe|rastgele_kfold|Polynomial Ridge|2022,0.0045463581989775,True,False,0.027278149193865,True,False,0.00681953729846625,True,False
+F2 DKASC CdTe / enkotu,Faz 2 kaynak x varyant,F2|DKASC CdTe|enkotu|Hist Gradient Boosting|2018,2.2804864145545697e-12,True,False,3.420729621831855e-11,True,False,3.420729621831855e-11,True,False
+F2 DKASC CdTe / enkotu,Faz 2 kaynak x varyant,F2|DKASC CdTe|enkotu|Linear Regression|2018,6.412507678417454e-09,True,False,5.1300061427339635e-08,True,False,1.0087565272873852e-08,True,False
+F2 DKASC CdTe / enkotu,Faz 2 kaynak x varyant,F2|DKASC CdTe|enkotu|Polynomial Ridge|2018,6.507490969402007e-10,True,False,7.808989163282408e-09,True,False,2.4403091135257525e-09,True,False
+F2 DKASC CdTe / enkotu,Faz 2 kaynak x varyant,F2|DKASC CdTe|enkotu|Hist Gradient Boosting|2019,1.137898248209549e-07,True,False,3.413694744628647e-07,True,False,1.3129595171648642e-07,True,False
+F2 DKASC CdTe / enkotu,Faz 2 kaynak x varyant,F2|DKASC CdTe|enkotu|Linear Regression|2019,0.0004949150290351,True,False,0.0005418944683514,True,False,0.0004949150290351,True,False
+F2 DKASC CdTe / enkotu,Faz 2 kaynak x varyant,F2|DKASC CdTe|enkotu|Polynomial Ridge|2019,0.0002709472341757,True,False,0.0005418944683514,True,False,0.00029030060804539285,True,False
+F2 DKASC CdTe / enkotu,Faz 2 kaynak x varyant,F2|DKASC CdTe|enkotu|Hist Gradient Boosting|2020,1.3020598328913248e-10,True,False,1.8228837660478546e-09,True,False,9.765448746684936e-10,True,False
+F2 DKASC CdTe / enkotu,Faz 2 kaynak x varyant,F2|DKASC CdTe|enkotu|Linear Regression|2020,8.818187052062945e-10,True,False,9.700005757269239e-09,True,False,2.6454561156188836e-09,True,False
+F2 DKASC CdTe / enkotu,Faz 2 kaynak x varyant,F2|DKASC CdTe|enkotu|Polynomial Ridge|2020,9.233864818412356e-09,True,False,5.1300061427339635e-08,True,False,1.1542331023015443e-08,True,False
+F2 DKASC CdTe / enkotu,Faz 2 kaynak x varyant,F2|DKASC CdTe|enkotu|Hist Gradient Boosting|2021,3.719226244289536e-10,True,False,4.834994117576397e-09,True,False,1.8596131221447679e-09,True,False
+F2 DKASC CdTe / enkotu,Faz 2 kaynak x varyant,F2|DKASC CdTe|enkotu|Linear Regression|2021,8.989587777275718e-09,True,False,5.1300061427339635e-08,True,False,1.1542331023015443e-08,True,False
+F2 DKASC CdTe / enkotu,Faz 2 kaynak x varyant,F2|DKASC CdTe|enkotu|Polynomial Ridge|2021,4.087997318377846e-09,True,False,3.6791975865400617e-08,True,False,8.759994253666815e-09,True,False
+F2 DKASC CdTe / enkotu,Faz 2 kaynak x varyant,F2|DKASC CdTe|enkotu|Hist Gradient Boosting|2022,6.618823653678499e-09,True,False,5.1300061427339635e-08,True,False,1.0087565272873852e-08,True,False
+F2 DKASC CdTe / enkotu,Faz 2 kaynak x varyant,F2|DKASC CdTe|enkotu|Linear Regression|2022,1.1425052128487422e-09,True,False,1.1425052128487422e-08,True,False,2.8562630321218555e-09,True,False
+F2 DKASC CdTe / enkotu,Faz 2 kaynak x varyant,F2|DKASC CdTe|enkotu|Polynomial Ridge|2022,6.7250435152492355e-09,True,False,5.1300061427339635e-08,True,False,1.0087565272873852e-08,True,False
+F2 DKASC poly-Si / eszaman,Faz 2 kaynak x varyant,F2|DKASC poly-Si|eszaman|Hist Gradient Boosting|2018,2.599689220456765e-21,True,False,3.899533830685148e-20,True,False,3.899533830685148e-20,True,False
+F2 DKASC poly-Si / eszaman,Faz 2 kaynak x varyant,F2|DKASC poly-Si|eszaman|Linear Regression|2018,2.741355153812526e-15,True,False,2.1930841230500207e-14,True,False,4.780521286775282e-15,True,False
+F2 DKASC poly-Si / eszaman,Faz 2 kaynak x varyant,F2|DKASC poly-Si|eszaman|Polynomial Ridge|2018,2.259174967932186e-15,True,False,2.0332574711389675e-14,True,False,4.780521286775282e-15,True,False
+F2 DKASC poly-Si / eszaman,Faz 2 kaynak x varyant,F2|DKASC poly-Si|eszaman|Hist Gradient Boosting|2019,7.605312765182976e-11,True,False,2.2815938295548928e-10,True,False,8.775360882903435e-11,True,False
+F2 DKASC poly-Si / eszaman,Faz 2 kaynak x varyant,F2|DKASC poly-Si|eszaman|Linear Regression|2019,4.6792473752223367e-08,True,False,4.6792473752223367e-08,True,False,4.679247375222337e-08,True,False
+F2 DKASC poly-Si / eszaman,Faz 2 kaynak x varyant,F2|DKASC poly-Si|eszaman|Polynomial Ridge|2019,4.7859752750406805e-09,True,False,9.571950550081361e-09,True,False,5.1278306518293e-09,True,False
+F2 DKASC poly-Si / eszaman,Faz 2 kaynak x varyant,F2|DKASC poly-Si|eszaman|Hist Gradient Boosting|2020,1.9172382406295292e-16,True,False,1.917238240629529e-15,True,False,4.793095601573824e-16,True,False
+F2 DKASC poly-Si / eszaman,Faz 2 kaynak x varyant,F2|DKASC poly-Si|eszaman|Linear Regression|2020,1.4446074485712186e-16,True,False,1.5890681934283405e-15,True,False,4.3338223457136557e-16,True,False
+F2 DKASC poly-Si / eszaman,Faz 2 kaynak x varyant,F2|DKASC poly-Si|eszaman|Polynomial Ridge|2020,1.9024393948396407e-14,True,False,9.512196974198204e-14,True,False,2.594235538417692e-14,True,False
+F2 DKASC poly-Si / eszaman,Faz 2 kaynak x varyant,F2|DKASC poly-Si|eszaman|Hist Gradient Boosting|2021,1.2937361280375499e-14,True,False,7.7624167682253e-14,True,False,1.940604192056325e-14,True,False
+F2 DKASC poly-Si / eszaman,Faz 2 kaynak x varyant,F2|DKASC poly-Si|eszaman|Linear Regression|2021,2.868312772065169e-15,True,False,2.1930841230500207e-14,True,False,4.780521286775282e-15,True,False
+F2 DKASC poly-Si / eszaman,Faz 2 kaynak x varyant,F2|DKASC poly-Si|eszaman|Polynomial Ridge|2021,6.03770010553958e-13,True,False,2.415080042215832e-12,True,False,7.547125131924475e-13,True,False
+F2 DKASC poly-Si / eszaman,Faz 2 kaynak x varyant,F2|DKASC poly-Si|eszaman|Hist Gradient Boosting|2022,6.211714805921637e-17,True,False,7.454057767105963e-16,True,False,2.3293930522206136e-16,True,False
+F2 DKASC poly-Si / eszaman,Faz 2 kaynak x varyant,F2|DKASC poly-Si|eszaman|Linear Regression|2022,1.932437433814724e-20,True,False,2.7054124073406134e-19,True,False,1.449328075361043e-19,True,False
+F2 DKASC poly-Si / eszaman,Faz 2 kaynak x varyant,F2|DKASC poly-Si|eszaman|Polynomial Ridge|2022,6.037027532362907e-19,True,False,7.848135792071779e-18,True,False,3.018513766181454e-18,True,False
+F2 DKASC poly-Si / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC poly-Si|olcekleyici|Hist Gradient Boosting|2018,0.1265913075422725,False,False,0.759547845253635,False,False,0.18988696131340874,False,False
+F2 DKASC poly-Si / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC poly-Si|olcekleyici|Linear Regression|2018,0.0192419458852303,True,False,0.23090335062276357,False,False,0.061458319913565,False,False
+F2 DKASC poly-Si / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC poly-Si|olcekleyici|Polynomial Ridge|2018,0.0102813235883532,True,False,0.1439385302369448,False,False,0.061458319913565,False,False
+F2 DKASC poly-Si / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC poly-Si|olcekleyici|Hist Gradient Boosting|2019,0.3312269707738664,False,False,1.0,False,False,0.41403371346733303,False,False
+F2 DKASC poly-Si / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC poly-Si|olcekleyici|Linear Regression|2019,0.0009592878087901,True,False,0.014389317131851499,True,False,0.014389317131851499,True,False
+F2 DKASC poly-Si / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC poly-Si|olcekleyici|Polynomial Ridge|2019,0.880893849418012,False,False,1.0,False,False,0.880893849418012,False,False
+F2 DKASC poly-Si / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC poly-Si|olcekleyici|Hist Gradient Boosting|2020,0.2258295018693059,False,False,1.0,False,False,0.30794932073087167,False,False
+F2 DKASC poly-Si / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC poly-Si|olcekleyici|Linear Regression|2020,0.015104611280174,True,False,0.196359946642262,False,False,0.061458319913565,False,False
+F2 DKASC poly-Si / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC poly-Si|olcekleyici|Polynomial Ridge|2020,0.020486106637855,True,False,0.23090335062276357,False,False,0.061458319913565,False,False
+F2 DKASC poly-Si / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC poly-Si|olcekleyici|Hist Gradient Boosting|2021,0.0500728146835869,False,False,0.4005825174686952,False,False,0.09388652753172544,False,False
+F2 DKASC poly-Si / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC poly-Si|olcekleyici|Linear Regression|2021,0.0276726857409953,True,False,0.276726857409953,False,False,0.06833496383299392,False,False
+F2 DKASC poly-Si / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC poly-Si|olcekleyici|Polynomial Ridge|2021,0.471736987776013,False,False,1.0,False,False,0.5443119089723226,False,False
+F2 DKASC poly-Si / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC poly-Si|olcekleyici|Hist Gradient Boosting|2022,0.7352968877175166,False,False,1.0,False,False,0.7878180939830534,False,False
+F2 DKASC poly-Si / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC poly-Si|olcekleyici|Linear Regression|2022,0.0318896497887305,True,False,0.28700684809857446,False,False,0.06833496383299392,False,False
+F2 DKASC poly-Si / olcekleyici,Faz 2 kaynak x varyant,F2|DKASC poly-Si|olcekleyici|Polynomial Ridge|2022,0.0663702164858284,False,False,0.4645915154007988,False,False,0.11061702747638066,False,False
+F2 DKASC poly-Si / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC poly-Si|rastgele_kfold|Hist Gradient Boosting|2018,5.7188159285113976e-12,True,False,8.578223892767096e-11,True,False,8.578223892767096e-11,True,False
+F2 DKASC poly-Si / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC poly-Si|rastgele_kfold|Linear Regression|2018,0.0370223037074135,True,False,0.1305550213399424,False,False,0.04271804273932327,True,False
+F2 DKASC poly-Si / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC poly-Si|rastgele_kfold|Polynomial Ridge|2018,0.000167651359956,True,False,0.001508862239604,True,False,0.0003592529141914286,True,False
+F2 DKASC poly-Si / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC poly-Si|rastgele_kfold|Hist Gradient Boosting|2019,9.05039717488908e-08,True,False,1.2670556044844713e-06,True,False,6.78779788116681e-07,True,False
+F2 DKASC poly-Si / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC poly-Si|rastgele_kfold|Linear Regression|2019,0.008626624395125,True,False,0.043133121975625,True,False,0.011763578720625001,True,False
+F2 DKASC poly-Si / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC poly-Si|rastgele_kfold|Polynomial Ridge|2019,7.812634567140812e-06,True,False,9.375161480568975e-05,True,False,2.9297379626778043e-05,True,False
+F2 DKASC poly-Si / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC poly-Si|rastgele_kfold|Hist Gradient Boosting|2020,9.804510968015696e-06,True,False,0.00010784962064817266,True,False,2.9413532904047087e-05,True,False
+F2 DKASC poly-Si / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC poly-Si|rastgele_kfold|Linear Regression|2020,0.2951622164335823,False,False,0.2951622164335823,False,False,0.2951622164335823,False,False
+F2 DKASC poly-Si / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC poly-Si|rastgele_kfold|Polynomial Ridge|2020,0.0455640007020065,True,False,0.1305550213399424,False,False,0.048818572180721255,True,False
+F2 DKASC poly-Si / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC poly-Si|rastgele_kfold|Hist Gradient Boosting|2021,3.502240647008737e-05,True,False,0.0003502240647008737,True,False,8.755601617521842e-05,True,False
+F2 DKASC poly-Si / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC poly-Si|rastgele_kfold|Linear Regression|2021,0.0326387553349856,True,False,0.1305550213399424,False,False,0.040798444168732,True,False
+F2 DKASC poly-Si / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC poly-Si|rastgele_kfold|Polynomial Ridge|2021,0.0034769136150176,True,False,0.0239508037855093,True,False,0.005215370422526401,True,False
+F2 DKASC poly-Si / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC poly-Si|rastgele_kfold|Hist Gradient Boosting|2022,6.610983233572825e-06,True,False,8.594278203644672e-05,True,False,2.9297379626778043e-05,True,False
+F2 DKASC poly-Si / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC poly-Si|rastgele_kfold|Linear Regression|2022,0.0034215433979299,True,False,0.0239508037855093,True,False,0.005215370422526401,True,False
+F2 DKASC poly-Si / rastgele_kfold,Faz 2 kaynak x varyant,F2|DKASC poly-Si|rastgele_kfold|Polynomial Ridge|2022,0.0007457589528342,True,False,0.0059660716226736,True,False,0.001398298036564125,True,False
+F2 DKASC poly-Si / enkotu,Faz 2 kaynak x varyant,F2|DKASC poly-Si|enkotu|Hist Gradient Boosting|2018,4.25614300979281e-16,True,False,6.384214514689215e-15,True,False,6.384214514689215e-15,True,False
+F2 DKASC poly-Si / enkotu,Faz 2 kaynak x varyant,F2|DKASC poly-Si|enkotu|Linear Regression|2018,3.0108910043637555e-11,True,False,3.6130692052365066e-10,True,False,1.1290841266364083e-10,True,False
+F2 DKASC poly-Si / enkotu,Faz 2 kaynak x varyant,F2|DKASC poly-Si|enkotu|Polynomial Ridge|2018,1.4867407610908928e-11,True,False,2.08143706552725e-10,True,False,1.05049298906836e-10,True,False
+F2 DKASC poly-Si / enkotu,Faz 2 kaynak x varyant,F2|DKASC poly-Si|enkotu|Hist Gradient Boosting|2019,2.7077349203271423e-10,True,False,2.4369614282944282e-09,True,False,5.802289114986734e-10,True,False
+F2 DKASC poly-Si / enkotu,Faz 2 kaynak x varyant,F2|DKASC poly-Si|enkotu|Linear Regression|2019,6.572753072893305e-07,True,False,1.1088792992040312e-06,True,False,6.572753072893305e-07,True,False
+F2 DKASC poly-Si / enkotu,Faz 2 kaynak x varyant,F2|DKASC poly-Si|enkotu|Polynomial Ridge|2019,1.0356810015777085e-07,True,False,4.6794718186832703e-07,True,False,1.2946012519721357e-07,True,False
+F2 DKASC poly-Si / enkotu,Faz 2 kaynak x varyant,F2|DKASC poly-Si|enkotu|Hist Gradient Boosting|2020,1.198946826442173e-07,True,False,4.6794718186832703e-07,True,False,1.3834001843563534e-07,True,False
+F2 DKASC poly-Si / enkotu,Faz 2 kaynak x varyant,F2|DKASC poly-Si|enkotu|Linear Regression|2020,6.316717234081093e-08,True,False,3.7900303404486563e-07,True,False,9.475075851121641e-08,True,False
+F2 DKASC poly-Si / enkotu,Faz 2 kaynak x varyant,F2|DKASC poly-Si|enkotu|Polynomial Ridge|2020,5.544396496020156e-07,True,False,1.1088792992040312e-06,True,False,5.940424817164452e-07,True,False
+F2 DKASC poly-Si / enkotu,Faz 2 kaynak x varyant,F2|DKASC poly-Si|enkotu|Hist Gradient Boosting|2021,3.0625188481632613e-08,True,False,2.3811716141722666e-07,True,False,5.104198080272102e-08,True,False
+F2 DKASC poly-Si / enkotu,Faz 2 kaynak x varyant,F2|DKASC poly-Si|enkotu|Linear Regression|2021,2.9764645177153333e-08,True,False,2.3811716141722666e-07,True,False,5.104198080272102e-08,True,False
+F2 DKASC poly-Si / enkotu,Faz 2 kaynak x varyant,F2|DKASC poly-Si|enkotu|Polynomial Ridge|2021,9.358943637366541e-08,True,False,4.6794718186832703e-07,True,False,1.276219586913619e-07,True,False
+F2 DKASC poly-Si / enkotu,Faz 2 kaynak x varyant,F2|DKASC poly-Si|enkotu|Hist Gradient Boosting|2022,2.1163104500696318e-10,True,False,2.116310450069632e-09,True,False,5.29077612517408e-10,True,False
+F2 DKASC poly-Si / enkotu,Faz 2 kaynak x varyant,F2|DKASC poly-Si|enkotu|Linear Regression|2022,2.1009859781367198e-11,True,False,2.731281771577736e-10,True,False,1.05049298906836e-10,True,False
+F2 DKASC poly-Si / enkotu,Faz 2 kaynak x varyant,F2|DKASC poly-Si|enkotu|Polynomial Ridge|2022,5.6487634512410745e-11,True,False,6.213639796365182e-10,True,False,1.6946290353723223e-10,True,False
 F2 olcekleyici uc kaynak,Faz 2 olcekleyici (57),F2|PVGIS tam|olcekleyici|Hist Gradient Boosting|2017,0.209806039772271,False,False,1.0,False,False,0.3623922505157408,False,False
 F2 olcekleyici uc kaynak,Faz 2 olcekleyici (57),F2|PVGIS tam|olcekleyici|Linear Regression|2017,0.0542855379788978,False,False,1.0,False,False,0.14734646022843687,False,False
 F2 olcekleyici uc kaynak,Faz 2 olcekleyici (57),F2|PVGIS tam|olcekleyici|Polynomial Ridge|2017,0.3275349752763229,False,False,1.0,False,False,0.4913024629144844,False,False
@@ -284,234 +404,354 @@ F2 olcekleyici uc kaynak,Faz 2 olcekleyici (57),F2|DKASC|olcekleyici|Polynomial 
 F2 olcekleyici uc kaynak,Faz 2 olcekleyici (57),F2|DKASC|olcekleyici|Hist Gradient Boosting|2022,0.2045525304876784,False,False,1.0,False,False,0.3623922505157408,False,False
 F2 olcekleyici uc kaynak,Faz 2 olcekleyici (57),F2|DKASC|olcekleyici|Linear Regression|2022,0.0098703926197598,True,False,0.48364923836823015,False,False,0.06251248659181206,False,False
 F2 olcekleyici uc kaynak,Faz 2 olcekleyici (57),F2|DKASC|olcekleyici|Polynomial Ridge|2022,0.7235727259684748,False,False,1.0,False,False,0.841011968184706,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|eszaman|Hist Gradient Boosting|2017,4.758469003043088e-168,True,False,1.0183123666512209e-165,True,False,6.821063442491656e-167,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|olcekleyici|Hist Gradient Boosting|2017,0.209806039772271,False,False,1.0,False,False,0.24657617045400923,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|rastgele_kfold|Hist Gradient Boosting|2017,5.415218225787785e-23,True,False,7.743762062876532e-21,True,False,1.4356625063716454e-22,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|enkotu|Hist Gradient Boosting|2017,8.467936222355404e-93,True,False,1.532696456246328e-90,True,False,4.022269705618817e-92,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|eszaman|Linear Regression|2017,9.353484949032648e-181,True,False,2.0858271436342805e-178,True,False,3.5543242806324065e-179,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|olcekleyici|Linear Regression|2017,0.0542855379788978,False,False,1.0,False,False,0.0695342846021837,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|rastgele_kfold|Linear Regression|2017,0.004765220328619,True,False,0.338330643331949,False,False,0.006876393891931214,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|enkotu|Linear Regression|2017,8.217525739615797e-94,True,False,1.5120247360893067e-91,True,False,4.16354637473867e-93,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|eszaman|Polynomial Ridge|2017,1.3372893757112822e-155,True,False,2.7548161139652414e-153,True,False,1.3256607724442277e-154,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|olcekleyici|Polynomial Ridge|2017,0.3275349752763229,False,False,1.0,False,False,0.3680269070929996,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|rastgele_kfold|Polynomial Ridge|2017,2.606914895873722e-06,True,False,0.0002372292555245087,True,False,4.307076784487019e-06,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|enkotu|Polynomial Ridge|2017,2.7573845062438205e-85,True,False,4.825422885926686e-83,True,False,1.1642290137473907e-84,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|eszaman|Hist Gradient Boosting|2018,3.075149243500047e-184,True,False,6.888334305440104e-182,True,False,1.4022680550360214e-182,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|olcekleyici|Hist Gradient Boosting|2018,0.1195101217134501,False,False,1.0,False,False,0.1480886290797099,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|rastgele_kfold|Hist Gradient Boosting|2018,3.6463125940540636e-17,True,False,4.995448253854067e-15,True,False,9.036513820047028e-17,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|enkotu|Hist Gradient Boosting|2018,9.449415951821268e-87,True,False,1.6819960394241856e-84,True,False,4.224444778461273e-86,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|eszaman|Linear Regression|2018,1.7599747069207783e-190,True,False,3.959943090571751e-188,True,False,1.0031855829448436e-188,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|olcekleyici|Linear Regression|2018,0.0004307758859637,True,False,0.034462070877096004,True,False,0.0006591738389243195,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|rastgele_kfold|Linear Regression|2018,0.3627134736626846,False,False,1.0,False,False,0.4010653998469306,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|enkotu|Linear Regression|2018,5.9304118585561576e-95,True,False,1.1030566056914453e-92,True,False,3.144497450583265e-94,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|eszaman|Polynomial Ridge|2018,1.6532001340707117e-150,True,False,3.289868266800716e-148,True,False,1.256432101893741e-149,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|olcekleyici|Polynomial Ridge|2018,0.6699176534912672,False,False,1.0,False,False,0.7038766128848337,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|rastgele_kfold|Polynomial Ridge|2018,6.138546635736399e-07,True,False,5.893004770306943e-05,True,False,1.052322280411954e-06,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|enkotu|Polynomial Ridge|2018,1.5126150964692473e-88,True,False,2.707581022679953e-86,True,False,6.897524839899767e-88,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|eszaman|Hist Gradient Boosting|2019,7.63065519969339e-167,True,False,1.6100682471353054e-164,True,False,9.665496586278295e-166,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|olcekleyici|Hist Gradient Boosting|2019,0.1767939798738347,False,False,1.0,False,False,0.21327527730811804,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|rastgele_kfold|Hist Gradient Boosting|2019,2.268480820259985e-17,True,False,3.153188340161379e-15,True,False,5.746818077991962e-17,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|enkotu|Hist Gradient Boosting|2019,4.23314133310416e-69,True,False,6.984683199621863e-67,True,False,1.508056599918357e-68,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|eszaman|Linear Regression|2019,1.3436271337230964e-201,True,False,3.06346986488866e-199,True,False,3.06346986488866e-199,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|olcekleyici|Linear Regression|2019,0.0359400103643535,True,False,1.0,False,False,0.048487114574394065,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|rastgele_kfold|Linear Regression|2019,0.0826340926489174,False,False,1.0,False,False,0.10351963254919322,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|enkotu|Linear Regression|2019,1.961774267917344e-83,True,False,3.4134872261761786e-81,True,False,8.132446056093718e-83,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|eszaman|Polynomial Ridge|2019,2.545148916767335e-173,True,False,5.54842463855279e-171,True,False,5.275399572935931e-172,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|olcekleyici|Polynomial Ridge|2019,0.0345355987115563,True,False,1.0,False,False,0.04715039824092716,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|rastgele_kfold|Polynomial Ridge|2019,1.161248263576712e-05,True,False,0.0010451234372190407,True,False,1.904781324427988e-05,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|enkotu|Polynomial Ridge|2019,1.648168979684407e-69,True,False,2.7524421960729597e-67,True,False,6.061008505936207e-69,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|eszaman|Hist Gradient Boosting|2020,1.459279558634431e-142,True,False,2.8747807305098294e-140,True,False,1.0397366855270322e-141,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|olcekleyici|Hist Gradient Boosting|2020,0.0490764001734035,True,False,1.0,False,False,0.0635762456791818,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|rastgele_kfold|Hist Gradient Boosting|2020,6.535318686983912e-13,True,False,8.299854732469568e-11,True,False,1.4608359417964037e-12,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|enkotu|Hist Gradient Boosting|2020,4.255039926439446e-70,True,False,7.14846707641827e-68,True,False,1.5904083659478584e-69,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|eszaman|Linear Regression|2020,1.1819663179837134e-156,True,False,2.470309604585961e-154,True,False,1.3474416025014333e-155,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|olcekleyici|Linear Regression|2020,0.0414221710293434,True,False,1.0,False,False,0.054908459271455205,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|rastgele_kfold|Linear Regression|2020,0.3641251656505028,False,False,1.0,False,False,0.4010653998469306,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|enkotu|Linear Regression|2020,6.708400347835509e-77,True,False,1.1538448598277075e-74,True,False,2.6833601391342037e-76,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|eszaman|Polynomial Ridge|2020,1.501063794012377e-141,True,False,2.9120637603840116e-139,True,False,9.778358429566343e-141,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|olcekleyici|Polynomial Ridge|2020,0.6692842792119926,False,False,1.0,False,False,0.7038766128848337,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|rastgele_kfold|Polynomial Ridge|2020,3.3450321947773786e-05,True,False,0.002943628331404093,True,False,5.408988229852783e-05,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|enkotu|Polynomial Ridge|2020,3.612834459181409e-72,True,False,6.141818580608395e-70,True,False,1.396146197785358e-71,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|eszaman|Hist Gradient Boosting|2021,4.03309604522469e-141,True,False,7.703213446379158e-139,True,False,2.419857627134814e-140,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|olcekleyici|Hist Gradient Boosting|2021,0.4764845701430205,False,False,1.0,False,False,0.510039821561543,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|rastgele_kfold|Hist Gradient Boosting|2021,3.9100120624454766e-10,True,False,4.5356139924367526e-08,True,False,7.889227878208572e-10,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|enkotu|Hist Gradient Boosting|2021,5.0283608064205546e-54,True,False,7.743675641887654e-52,True,False,1.5286216851518486e-53,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|eszaman|Linear Regression|2021,2.2711149792271525e-153,True,False,4.655785707415663e-151,True,False,2.157559230265795e-152,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|olcekleyici|Linear Regression|2021,0.0524073348039552,False,False,1.0,False,False,0.06750775330678975,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|rastgele_kfold|Linear Regression|2021,0.3271285949418032,False,False,1.0,False,False,0.3680269070929996,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|enkotu|Linear Regression|2021,2.263648615711317e-58,True,False,3.6671107574523333e-56,True,False,7.703162453465376e-58,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|eszaman|Polynomial Ridge|2021,1.747846972464774e-142,True,False,3.425780066030957e-140,True,False,1.2076033627938438e-141,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|olcekleyici|Polynomial Ridge|2021,0.9027536804682238,False,False,1.0,False,False,0.9027536804682238,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|rastgele_kfold|Polynomial Ridge|2021,1.4836428888990643e-09,True,False,1.7061893222339239e-07,True,False,2.9672857777981286e-09,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|enkotu|Polynomial Ridge|2021,2.650362077669131e-56,True,False,4.1875720827172267e-54,True,False,8.51102188321918e-56,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|eszaman|Hist Gradient Boosting|2022,1.601877114467072e-152,True,False,3.219773000078815e-150,True,False,1.3043856503517585e-151,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|olcekleyici|Hist Gradient Boosting|2022,0.817567945712047,False,False,1.0,False,False,0.8268112037876253,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|rastgele_kfold|Hist Gradient Boosting|2022,3.062511291819127e-08,True,False,3.276887082246466e-06,True,False,5.7233817584816474e-08,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|enkotu|Hist Gradient Boosting|2022,7.354784007905361e-50,True,False,1.0885080331699935e-47,True,False,2.070235498521509e-49,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|eszaman|Linear Regression|2022,5.17349384580466e-169,True,False,1.1226481645396112e-166,True,False,9.829638307028854e-168,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|olcekleyici|Linear Regression|2022,0.0009238089051876,True,False,0.0711332856994452,False,False,0.0013857133577814002,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|rastgele_kfold|Linear Regression|2022,0.403275178804632,False,False,1.0,False,False,0.43784162270217186,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|enkotu|Linear Regression|2022,1.6373460774907235e-54,True,False,2.5542598808855287e-52,True,False,5.1139028173682866e-54,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|eszaman|Polynomial Ridge|2022,2.670797935318958e-152,True,False,5.341595870637916e-150,True,False,2.0997997560438702e-151,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|olcekleyici|Polynomial Ridge|2022,0.1424446711181325,False,False,1.0,False,False,0.1755534325131579,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|rastgele_kfold|Polynomial Ridge|2022,0.0003779869171094,True,False,0.0306169402858614,True,False,0.0005823041696009676,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|enkotu|Polynomial Ridge|2022,2.0907027061468304e-53,True,False,3.177868113343182e-51,True,False,6.190652168850355e-53,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|eszaman|Hist Gradient Boosting|2023,6.868421832674781e-137,True,False,1.2912633045428588e-134,True,False,3.819512628902074e-136,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|olcekleyici|Hist Gradient Boosting|2023,0.8194856934790182,False,False,1.0,False,False,0.8268112037876253,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|rastgele_kfold|Hist Gradient Boosting|2023,4.53642965589156e-08,True,False,4.808615435245054e-06,True,False,8.408991557262404e-08,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|enkotu|Hist Gradient Boosting|2023,2.0419750171487205e-49,True,False,3.0017032752086194e-47,True,False,5.677686633047662e-49,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|eszaman|Linear Regression|2023,4.786711187713442e-168,True,False,1.0195694829829632e-165,True,False,6.821063442491656e-167,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|olcekleyici|Linear Regression|2023,0.0038428116696431,True,False,0.2766824402143032,False,False,0.005580643698589979,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|rastgele_kfold|Linear Regression|2023,0.2073137693146298,False,False,1.0,False,False,0.24490953058930362,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|enkotu|Linear Regression|2023,1.2343020086648826e-57,True,False,1.974883213863812e-55,True,False,4.078563159066569e-57,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|eszaman|Polynomial Ridge|2023,2.2379383055272132e-143,True,False,4.431117844943882e-141,True,False,1.645967527936144e-142,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|olcekleyici|Polynomial Ridge|2023,0.7322053938143499,False,False,1.0,False,False,0.758831044498508,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|rastgele_kfold|Polynomial Ridge|2023,2.502003383256434e-07,True,False,2.5020033832564342e-05,True,False,4.4221455145927675e-07,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS tam|enkotu|Polynomial Ridge|2023,4.88791386604177e-47,True,False,7.087475105760567e-45,True,False,1.3267194779256233e-46,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|eszaman|Hist Gradient Boosting|2017,8.853650268914837e-167,True,False,1.859266556472116e-164,True,False,1.0624380322697805e-165,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|olcekleyici|Hist Gradient Boosting|2017,0.6102227654633354,False,False,1.0,False,False,0.6471199559332115,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|rastgele_kfold|Hist Gradient Boosting|2017,7.037996836730138e-27,True,False,1.0134715444891398e-24,True,False,1.887839151499378e-26,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|enkotu|Hist Gradient Boosting|2017,8.959916073955743e-94,True,False,1.639664641533901e-91,True,False,4.441001880134586e-93,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|eszaman|Linear Regression|2017,5.056587620583225e-180,True,False,1.1124492765283096e-177,True,False,1.2810021972144173e-178,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|olcekleyici|Linear Regression|2017,0.0722268262905741,False,False,1.0,False,False,0.09148731330139387,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|rastgele_kfold|Linear Regression|2017,0.0030559010958943,True,False,0.22308078000028392,False,False,0.004466316986307054,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|enkotu|Linear Regression|2017,2.4471834347668005e-93,True,False,4.453873851275577e-91,True,False,1.1871443045251714e-92,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|eszaman|Polynomial Ridge|2017,6.886952909396395e-156,True,False,1.4255992522450537e-153,True,False,7.1373875606471726e-155,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|olcekleyici|Polynomial Ridge|2017,0.2577702964257226,False,False,1.0,False,False,0.2998552427809426,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|rastgele_kfold|Polynomial Ridge|2017,1.8099639122850158e-09,True,False,2.063358860004918e-07,True,False,3.588450191312901e-09,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|enkotu|Polynomial Ridge|2017,1.096952679257999e-85,True,False,1.930636715494078e-83,True,False,4.7189662428457313e-85,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|eszaman|Hist Gradient Boosting|2018,1.6538833294235946e-180,True,False,3.67162099132038e-178,True,False,5.237689159652635e-179,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|olcekleyici|Hist Gradient Boosting|2018,0.4948437932200714,False,False,1.0,False,False,0.5272167516550293,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|rastgele_kfold|Hist Gradient Boosting|2018,1.0484907347415121e-20,True,False,1.478371935985532e-18,True,False,2.7165441763757356e-20,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|enkotu|Hist Gradient Boosting|2018,1.0466440357932966e-86,True,False,1.852559943354135e-84,True,False,4.589131541555224e-86,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|eszaman|Linear Regression|2018,1.4152651921112363e-190,True,False,3.198499334171394e-188,True,False,1.0031855829448436e-188,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|olcekleyici|Linear Regression|2018,0.0003479759614733,True,False,0.0285340288408106,True,False,0.0005397178177953225,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|rastgele_kfold|Linear Regression|2018,0.3588408695890157,False,False,1.0,False,False,0.39910106471363693,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|enkotu|Linear Regression|2018,1.0126372760840338e-94,True,False,1.8733789607554626e-92,True,False,5.247302248799083e-94,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|eszaman|Polynomial Ridge|2018,1.837785670053556e-180,True,False,4.061506330818359e-178,True,False,5.237689159652635e-179,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|olcekleyici|Polynomial Ridge|2018,0.703192220686284,False,False,1.0,False,False,0.7354487445709759,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|rastgele_kfold|Polynomial Ridge|2018,5.241288464361202e-07,True,False,5.084049810430366e-05,True,False,9.053134620260259e-07,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|enkotu|Polynomial Ridge|2018,8.875900676454215e-89,True,False,1.5976621217617588e-86,True,False,4.130010927003186e-88,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|eszaman|Hist Gradient Boosting|2019,3.9075373734368616e-168,True,False,8.401205352889253e-166,True,False,6.363703722454317e-167,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|olcekleyici|Hist Gradient Boosting|2019,0.1888588599395289,False,False,1.0,False,False,0.22663063192743468,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|rastgele_kfold|Hist Gradient Boosting|2019,8.324528852920922e-12,True,False,1.0322415777621943e-09,True,False,1.8076119794914002e-11,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|enkotu|Hist Gradient Boosting|2019,5.40121989465264e-67,True,False,8.803988428283803e-65,True,False,1.8658759636072757e-66,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|eszaman|Linear Regression|2019,2.8110458892626964e-201,True,False,6.381074168626321e-199,True,False,3.2045923137594738e-199,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|olcekleyici|Linear Regression|2019,0.0291882653219536,True,False,1.0,False,False,0.04057880788661842,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|rastgele_kfold|Linear Regression|2019,0.0870129847038188,False,False,1.0,False,False,0.10840962028672506,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|enkotu|Linear Regression|2019,2.2858501321858825e-83,True,False,3.954520728681577e-81,True,False,9.306675538185379e-83,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|eszaman|Polynomial Ridge|2019,1.3202828154203459e-173,True,False,2.8914193657705573e-171,True,False,3.010244819158389e-172,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|olcekleyici|Polynomial Ridge|2019,0.0065604260564554,True,False,0.459229823951878,False,False,0.00940740340170963,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|rastgele_kfold|Polynomial Ridge|2019,3.4297407821675106e-05,True,False,0.002983874480485734,True,False,5.506907734747834e-05,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|enkotu|Polynomial Ridge|2019,2.760020153211251e-69,True,False,4.581633454330677e-67,True,False,9.988644364002623e-69,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|eszaman|Hist Gradient Boosting|2020,3.555315182521325e-139,True,False,6.755098846790517e-137,True,False,2.0784919528586206e-138,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|olcekleyici|Hist Gradient Boosting|2020,0.2059267655791409,False,False,1.0,False,False,0.24453803412522981,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|rastgele_kfold|Hist Gradient Boosting|2020,1.7329771306693476e-10,True,False,2.0275832428831366e-08,True,False,3.5278463017197436e-10,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|enkotu|Hist Gradient Boosting|2020,1.5612850556425278e-68,True,False,2.5605074912537455e-66,True,False,5.476507579792252e-68,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|eszaman|Linear Regression|2020,3.213605405203781e-156,True,False,6.684299242823865e-154,True,False,3.489057297078391e-155,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|olcekleyici|Linear Regression|2020,0.0384410131359256,True,False,1.0,False,False,0.051254684181234134,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|rastgele_kfold|Linear Regression|2020,0.2610900314275539,False,False,1.0,False,False,0.3021752647994025,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|enkotu|Linear Regression|2020,9.738227397743547e-77,True,False,1.6652368850141466e-74,True,False,3.8281307701474634e-76,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|eszaman|Polynomial Ridge|2020,3.081191174045674e-141,True,False,5.94669896590815e-139,True,False,1.9323011524438337e-140,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|olcekleyici|Polynomial Ridge|2020,0.0433987487509556,True,False,1.0,False,False,0.0571960388162883,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|rastgele_kfold|Polynomial Ridge|2020,7.456291748451965e-05,True,False,0.0063378479861841705,True,False,0.00011805795268382279,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|enkotu|Polynomial Ridge|2020,4.575445145928878e-72,True,False,7.732502296619804e-70,True,False,1.7386691554529737e-71,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|eszaman|Hist Gradient Boosting|2021,4.019502055517168e-139,True,False,7.596858884927447e-137,True,False,2.2911161716447855e-138,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|olcekleyici|Hist Gradient Boosting|2021,0.2993811112980252,False,False,1.0,False,False,0.3430095144520087,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|rastgele_kfold|Hist Gradient Boosting|2021,8.839811389421368e-12,True,False,1.0784569895094069e-09,True,False,1.883623361484179e-11,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|enkotu|Hist Gradient Boosting|2021,6.987898639778482e-54,True,False,1.0691484918861078e-51,True,False,2.0963695919335446e-53,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|eszaman|Linear Regression|2021,4.716473899557696e-153,True,False,9.574442016102123e-151,True,False,4.135984804227518e-152,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|olcekleyici|Linear Regression|2021,0.0350830168976293,True,False,1.0,False,False,0.04761266578963976,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|rastgele_kfold|Linear Regression|2021,0.393419237100457,False,False,1.0,False,False,0.43067544090134086,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|enkotu|Linear Regression|2021,3.230887382440872e-58,True,False,5.201728685729804e-56,True,False,1.0832975341125278e-57,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|eszaman|Polynomial Ridge|2021,5.754203335339982e-142,True,False,1.1220696503912965e-139,True,False,3.8587010601691646e-141,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|olcekleyici|Polynomial Ridge|2021,0.8375529124878569,False,False,1.0,False,False,0.8412425728952924,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|rastgele_kfold|Polynomial Ridge|2021,1.1567793365989136e-08,True,False,1.2608894768928157e-06,True,False,2.197880739537936e-08,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|enkotu|Polynomial Ridge|2021,3.0762810232589615e-56,True,False,4.8297612065165696e-54,True,False,9.741556573653378e-56,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|eszaman|Hist Gradient Boosting|2022,3.937136801984988e-153,True,False,8.031759076049376e-151,True,False,3.590668763410309e-152,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|olcekleyici|Hist Gradient Boosting|2022,0.8195584739298392,False,False,1.0,False,False,0.8268112037876253,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|rastgele_kfold|Hist Gradient Boosting|2022,7.499405576962476e-07,True,False,7.124435298114353e-05,True,False,1.2760182623488392e-06,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|enkotu|Hist Gradient Boosting|2022,2.1033863760527757e-50,True,False,3.155079564079164e-48,True,False,6.070532832152315e-50,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|eszaman|Linear Regression|2022,6.617765789094455e-169,True,False,1.4294374104444023e-166,True,False,1.1606543076257967e-167,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|olcekleyici|Linear Regression|2022,0.0006004797284789,True,False,0.046837418821354206,True,False,0.0009066846231337033,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|rastgele_kfold|Linear Regression|2022,0.4052350498133459,False,False,1.0,False,False,0.4378843192295871,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|enkotu|Linear Regression|2022,1.7036263993343984e-54,True,False,2.6406209189683175e-52,True,False,5.249011068219498e-54,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|eszaman|Polynomial Ridge|2022,8.817271804632512e-153,True,False,1.7810889045357676e-150,True,False,7.445696190578566e-152,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|olcekleyici|Polynomial Ridge|2022,0.4321535282524388,False,False,1.0,False,False,0.4647688888752644,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|rastgele_kfold|Polynomial Ridge|2022,0.0026379706758274,True,False,0.1952098300112276,False,False,0.003880369768313853,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|enkotu|Polynomial Ridge|2022,2.912243879357194e-53,True,False,4.397488257829363e-51,True,False,8.512712878121028e-53,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|eszaman|Hist Gradient Boosting|2023,1.3818536549761083e-136,True,False,2.5840663348053227e-134,True,False,7.501491269870302e-136,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|olcekleyici|Hist Gradient Boosting|2023,0.7676738024939559,False,False,1.0,False,False,0.784886219590233,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|rastgele_kfold|Hist Gradient Boosting|2023,3.4339696124709572e-09,True,False,3.777366573718053e-07,True,False,6.579370349944355e-09,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|enkotu|Hist Gradient Boosting|2023,3.147998748607558e-50,True,False,4.6905181354252617e-48,True,False,8.971796433531541e-50,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|eszaman|Linear Regression|2023,1.3519207379775637e-167,True,False,2.866071964512435e-165,True,False,1.8131642838757913e-166,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|olcekleyici|Linear Regression|2023,0.0021425991994933,True,False,0.16069493996199752,False,False,0.0031721598537952757,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|rastgele_kfold|Linear Regression|2023,0.3276730795608725,False,False,1.0,False,False,0.3680269070929996,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|enkotu|Linear Regression|2023,1.4250273455701034e-57,True,False,2.2657934794564643e-55,True,False,4.641517639856908e-57,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|eszaman|Polynomial Ridge|2023,3.135751870193941e-141,True,False,6.020643590772366e-139,True,False,1.9323011524438337e-140,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|olcekleyici|Polynomial Ridge|2023,0.3234492103544216,False,False,1.0,False,False,0.3680269070929996,False,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|rastgele_kfold|Polynomial Ridge|2023,1.3093507922165397e-06,True,False,0.00012176962367613819,True,False,2.195088092833611e-06,True,False
-F2 tumu,Faz 2 tumu (228),F2|PVGIS indirgenmis|enkotu|Polynomial Ridge|2023,1.943515652160784e-47,True,False,2.8375328521547447e-45,True,False,5.338814080634443e-47,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|eszaman|Hist Gradient Boosting|2018,3.139505767972812e-21,True,False,4.458098190521393e-19,True,False,8.227670288480473e-21,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|olcekleyici|Hist Gradient Boosting|2018,0.3567241385435125,False,False,1.0,False,False,0.39869168425451396,False,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|rastgele_kfold|Hist Gradient Boosting|2018,8.481966133869297e-12,True,False,1.0432818344659235e-09,True,False,1.8244229042662262e-11,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|enkotu|Hist Gradient Boosting|2018,3.206896053152048e-17,True,False,4.425516553349826e-15,True,False,8.034860440864471e-17,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|eszaman|Linear Regression|2018,2.3733553152731487e-14,True,False,3.0616283567023618e-12,True,False,5.411250118822779e-14,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|olcekleyici|Linear Regression|2018,0.7377297966532509,False,False,1.0,False,False,0.7610968037870642,False,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|rastgele_kfold|Linear Regression|2018,0.170779939797942,False,False,1.0,False,False,0.20822366991406835,False,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|enkotu|Linear Regression|2018,1.1584190348264776e-10,True,False,1.3669344610952434e-08,True,False,2.3794553147787106e-10,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|eszaman|Polynomial Ridge|2018,8.074438900218107e-16,True,False,1.0819748126292263e-13,True,False,1.9378653360523457e-15,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|olcekleyici|Polynomial Ridge|2018,0.3947858208262291,False,False,1.0,False,False,0.43067544090134086,False,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|rastgele_kfold|Polynomial Ridge|2018,0.0004490308620648,True,False,0.035473438103119204,True,False,0.000682526910338496,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|enkotu|Polynomial Ridge|2018,5.290053019254615e-12,True,False,6.612566274068269e-10,True,False,1.1597423926827425e-11,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|eszaman|Hist Gradient Boosting|2019,6.158266742453992e-11,True,False,7.328337423520251e-09,True,False,1.276440742981373e-10,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|olcekleyici|Hist Gradient Boosting|2019,0.0674883733145609,False,False,1.0,False,False,0.08596284422189879,False,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|rastgele_kfold|Hist Gradient Boosting|2019,1.7607999157628518e-08,True,False,1.90166390902388e-06,True,False,3.317870915652316e-08,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|enkotu|Hist Gradient Boosting|2019,1.6676211441497346e-11,True,False,2.017821584421179e-09,True,False,3.5205335265383285e-11,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|eszaman|Linear Regression|2019,2.178318461407481e-07,True,False,2.2001016460215557e-05,True,False,3.8801297593820756e-07,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|olcekleyici|Linear Regression|2019,0.0475071017730832,True,False,1.0,False,False,0.06189496688150268,False,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|rastgele_kfold|Linear Regression|2019,0.0370241164484663,True,False,1.0,False,False,0.04965587382500187,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|enkotu|Linear Regression|2019,1.459500765879188e-06,True,False,0.00013427407046088532,True,False,2.4289501797113495e-06,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|eszaman|Polynomial Ridge|2019,3.0578541464089073e-09,True,False,3.394218102513887e-07,True,False,5.908396147298567e-09,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|olcekleyici|Polynomial Ridge|2019,0.0799783858722403,False,False,1.0,False,False,0.10074625402691044,False,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|rastgele_kfold|Polynomial Ridge|2019,1.5159873108429888e-05,True,False,0.00134922870665026,True,False,2.468893620515725e-05,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|enkotu|Polynomial Ridge|2019,1.065029962605769e-07,True,False,1.1076311611099998e-05,True,False,1.9426146517929227e-07,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|eszaman|Hist Gradient Boosting|2020,3.697118449595338e-15,True,False,4.880196353465846e-13,True,False,8.690134087708629e-15,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|olcekleyici|Hist Gradient Boosting|2020,0.0009390370374524,True,False,0.0713668148463824,False,False,0.0013993493107133804,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|rastgele_kfold|Hist Gradient Boosting|2020,0.0001319547272916,True,False,0.011084197092494402,True,False,0.00020748743325851586,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|enkotu|Hist Gradient Boosting|2020,1.0052419426727174e-06,True,False,9.449274261123543e-05,True,False,1.6977419476250337e-06,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|eszaman|Linear Regression|2020,1.0670411316948482e-15,True,False,1.4191647051541481e-13,True,False,2.5342226877752642e-15,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|olcekleyici|Linear Regression|2020,0.1475994559075665,False,False,1.0,False,False,0.18092836530604928,False,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|rastgele_kfold|Linear Regression|2020,0.2771619150077613,False,False,1.0,False,False,0.3191561445543918,False,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|enkotu|Linear Regression|2020,1.693930360480929e-07,True,False,1.7278089676905475e-05,True,False,3.041071828264975e-07,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|eszaman|Polynomial Ridge|2020,1.3709434333853052e-14,True,False,1.79593589773475e-12,True,False,3.189541865427037e-14,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|olcekleyici|Polynomial Ridge|2020,0.034493955476032,True,False,1.0,False,False,0.04715039824092716,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|rastgele_kfold|Polynomial Ridge|2020,0.0326077923054242,True,False,1.0,False,False,0.04505804027658617,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|enkotu|Polynomial Ridge|2020,3.4461290240567733e-07,True,False,3.377206443575638e-05,True,False,5.997842881564461e-07,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|eszaman|Hist Gradient Boosting|2021,3.5825278312696293e-13,True,False,4.5856356240251255e-11,True,False,8.087290549796788e-13,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|olcekleyici|Hist Gradient Boosting|2021,0.7531086362719174,False,False,1.0,False,False,0.773462923738726,False,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|rastgele_kfold|Hist Gradient Boosting|2021,0.0002094543281328,True,False,0.0173847092350224,True,False,0.00032709306037176985,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|enkotu|Hist Gradient Boosting|2021,3.200869820423143e-07,True,False,3.168861122218911e-05,True,False,5.613833223511358e-07,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|eszaman|Linear Regression|2021,1.4386281713223634e-14,True,False,1.8702166227190722e-12,True,False,3.3132042733484736e-14,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|olcekleyici|Linear Regression|2021,0.1750290849845867,False,False,1.0,False,False,0.21226931583237107,False,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|rastgele_kfold|Linear Regression|2021,0.0451404281380676,True,False,1.0,False,False,0.05914952652574375,False,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|enkotu|Linear Regression|2021,6.047042174992357e-08,True,False,6.349394283741976e-06,True,False,1.1118754966921432e-07,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|eszaman|Polynomial Ridge|2021,9.400773450562368e-13,True,False,1.1844974547708584e-10,True,False,2.0809479094448738e-12,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|olcekleyici|Polynomial Ridge|2021,0.2275458268392285,False,False,1.0,False,False,0.2660535821504826,False,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|rastgele_kfold|Polynomial Ridge|2021,0.0068589305526752,True,False,0.4732662081345888,False,False,0.00977397603756216,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|enkotu|Polynomial Ridge|2021,1.2455666151312397e-07,True,False,1.2829336135851768e-05,True,False,2.2538824464279575e-07,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|eszaman|Hist Gradient Boosting|2022,6.952408424137591e-17,True,False,9.455275456827124e-15,True,False,1.7044614201111513e-16,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|olcekleyici|Hist Gradient Boosting|2022,0.2045525304876784,False,False,1.0,False,False,0.24417788979680985,False,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|rastgele_kfold|Hist Gradient Boosting|2022,6.452617141673649e-05,True,False,0.005549250741839338,True,False,0.00010288088869241902,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|enkotu|Hist Gradient Boosting|2022,2.5870538978890612e-09,True,False,2.9233709046146393e-07,True,False,5.0848990406785e-09,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|eszaman|Linear Regression|2022,8.534572648380857e-20,True,False,1.19484017077332e-17,True,False,2.1863849031807136e-19,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|olcekleyici|Linear Regression|2022,0.0098703926197598,True,False,0.670798946251128,False,False,0.013891663687069348,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|rastgele_kfold|Linear Regression|2022,0.0122027253790679,True,False,0.8053798750184814,False,False,0.017068842861518288,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|enkotu|Linear Regression|2022,3.017180450447885e-11,True,False,3.620616540537462e-09,True,False,6.31116644680842e-11,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|eszaman|Polynomial Ridge|2022,1.333037404437116e-16,True,False,1.7996004959901063e-14,True,False,3.2333247682091744e-16,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|olcekleyici|Polynomial Ridge|2022,0.7235727259684748,False,False,1.0,False,False,0.753308591419234,False,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|rastgele_kfold|Polynomial Ridge|2022,0.009864690386046,True,False,0.670798946251128,False,False,0.013891663687069348,True,False
-F2 tumu,Faz 2 tumu (228),F2|DKASC|enkotu|Polynomial Ridge|2022,2.617458599084011e-09,True,False,2.9315536309740924e-07,True,False,5.100688552061149e-09,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|eszaman|Hist Gradient Boosting|2017,4.758469003043088e-168,True,False,1.5893286470163913e-165,True,False,1.0411096833276737e-166,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|olcekleyici|Hist Gradient Boosting|2017,0.209806039772271,False,False,1.0,False,False,0.24176325112831226,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|rastgele_kfold|Hist Gradient Boosting|2017,5.415218225787785e-23,True,False,1.4242023933821873e-20,True,False,2.1912743518304056e-22,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|enkotu|Hist Gradient Boosting|2017,8.467936222355404e-93,True,False,2.5488488029289764e-90,True,False,6.139253761207668e-92,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|eszaman|Linear Regression|2017,9.353484949032648e-181,True,False,3.2082453375181985e-178,True,False,5.425021270438936e-179,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|olcekleyici|Linear Regression|2017,0.0542855379788978,False,False,1.0,False,False,0.06795455833329653,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|rastgele_kfold|Linear Regression|2017,0.004765220328619,True,False,0.519409015819471,False,False,0.00690956947649755,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|enkotu|Linear Regression|2017,8.217525739615797e-94,True,False,2.4981278248432024e-91,True,False,6.35488657196955e-93,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|eszaman|Polynomial Ridge|2017,1.3372893757112822e-155,True,False,4.3595633648187803e-153,True,False,2.0233769684675054e-154,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|olcekleyici|Polynomial Ridge|2017,0.3275349752763229,False,False,1.0,False,False,0.3631536040993109,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|rastgele_kfold|Polynomial Ridge|2017,2.606914895873722e-06,True,False,0.00038321648969343714,True,False,4.491120711703244e-06,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|enkotu|Polynomial Ridge|2017,2.7573845062438205e-85,True,False,8.13428429341927e-83,True,False,1.7769811262460177e-84,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|eszaman|Hist Gradient Boosting|2018,3.075149243500047e-184,True,False,1.057851339764016e-181,True,False,2.1403038734760327e-182,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|olcekleyici|Hist Gradient Boosting|2018,0.1195101217134501,False,False,1.0,False,False,0.1434121460561401,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|rastgele_kfold|Hist Gradient Boosting|2018,3.6463125940540636e-17,True,False,9.18870773701624e-15,True,False,1.3081616316812518e-16,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|enkotu|Hist Gradient Boosting|2018,9.449415951821268e-87,True,False,2.8159259536427377e-84,True,False,6.4478367671251e-86,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|eszaman|Linear Regression|2018,1.7599747069207783e-190,True,False,6.071912738876685e-188,True,False,1.5311779950210772e-188,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|olcekleyici|Linear Regression|2018,0.0004307758859637,True,False,0.054277761631426204,False,False,0.0006722421897550117,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|rastgele_kfold|Linear Regression|2018,0.3627134736626846,False,False,1.0,False,False,0.3969317258950133,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|enkotu|Linear Regression|2018,5.9304118585561576e-95,True,False,1.8147060287181842e-92,True,False,4.799496108784983e-94,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|eszaman|Polynomial Ridge|2018,1.6532001340707117e-150,True,False,5.273708427685571e-148,True,False,1.9177121555220255e-149,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|olcekleyici|Polynomial Ridge|2018,0.6699176534912672,False,False,1.0,False,False,0.7022028416113283,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|rastgele_kfold|Polynomial Ridge|2018,6.138546635736399e-07,True,False,9.453361819034054e-05,True,False,1.0954944765314187e-06,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|enkotu|Polynomial Ridge|2018,1.5126150964692473e-88,True,False,4.5227191384430495e-86,True,False,1.052780107142596e-87,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|eszaman|Hist Gradient Boosting|2019,7.63065519969339e-167,True,False,2.5257468710985123e-164,True,False,1.4752600052740552e-165,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|olcekleyici|Hist Gradient Boosting|2019,0.1767939798738347,False,False,1.0,False,False,0.20715254207439215,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|rastgele_kfold|Hist Gradient Boosting|2019,2.268480820259985e-17,True,False,5.761941283460362e-15,True,False,8.309803425794471e-17,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|enkotu|Hist Gradient Boosting|2019,4.23314133310416e-69,True,False,1.2064452799346855e-66,True,False,2.301770599875387e-68,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|eszaman|Linear Regression|2019,1.3436271337230964e-201,True,False,4.6758224253563755e-199,True,False,4.6758224253563755e-199,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|olcekleyici|Linear Regression|2019,0.0359400103643535,True,False,1.0,False,False,0.04701926167968052,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|rastgele_kfold|Linear Regression|2019,0.0826340926489174,False,False,1.0,False,False,0.10090057628709914,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|enkotu|Linear Regression|2019,1.961774267917344e-83,True,False,5.767616347676991e-81,True,False,1.2412680822458831e-82,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|eszaman|Polynomial Ridge|2019,2.545148916767335e-173,True,False,8.602603338673592e-171,True,False,8.051925663954842e-172,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|olcekleyici|Polynomial Ridge|2019,0.0345355987115563,True,False,1.0,False,False,0.04552419830159694,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|rastgele_kfold|Polynomial Ridge|2019,1.161248263576712e-05,True,False,0.001637360051643164,True,False,1.942857671753345e-05,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|enkotu|Polynomial Ridge|2019,1.648168979684407e-69,True,False,4.730244971694248e-67,True,False,9.251012982744736e-69,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|eszaman|Hist Gradient Boosting|2020,1.459279558634431e-142,True,False,4.625916200871146e-140,True,False,1.5869665200149437e-141,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|olcekleyici|Hist Gradient Boosting|2020,0.0490764001734035,True,False,1.0,False,False,0.062103953673979695,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|rastgele_kfold|Hist Gradient Boosting|2020,6.535318686983912e-13,True,False,1.4704467045713802e-10,True,False,1.834105566992259e-12,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|enkotu|Hist Gradient Boosting|2020,4.255039926439446e-70,True,False,1.2254514988145605e-67,True,False,2.4274654006572575e-69,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|eszaman|Linear Regression|2020,1.1819663179837134e-156,True,False,3.8886691861664174e-154,True,False,2.0566213932916612e-155,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|olcekleyici|Linear Regression|2020,0.0414221710293434,True,False,1.0,False,False,0.053388575993375945,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|rastgele_kfold|Linear Regression|2020,0.3641251656505028,False,False,1.0,False,False,0.3972274534369121,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|enkotu|Linear Regression|2020,6.708400347835509e-77,True,False,1.9588529015679687e-74,True,False,4.095654949204837e-76,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|eszaman|Polynomial Ridge|2020,1.501063794012377e-141,True,False,4.7133403131988645e-139,True,False,1.4924862866180207e-140,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|olcekleyici|Polynomial Ridge|2020,0.6692842792119926,False,False,1.0,False,False,0.7022028416113283,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|rastgele_kfold|Polynomial Ridge|2020,3.3450321947773786e-05,True,False,0.0046495947507405565,True,False,5.543196208488227e-05,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|enkotu|Polynomial Ridge|2020,3.612834459181409e-72,True,False,1.0477219931626086e-69,True,False,2.1309599860934414e-71,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|eszaman|Hist Gradient Boosting|2021,4.03309604522469e-141,True,False,1.2542928700648785e-138,True,False,3.6934669045741896e-140,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|olcekleyici|Hist Gradient Boosting|2021,0.4764845701430205,False,False,1.0,False,False,0.5086399705821201,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|rastgele_kfold|Hist Gradient Boosting|2021,3.9100120624454766e-10,True,False,7.820024124890952e-08,True,False,9.132108709604201e-10,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|enkotu|Hist Gradient Boosting|2021,5.0283608064205546e-54,True,False,1.377770860959232e-51,True,False,2.3331594141791374e-53,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|eszaman|Linear Regression|2021,2.2711149792271525e-153,True,False,7.381123682488245e-151,True,False,3.293116719879371e-152,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|olcekleyici|Linear Regression|2021,0.0524073348039552,False,False,1.0,False,False,0.0658402617753661,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|rastgele_kfold|Linear Regression|2021,0.3271285949418032,False,False,1.0,False,False,0.3631536040993109,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|enkotu|Linear Regression|2021,2.263648615711317e-58,True,False,6.383489096305914e-56,True,False,1.1757458481605049e-57,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|eszaman|Polynomial Ridge|2021,1.747846972464774e-142,True,False,5.523196432988685e-140,True,False,1.8431840800537617e-141,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|olcekleyici|Polynomial Ridge|2021,0.9027536804682238,False,False,1.0,False,False,0.9079719098350921,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|rastgele_kfold|Polynomial Ridge|2021,1.4836428888990643e-09,True,False,2.8782672044641846e-07,True,False,3.331017582818544e-09,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|enkotu|Polynomial Ridge|2021,2.650362077669131e-56,True,False,7.368006575920183e-54,True,False,1.2990507084913486e-55,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|eszaman|Hist Gradient Boosting|2022,1.601877114467072e-152,True,False,5.142025537439301e-150,True,False,1.9909044136947895e-151,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|olcekleyici|Hist Gradient Boosting|2022,0.817567945712047,False,False,1.0,False,False,0.8339366927707136,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|rastgele_kfold|Hist Gradient Boosting|2022,3.062511291819127e-08,True,False,5.451270099438046e-06,True,False,6.196259064888459e-08,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|enkotu|Hist Gradient Boosting|2022,7.354784007905361e-50,True,False,1.9710821141186368e-47,True,False,3.1598331293223034e-49,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|eszaman|Linear Regression|2022,5.17349384580466e-169,True,False,1.7434674260361704e-166,True,False,1.5003132152833515e-167,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|olcekleyici|Linear Regression|2022,0.0009238089051876,True,False,0.110857068622512,False,False,0.0014038668078833398,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|rastgele_kfold|Linear Regression|2022,0.403275178804632,False,False,1.0,False,False,0.43583777088202463,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|enkotu|Linear Regression|2022,1.6373460774907235e-54,True,False,4.519075173874397e-52,True,False,7.805430615983175e-54,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|eszaman|Polynomial Ridge|2022,2.670797935318958e-152,True,False,8.546553393020666e-150,True,False,3.204957522382749e-151,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|olcekleyici|Polynomial Ridge|2022,0.1424446711181325,False,False,1.0,False,False,0.16918343190822563,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|rastgele_kfold|Polynomial Ridge|2022,0.0003779869171094,True,False,0.0480043384728938,True,False,0.0005925200322255459,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|enkotu|Polynomial Ridge|2022,2.0907027061468304e-53,True,False,5.686711360719378e-51,True,False,9.448890152455804e-53,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|eszaman|Hist Gradient Boosting|2023,6.868421832674781e-137,True,False,2.1154739244638325e-134,True,False,5.8297824335873745e-136,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|olcekleyici|Hist Gradient Boosting|2023,0.8194856934790182,False,False,1.0,False,False,0.8339366927707136,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|rastgele_kfold|Hist Gradient Boosting|2023,4.53642965589156e-08,True,False,7.93875189781023e-06,True,False,9.072859311783119e-08,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|enkotu|Hist Gradient Boosting|2023,2.0419750171487205e-49,True,False,5.452073295787084e-47,True,False,8.665942755704326e-49,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|eszaman|Linear Regression|2023,4.786711187713442e-168,True,False,1.5939748255085762e-165,True,False,1.0411096833276737e-166,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|olcekleyici|Linear Regression|2023,0.0038428116696431,True,False,0.4265520953303841,False,False,0.005618901096789071,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|rastgele_kfold|Linear Regression|2023,0.2073137693146298,False,False,1.0,False,False,0.23968502233053546,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|enkotu|Linear Regression|2023,1.2343020086648826e-57,True,False,3.4560456242616715e-55,True,False,6.225175348048972e-57,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|eszaman|Polynomial Ridge|2023,2.2379383055272132e-143,True,False,7.116643811576538e-141,True,False,2.512266226849904e-142,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|olcekleyici|Polynomial Ridge|2023,0.7322053938143499,False,False,1.0,False,False,0.7606193344698322,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|rastgele_kfold|Polynomial Ridge|2023,2.502003383256434e-07,True,False,4.0282254470428594e-05,True,False,4.6313679647512717e-07,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS tam|enkotu|Polynomial Ridge|2023,4.88791386604177e-47,True,False,1.295297174501069e-44,True,False,2.024992887360162e-46,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|eszaman|Hist Gradient Boosting|2017,8.853650268914837e-167,True,False,2.9217045887418963e-164,True,False,1.6216159439907176e-165,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|olcekleyici|Hist Gradient Boosting|2017,0.6102227654633354,False,False,1.0,False,False,0.6454635938639536,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|rastgele_kfold|Hist Gradient Boosting|2017,7.037996836730138e-27,True,False,1.8580311648967563e-24,True,False,2.8814387049201035e-26,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|enkotu|Hist Gradient Boosting|2017,8.959916073955743e-94,True,False,2.71485457040859e-91,True,False,6.778371290731736e-93,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|eszaman|Linear Regression|2017,5.056587620583225e-180,True,False,1.7192397909982966e-177,True,False,1.9552138799588471e-178,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|olcekleyici|Linear Regression|2017,0.0722268262905741,False,False,1.0,False,False,0.08944816921394942,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|rastgele_kfold|Linear Regression|2017,0.0030559010958943,True,False,0.3514286260278445,False,False,0.004544673424663318,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|enkotu|Linear Regression|2017,2.4471834347668005e-93,True,False,7.390493972995737e-91,True,False,1.8119570963805246e-92,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|eszaman|Polynomial Ridge|2017,6.886952909396395e-156,True,False,2.252033601372621e-153,True,False,1.0893907329408842e-154,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|olcekleyici|Polynomial Ridge|2017,0.2577702964257226,False,False,1.0,False,False,0.2941116824791851,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|rastgele_kfold|Polynomial Ridge|2017,1.8099639122850158e-09,True,False,3.4932303507100805e-07,True,False,4.037611804328112e-09,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|enkotu|Polynomial Ridge|2017,1.096952679257999e-85,True,False,3.2469799306036767e-83,True,False,7.202632686448747e-85,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|eszaman|Hist Gradient Boosting|2018,1.6538833294235946e-180,True,False,5.656280986628693e-178,True,False,7.994367664732969e-179,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|olcekleyici|Hist Gradient Boosting|2018,0.4948437932200714,False,False,1.0,False,False,0.5266227524176906,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|rastgele_kfold|Hist Gradient Boosting|2018,1.0484907347415121e-20,True,False,2.7260759103279317e-18,True,False,4.099716580787036e-20,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|enkotu|Hist Gradient Boosting|2018,1.0466440357932966e-86,True,False,3.108532786306091e-84,True,False,7.004463931847447e-86,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|eszaman|Linear Regression|2018,1.4152651921112363e-190,True,False,4.8968175647048777e-188,True,False,1.5311779950210772e-188,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|olcekleyici|Linear Regression|2018,0.0003479759614733,True,False,0.0445409230685824,True,False,0.0005479440479308073,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|rastgele_kfold|Linear Regression|2018,0.3588408695890157,False,False,1.0,False,False,0.3939325634604967,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|enkotu|Linear Regression|2018,1.0126372760840338e-94,True,False,3.088543692056303e-92,True,False,8.009040274482814e-94,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|eszaman|Polynomial Ridge|2018,1.837785670053556e-180,True,False,6.266849134882626e-178,True,False,7.994367664732969e-179,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|olcekleyici|Polynomial Ridge|2018,0.703192220686284,False,False,1.0,False,False,0.7348675459424229,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|rastgele_kfold|Polynomial Ridge|2018,5.241288464361202e-07,True,False,8.176410004403475e-05,True,False,9.450613396879266e-07,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|enkotu|Polynomial Ridge|2018,8.875900676454215e-89,True,False,2.6627702029362645e-86,True,False,6.30370088858381e-88,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|eszaman|Hist Gradient Boosting|2019,3.9075373734368616e-168,True,False,1.3090250201013487e-165,True,False,9.713021471114484e-167,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|olcekleyici|Hist Gradient Boosting|2019,0.1888588599395289,False,False,1.0,False,False,0.2205465881173022,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|rastgele_kfold|Hist Gradient Boosting|2019,8.324528852920922e-12,True,False,1.814747289936761e-09,True,False,2.2114015578751762e-11,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|enkotu|Hist Gradient Boosting|2019,5.40121989465264e-67,True,False,1.5285452301866972e-64,True,False,2.8479159444532104e-66,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|eszaman|Linear Regression|2019,2.8110458892626964e-201,True,False,9.754329235741557e-199,True,False,4.891219847317092e-199,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|olcekleyici|Linear Regression|2019,0.0291882653219536,True,False,1.0,False,False,0.039677798172030675,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|rastgele_kfold|Linear Regression|2019,0.0870129847038188,False,False,1.0,False,False,0.10587593942982147,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|enkotu|Linear Regression|2019,2.2858501321858825e-83,True,False,6.697540887304636e-81,True,False,1.420492582144084e-82,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|eszaman|Polynomial Ridge|2019,1.3202828154203459e-173,True,False,4.475758744274972e-171,True,False,4.5945841976628036e-172,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|olcekleyici|Polynomial Ridge|2019,0.0065604260564554,True,False,0.7019655880407277,False,False,0.009434001105977186,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|rastgele_kfold|Polynomial Ridge|2019,3.4297407821675106e-05,True,False,0.0047330422793911645,True,False,5.65663408622888e-05,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|enkotu|Polynomial Ridge|2019,2.760020153211251e-69,True,False,7.893657638184178e-67,True,False,1.524582560821453e-68,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|eszaman|Hist Gradient Boosting|2020,3.555315182521325e-139,True,False,1.1021477065816106e-136,True,False,3.172435085942105e-138,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|olcekleyici|Hist Gradient Boosting|2020,0.2059267655791409,False,False,1.0,False,False,0.23887504807180343,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|rastgele_kfold|Hist Gradient Boosting|2020,1.7329771306693476e-10,True,False,3.535273346565469e-08,True,False,4.159145113606434e-10,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|enkotu|Hist Gradient Boosting|2020,1.5612850556425278e-68,True,False,4.4340495580247787e-66,True,False,8.358879990209227e-68,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|eszaman|Linear Regression|2020,3.213605405203781e-156,True,False,1.0540625729068401e-153,True,False,5.325403242909123e-155,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|olcekleyici|Linear Regression|2020,0.0384410131359256,True,False,1.0,False,False,0.04973038130595579,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|rastgele_kfold|Linear Regression|2020,0.2610900314275539,False,False,1.0,False,False,0.29692591809408087,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|enkotu|Linear Regression|2020,9.738227397743547e-77,True,False,2.833824172743372e-74,True,False,5.842936438646128e-76,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|eszaman|Polynomial Ridge|2020,3.081191174045674e-141,True,False,9.64412837476296e-139,True,False,2.94930175899322e-140,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|olcekleyici|Polynomial Ridge|2020,0.0433987487509556,True,False,1.0,False,False,0.055729758543662536,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|rastgele_kfold|Polynomial Ridge|2020,7.456291748451965e-05,True,False,0.010065993860410153,True,False,0.00012125184712435906,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|enkotu|Polynomial Ridge|2020,4.575445145928878e-72,True,False,1.3223036471734457e-69,True,False,2.6537581846387494e-71,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|eszaman|Hist Gradient Boosting|2021,4.019502055517168e-139,True,False,1.242026135154805e-136,True,False,3.496966788299936e-138,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|olcekleyici|Hist Gradient Boosting|2021,0.2993811112980252,False,False,1.0,False,False,0.33716707680165947,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|rastgele_kfold|Hist Gradient Boosting|2021,8.839811389421368e-12,True,False,1.9093992601150154e-09,True,False,2.31297320565311e-11,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|enkotu|Hist Gradient Boosting|2021,6.987898639778482e-54,True,False,1.9076963286595256e-51,True,False,3.199722008740673e-53,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|eszaman|Linear Regression|2021,4.716473899557696e-153,True,False,1.5234210695571358e-150,True,False,6.312818911715686e-152,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|olcekleyici|Linear Regression|2021,0.0350830168976293,True,False,1.0,False,False,0.04607128256745281,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|rastgele_kfold|Linear Regression|2021,0.393419237100457,False,False,1.0,False,False,0.42784342034674705,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|enkotu|Linear Regression|2021,3.230887382440872e-58,True,False,9.07879354465885e-56,True,False,1.6534541310138582e-57,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|eszaman|Polynomial Ridge|2021,5.754203335339982e-142,True,False,1.8125740506320944e-139,True,False,5.88959635499504e-141,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|olcekleyici|Polynomial Ridge|2021,0.8375529124878569,False,False,1.0,False,False,0.8497621386174175,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|rastgele_kfold|Polynomial Ridge|2021,1.1567793365989136e-08,True,False,2.0937705992440335e-06,True,False,2.396185768669178e-08,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|enkotu|Polynomial Ridge|2021,3.0762810232589615e-56,True,False,8.521298434427323e-54,True,False,1.4868691612418315e-55,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|eszaman|Hist Gradient Boosting|2022,3.937136801984988e-153,True,False,1.275632323843136e-150,True,False,5.480494428363103e-152,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|olcekleyici|Hist Gradient Boosting|2022,0.8195584739298392,False,False,1.0,False,False,0.8339366927707136,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|rastgele_kfold|Hist Gradient Boosting|2022,7.499405576962476e-07,True,False,0.00011399096476982963,True,False,1.3247680917679908e-06,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|enkotu|Hist Gradient Boosting|2022,2.1033863760527757e-50,True,False,5.679143215342494e-48,True,False,9.26555011223248e-50,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|eszaman|Linear Regression|2022,6.617765789094455e-169,True,False,2.2235693051357368e-166,True,False,1.7715249958499e-167,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|olcekleyici|Linear Regression|2022,0.0006004797284789,True,False,0.0732585268744258,False,False,0.0009205592313244812,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|rastgele_kfold|Linear Regression|2022,0.4052350498133459,False,False,1.0,False,False,0.43659999174936337,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|enkotu|Linear Regression|2022,1.7036263993343984e-54,True,False,4.6849725981695955e-52,True,False,8.01164847254555e-54,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|eszaman|Polynomial Ridge|2022,8.817271804632512e-153,True,False,2.839161521091669e-150,True,False,1.1364483659304128e-151,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|olcekleyici|Polynomial Ridge|2022,0.4321535282524388,False,False,1.0,False,False,0.4641649007155824,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|rastgele_kfold|Polynomial Ridge|2022,0.0026379706758274,True,False,0.3060045983959784,False,False,0.003939973369905301,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|enkotu|Polynomial Ridge|2022,2.912243879357194e-53,True,False,7.892180913057996e-51,True,False,1.2993088077132097e-52,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|eszaman|Hist Gradient Boosting|2023,1.3818536549761083e-136,True,False,4.2422907207766524e-134,True,False,1.1449644569802042e-135,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|olcekleyici|Hist Gradient Boosting|2023,0.7676738024939559,False,False,1.0,False,False,0.7880545229141495,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|rastgele_kfold|Hist Gradient Boosting|2023,3.4339696124709572e-09,True,False,6.490202567570109e-07,True,False,7.468883907124331e-09,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|enkotu|Hist Gradient Boosting|2023,3.147998748607558e-50,True,False,8.468116633754331e-48,True,False,1.369379455644288e-49,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|eszaman|Linear Regression|2023,1.3519207379775637e-167,True,False,4.488376850085511e-165,True,False,2.767461275389365e-166,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|olcekleyici|Linear Regression|2023,0.0021425991994933,True,False,0.25068410634071614,False,False,0.00321389879923995,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|rastgele_kfold|Linear Regression|2023,0.3276730795608725,False,False,1.0,False,False,0.3631536040993109,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|enkotu|Linear Regression|2023,1.4250273455701034e-57,True,False,3.975826294140588e-55,True,False,7.084421660834228e-57,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|eszaman|Polynomial Ridge|2023,3.135751870193941e-141,True,False,9.783545835005095e-139,True,False,2.94930175899322e-140,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|olcekleyici|Polynomial Ridge|2023,0.3234492103544216,False,False,1.0,False,False,0.36193030612006016,False,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|rastgele_kfold|Polynomial Ridge|2023,1.3093507922165397e-06,True,False,0.0001950932680402644,True,False,2.278270378456779e-06,True,False
+F2 tumu,Faz 2 tumu (348),F2|PVGIS indirgenmis|enkotu|Polynomial Ridge|2023,1.943515652160784e-47,True,False,5.169751634747686e-45,True,False,8.148716228336781e-47,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|eszaman|Hist Gradient Boosting|2018,3.139505767972812e-21,True,False,8.194110054409039e-19,True,False,1.2415318264256121e-20,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|olcekleyici|Hist Gradient Boosting|2018,0.3567241385435125,False,False,1.0,False,False,0.3928481019403239,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|rastgele_kfold|Hist Gradient Boosting|2018,8.481966133869297e-12,True,False,1.8405866510496373e-09,True,False,2.2361547080200872e-11,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|enkotu|Hist Gradient Boosting|2018,3.206896053152048e-17,True,False,8.113447014474682e-15,True,False,1.1624998192676174e-16,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|eszaman|Linear Regression|2018,2.3733553152731487e-14,True,False,5.458717225128242e-12,True,False,6.940568485000469e-14,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|olcekleyici|Linear Regression|2018,0.7377297966532509,False,False,1.0,False,False,0.7618099977309534,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|rastgele_kfold|Linear Regression|2018,0.170779939797942,False,False,1.0,False,False,0.20146243745655532,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|enkotu|Linear Regression|2018,1.1584190348264776e-10,True,False,2.3979274020908086e-08,True,False,2.838942423377565e-10,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|eszaman|Polynomial Ridge|2018,8.074438900218107e-16,True,False,1.970163091653218e-13,True,False,2.6760997497865724e-15,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|olcekleyici|Polynomial Ridge|2018,0.3947858208262291,False,False,1.0,False,False,0.4279921048209586,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|rastgele_kfold|Polynomial Ridge|2018,0.0004490308620648,True,False,0.056128857758100004,False,False,0.0006976015178506715,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|enkotu|Polynomial Ridge|2018,5.290053019254615e-12,True,False,1.1638116642360154e-09,True,False,1.4270840703105474e-11,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|eszaman|Hist Gradient Boosting|2019,6.158266742453992e-11,True,False,1.2870777491728843e-08,True,False,1.5307691616957066e-10,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|olcekleyici|Hist Gradient Boosting|2019,0.0674883733145609,False,False,1.0,False,False,0.0838784068338114,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|rastgele_kfold|Hist Gradient Boosting|2019,1.7607999157628518e-08,True,False,3.169439848373133e-06,True,False,3.625789175653683e-08,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|enkotu|Hist Gradient Boosting|2019,1.6676211441497346e-11,True,False,3.568709248480432e-09,True,False,4.298756727141538e-11,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|eszaman|Linear Regression|2019,2.178318461407481e-07,True,False,3.550659092094194e-05,True,False,4.0755635729559316e-07,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|olcekleyici|Linear Regression|2019,0.0475071017730832,True,False,1.0,False,False,0.06033748692347792,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|rastgele_kfold|Linear Regression|2019,0.0370241164484663,True,False,1.0,False,False,0.04807609150770997,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|enkotu|Linear Regression|2019,1.459500765879188e-06,True,False,0.00021600611335011985,True,False,2.5268968483878482e-06,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|eszaman|Polynomial Ridge|2019,3.0578541464089073e-09,True,False,5.809922878176924e-07,True,False,6.692661905347798e-09,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|olcekleyici|Polynomial Ridge|2019,0.0799783858722403,False,False,1.0,False,False,0.0980016840969705,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|rastgele_kfold|Polynomial Ridge|2019,1.5159873108429888e-05,True,False,0.0021223822351801843,True,False,2.5242276754706225e-05,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|enkotu|Polynomial Ridge|2019,1.065029962605769e-07,True,False,1.789250337177692e-05,True,False,2.0476819170541857e-07,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|eszaman|Hist Gradient Boosting|2020,3.697118449595338e-15,True,False,8.836113094532858e-13,True,False,1.1696338367810706e-14,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|olcekleyici|Hist Gradient Boosting|2020,0.0009390370374524,True,False,0.1117454074568356,False,False,0.001420803865362762,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|rastgele_kfold|Hist Gradient Boosting|2020,0.0001319547272916,True,False,0.017418024002491202,True,False,0.00021161403270726636,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|enkotu|Hist Gradient Boosting|2020,1.0052419426727174e-06,True,False,0.0001507862914009076,True,False,1.757910532915104e-06,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|eszaman|Linear Regression|2020,1.0670411316948482e-15,True,False,2.592909950018481e-13,True,False,3.503116168205728e-15,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|olcekleyici|Linear Regression|2020,0.1475994559075665,False,False,1.0,False,False,0.17470956005385424,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|rastgele_kfold|Linear Regression|2020,0.2771619150077613,False,False,1.0,False,False,0.31417702417817894,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|enkotu|Linear Regression|2020,1.693930360480929e-07,True,False,2.7780457911887236e-05,True,False,3.1864203537695314e-07,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|eszaman|Polynomial Ridge|2020,1.3709434333853052e-14,True,False,3.194298199787761e-12,True,False,4.1128303001559155e-14,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|olcekleyici|Polynomial Ridge|2020,0.034493955476032,True,False,1.0,False,False,0.04552419830159694,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|rastgele_kfold|Polynomial Ridge|2020,0.0326077923054242,True,False,1.0,False,False,0.04335223991059156,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|enkotu|Polynomial Ridge|2020,3.4461290240567733e-07,True,False,5.4448838580097016e-05,True,False,6.27881099671077e-07,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|eszaman|Hist Gradient Boosting|2021,3.5825278312696293e-13,True,False,8.132338176982059e-11,True,False,1.02190138137855e-12,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|olcekleyici|Hist Gradient Boosting|2021,0.7531086362719174,False,False,1.0,False,False,0.7753899568716783,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|rastgele_kfold|Hist Gradient Boosting|2021,0.0002094543281328,True,False,0.027229062657264,True,False,0.00033283153511513424,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|enkotu|Hist Gradient Boosting|2021,3.200869820423143e-07,True,False,5.089383014472797e-05,True,False,5.862645776353966e-07,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|eszaman|Linear Regression|2021,1.4386281713223634e-14,True,False,3.3376173574678833e-12,True,False,4.278996612138311e-14,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|olcekleyici|Linear Regression|2021,0.1750290849845867,False,False,1.0,False,False,0.20577743775214924,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|rastgele_kfold|Linear Regression|2021,0.0451404281380676,True,False,1.0,False,False,0.05775319482370414,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|enkotu|Linear Regression|2021,6.047042174992357e-08,True,False,1.0461382962736779e-05,True,False,1.1956651573280342e-07,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|eszaman|Polynomial Ridge|2021,9.400773450562368e-13,True,False,2.1057732529259703e-10,True,False,2.617175328636563e-12,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|olcekleyici|Polynomial Ridge|2021,0.2275458268392285,False,False,1.0,False,False,0.26048009125016947,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|rastgele_kfold|Polynomial Ridge|2021,0.0068589305526752,True,False,0.7270466385835712,False,False,0.009822665976670655,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|enkotu|Polynomial Ridge|2021,1.2455666151312397e-07,True,False,2.0551849149665456e-05,True,False,2.355745554704736e-07,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|eszaman|Hist Gradient Boosting|2022,6.952408424137591e-17,True,False,1.7381021060343978e-14,True,False,2.443876900605941e-16,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|olcekleyici|Hist Gradient Boosting|2022,0.2045525304876784,False,False,1.0,False,False,0.2380745170893381,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|rastgele_kfold|Hist Gradient Boosting|2022,6.452617141673649e-05,True,False,0.008775559312676163,True,False,0.00010542304062452723,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|enkotu|Hist Gradient Boosting|2022,2.5870538978890612e-09,True,False,4.967143483946998e-07,True,False,5.7343615061490015e-09,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|eszaman|Linear Regression|2022,8.534572648380857e-20,True,False,2.1933851706338802e-17,True,False,3.228294871344063e-19,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|olcekleyici|Linear Regression|2022,0.0098703926197598,True,False,1.0,False,False,0.01390646409585591,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|rastgele_kfold|Linear Regression|2022,0.0122027253790679,True,False,1.0,False,False,0.017054411373155137,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|enkotu|Linear Regression|2022,3.017180450447885e-11,True,False,6.383088929251161e-09,True,False,7.608542005477276e-11,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|eszaman|Polynomial Ridge|2022,1.333037404437116e-16,True,False,3.3059327630040474e-14,True,False,4.593039769743727e-16,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|olcekleyici|Polynomial Ridge|2022,0.7235727259684748,False,False,1.0,False,False,0.7539021216677522,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|rastgele_kfold|Polynomial Ridge|2022,0.009864690386046,True,False,1.0,False,False,0.01390646409585591,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC|enkotu|Polynomial Ridge|2022,2.617458599084011e-09,True,False,4.999345924250461e-07,True,False,5.76503539545086e-09,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|eszaman|Hist Gradient Boosting|2018,2.736997752148791e-13,True,False,6.240354874899243e-11,True,False,7.871696014444456e-13,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|olcekleyici|Hist Gradient Boosting|2018,0.0081340817040047,True,False,0.8540785789204934,False,False,0.011601067348334573,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|rastgele_kfold|Hist Gradient Boosting|2018,7.734774263599065e-10,True,False,1.531485304192615e-07,True,False,1.7825837375711752e-09,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|enkotu|Hist Gradient Boosting|2018,2.2804864145545697e-12,True,False,5.062679840311144e-10,True,False,6.248891907598348e-12,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|eszaman|Linear Regression|2018,1.4690294136574226e-09,True,False,2.864607356631974e-07,True,False,3.3196249087843054e-09,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|olcekleyici|Linear Regression|2018,0.0322095439174606,True,False,1.0,False,False,0.04311123570490881,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|rastgele_kfold|Linear Regression|2018,3.3892091804849525e-08,True,False,5.965008157653516e-06,True,False,6.817599969992852e-08,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|enkotu|Linear Regression|2018,6.412507678417454e-09,True,False,1.1927264281856465e-06,True,False,1.3690507190731742e-08,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|eszaman|Polynomial Ridge|2018,5.179510233823557e-12,True,False,1.1446717616750061e-09,True,False,1.4081793448207795e-11,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|olcekleyici|Polynomial Ridge|2018,0.8523661804866812,False,False,1.0,False,False,0.8622774151435031,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|rastgele_kfold|Polynomial Ridge|2018,4.747999385315292e-06,True,False,0.0006884599108707173,True,False,8.09952836318491e-06,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|enkotu|Polynomial Ridge|2018,6.507490969402007e-10,True,False,1.2949907029109992e-07,True,False,1.5097379049012657e-09,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|eszaman|Hist Gradient Boosting|2019,1.381032786315163e-10,True,False,2.831117211946084e-08,True,False,3.337495900261644e-10,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|olcekleyici|Hist Gradient Boosting|2019,0.1146344962140202,False,False,1.0,False,False,0.13803738644456412,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|rastgele_kfold|Hist Gradient Boosting|2019,2.195069801993315e-07,True,False,3.55601307922917e-05,True,False,4.08494273312125e-07,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|enkotu|Hist Gradient Boosting|2019,1.137898248209549e-07,True,False,1.9002900745099468e-05,True,False,2.1757614855874893e-07,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|eszaman|Linear Regression|2019,9.18736134347988e-07,True,False,0.00013872915628654618,True,False,1.6147483573388879e-06,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|olcekleyici|Linear Regression|2019,0.0004816903682243,True,False,0.0597296056598132,False,False,0.0007450144361869173,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|rastgele_kfold|Linear Regression|2019,0.6547205339869924,False,False,1.0,False,False,0.6904325631135556,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|enkotu|Linear Regression|2019,0.0004949150290351,True,False,0.0608745485713173,False,False,0.0007620815491336939,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|eszaman|Polynomial Ridge|2019,3.88902291557968e-07,True,False,6.105765977460098e-05,True,False,7.048854034488169e-07,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|olcekleyici|Polynomial Ridge|2019,0.93603267157057,False,False,1.0,False,False,0.93603267157057,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|rastgele_kfold|Polynomial Ridge|2019,8.534000604753055e-05,True,False,0.011435560810369094,True,False,0.00013813173071879363,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|enkotu|Polynomial Ridge|2019,0.0002709472341757,True,False,0.0349521932086653,True,False,0.0004285892613324709,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|eszaman|Hist Gradient Boosting|2020,8.387461652199758e-15,True,False,1.9878284115713427e-12,True,False,2.6061041562192106e-14,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|olcekleyici|Hist Gradient Boosting|2020,0.0262597192567048,True,False,1.0,False,False,0.03597788307611524,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|rastgele_kfold|Hist Gradient Boosting|2020,2.9177153399971813e-07,True,False,4.66834454399549e-05,True,False,5.372301260947191e-07,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|enkotu|Hist Gradient Boosting|2020,1.3020598328913248e-10,True,False,2.682243255756129e-08,True,False,3.168649103819448e-10,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|eszaman|Linear Regression|2020,1.0282992284638023e-14,True,False,2.4267861791745736e-12,True,False,3.166797623941621e-14,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|olcekleyici|Linear Regression|2020,0.0956463893356381,False,False,1.0,False,False,0.11597541285296883,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|rastgele_kfold|Linear Regression|2020,0.3027850594092523,False,False,1.0,False,False,0.33990064733683806,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|enkotu|Linear Regression|2020,8.818187052062945e-10,True,False,1.7371828492564e-07,True,False,2.018900719814411e-09,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|eszaman|Polynomial Ridge|2020,6.6148236158401e-14,True,False,1.514794608027383e-11,True,False,1.918298848593629e-13,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|olcekleyici|Polynomial Ridge|2020,0.0319146780767669,True,False,1.0,False,False,0.042881497956428115,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|rastgele_kfold|Polynomial Ridge|2020,0.0299514803577599,True,False,1.0,False,False,0.04055686834435971,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|enkotu|Polynomial Ridge|2020,9.233864818412356e-09,True,False,1.6805633969510486e-06,True,False,1.9241826088667662e-08,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|eszaman|Hist Gradient Boosting|2021,1.1143246695236872e-14,True,False,2.618662973380665e-12,True,False,3.401622675388097e-14,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|olcekleyici|Hist Gradient Boosting|2021,0.0787080375948408,False,False,1.0,False,False,0.09678585541697737,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|rastgele_kfold|Hist Gradient Boosting|2021,2.677144302034665e-06,True,False,0.00039086306809706106,True,False,4.589390232059426e-06,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|enkotu|Hist Gradient Boosting|2021,3.719226244289536e-10,True,False,7.475644751021967e-08,True,False,8.745207655491611e-10,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|eszaman|Linear Regression|2021,7.938931348650813e-15,True,False,1.8894656609788936e-12,True,False,2.4889622606580927e-14,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|olcekleyici|Linear Regression|2021,0.1061645661103068,False,False,1.0,False,False,0.12828218404995406,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|rastgele_kfold|Linear Regression|2021,0.1206450689991168,False,False,1.0,False,False,0.14427657735976854,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|enkotu|Linear Regression|2021,8.989587777275718e-09,True,False,1.6450945632414565e-06,True,False,1.8845641846337047e-08,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|eszaman|Polynomial Ridge|2021,1.3101373381218789e-12,True,False,2.9216062640117897e-10,True,False,3.618474552908046e-12,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|olcekleyici|Polynomial Ridge|2021,0.0770239354392942,False,False,1.0,False,False,0.09505081394636306,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|rastgele_kfold|Polynomial Ridge|2021,0.0057475438583627,True,False,0.6207347367031716,False,False,0.008299357936556928,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|enkotu|Polynomial Ridge|2021,4.087997318377846e-09,True,False,7.685434958550351e-07,True,False,8.836168116742176e-09,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|eszaman|Hist Gradient Boosting|2022,2.056026079406263e-17,True,False,5.242866502485971e-15,True,False,7.611671017376378e-17,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|olcekleyici|Hist Gradient Boosting|2022,0.569600051581486,False,False,1.0,False,False,0.6043317620437717,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|rastgele_kfold|Hist Gradient Boosting|2022,9.147496113516688e-05,True,False,0.012166169830977196,True,False,0.00014737632627332442,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|enkotu|Hist Gradient Boosting|2022,6.618823653678499e-09,True,False,1.2244823759305222e-06,True,False,1.4044820923659255e-08,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|eszaman|Linear Regression|2022,4.874345606137338e-20,True,False,1.2575811663834332e-17,True,False,1.8640354625668063e-19,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|olcekleyici|Linear Regression|2022,0.0177859498523423,True,False,1.0,False,False,0.02465940457615586,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|rastgele_kfold|Linear Regression|2022,0.0033257065925079,True,False,0.3791305515459006,False,False,0.004924876145501061,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|enkotu|Linear Regression|2022,1.1425052128487422e-09,True,False,2.2393102171835347e-07,True,False,2.5986393076559625e-09,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|eszaman|Polynomial Ridge|2022,1.0236350724020926e-16,True,False,2.5488513302812106e-14,True,False,3.5622500519592823e-16,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|olcekleyici|Polynomial Ridge|2022,0.9195107647434608,False,False,1.0,False,False,0.9221606516735572,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|rastgele_kfold|Polynomial Ridge|2022,0.0045463581989775,True,False,0.500099401887525,False,False,0.006619801896419121,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC CdTe|enkotu|Polynomial Ridge|2022,6.7250435152492355e-09,True,False,1.2374080068058593e-06,True,False,1.4183728141252932e-08,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|eszaman|Hist Gradient Boosting|2018,2.599689220456765e-21,True,False,6.811185757596724e-19,True,False,1.0398756881827058e-20,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|olcekleyici|Hist Gradient Boosting|2018,0.1265913075422725,False,False,1.0,False,False,0.15086909255037953,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|rastgele_kfold|Hist Gradient Boosting|2018,5.7188159285113976e-12,True,False,1.252420688343996e-09,True,False,1.5308830331707432e-11,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|enkotu|Hist Gradient Boosting|2018,4.25614300979281e-16,True,False,1.0427550373992386e-13,True,False,1.424170930199902e-15,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|eszaman|Linear Regression|2018,2.741355153812526e-15,True,False,6.606665920688187e-13,True,False,8.833255495618139e-15,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|olcekleyici|Linear Regression|2018,0.0192419458852303,True,False,1.0,False,False,0.02657221098436565,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|rastgele_kfold|Linear Regression|2018,0.0370223037074135,True,False,1.0,False,False,0.04807609150770997,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|enkotu|Linear Regression|2018,3.0108910043637555e-11,True,False,6.383088929251161e-09,True,False,7.608542005477276e-11,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|eszaman|Polynomial Ridge|2018,2.259174967932186e-15,True,False,5.46720342239589e-13,True,False,7.347597091966362e-15,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|olcekleyici|Polynomial Ridge|2018,0.0102813235883532,True,False,1.0,False,False,0.014427018583656909,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|rastgele_kfold|Polynomial Ridge|2018,0.000167651359956,True,False,0.021962328154236002,True,False,0.00026762694158113763,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|enkotu|Polynomial Ridge|2018,1.4867407610908928e-11,True,False,3.1964926363454194e-09,True,False,3.8610879467136615e-11,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|eszaman|Hist Gradient Boosting|2019,7.605312765182976e-11,True,False,1.581905055158059e-08,True,False,1.877055916513245e-10,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|olcekleyici|Hist Gradient Boosting|2019,0.3312269707738664,False,False,1.0,False,False,0.36592693914065244,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|rastgele_kfold|Hist Gradient Boosting|2019,9.05039717488908e-08,True,False,1.5476179169060328e-05,True,False,1.769403492618764e-07,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|enkotu|Hist Gradient Boosting|2019,2.7077349203271423e-10,True,False,5.4696245390608275e-08,True,False,6.410147974652011e-10,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|eszaman|Linear Regression|2019,4.6792473752223367e-08,True,False,8.141890432886865e-06,True,False,9.305017637584989e-08,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|olcekleyici|Linear Regression|2019,0.0009592878087901,True,False,0.11319596143723179,False,False,0.0014451608548006702,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|rastgele_kfold|Linear Regression|2019,0.008626624395125,True,False,0.8971689370929999,False,False,0.012253327712259184,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|enkotu|Linear Regression|2019,6.572753072893305e-07,True,False,0.00010056312201526757,True,False,1.166999014983097e-06,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|eszaman|Polynomial Ridge|2019,4.7859752750406805e-09,True,False,8.949773764326072e-07,True,False,1.0280983924161462e-08,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|olcekleyici|Polynomial Ridge|2019,0.880893849418012,False,False,1.0,False,False,0.8885537959346903,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|rastgele_kfold|Polynomial Ridge|2019,7.812634567140812e-06,True,False,0.0011172067431011361,True,False,1.3198042860995157e-05,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|enkotu|Polynomial Ridge|2019,1.0356810015777085e-07,True,False,1.7503008926663274e-05,True,False,2.0023166030502366e-07,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|eszaman|Hist Gradient Boosting|2020,1.9172382406295292e-16,True,False,4.716406071948642e-14,True,False,6.477659298437633e-16,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|olcekleyici|Hist Gradient Boosting|2020,0.2258295018693059,False,False,1.0,False,False,0.2593685368003909,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|rastgele_kfold|Hist Gradient Boosting|2020,9.804510968015696e-06,True,False,0.0013922405574582288,True,False,1.6482945975214793e-05,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|enkotu|Hist Gradient Boosting|2020,1.198946826442173e-07,True,False,1.9902517318940073e-05,True,False,2.2799644568408535e-07,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|eszaman|Linear Regression|2020,1.4446074485712186e-16,True,False,3.56818039797091e-14,True,False,4.92866070689004e-16,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|olcekleyici|Linear Regression|2020,0.015104611280174,True,False,1.0,False,False,0.02102561890200221,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|rastgele_kfold|Linear Regression|2020,0.2951622164335823,False,False,1.0,False,False,0.333494971814567,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|enkotu|Linear Regression|2020,6.316717234081093e-08,True,False,1.086475364261948e-05,True,False,1.2419308460227234e-07,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|eszaman|Polynomial Ridge|2020,1.9024393948396407e-14,True,False,4.39463500207957e-12,True,False,5.6105839780016523e-14,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|olcekleyici|Polynomial Ridge|2020,0.020486106637855,True,False,1.0,False,False,0.028178518221239283,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|rastgele_kfold|Polynomial Ridge|2020,0.0455640007020065,True,False,1.0,False,False,0.058081583312447845,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|enkotu|Polynomial Ridge|2020,5.544396496020156e-07,True,False,8.593814568831242e-05,True,False,9.945618456778425e-07,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|eszaman|Hist Gradient Boosting|2021,1.2937361280375499e-14,True,False,3.0273425396078668e-12,True,False,3.914958022235369e-14,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|olcekleyici|Hist Gradient Boosting|2021,0.0500728146835869,False,False,1.0,False,False,0.06313528807930523,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|rastgele_kfold|Hist Gradient Boosting|2021,3.502240647008737e-05,True,False,0.004798069686401969,True,False,5.748961062070945e-05,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|enkotu|Hist Gradient Boosting|2021,3.0625188481632613e-08,True,False,5.451270099438046e-06,True,False,6.196259064888459e-08,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|eszaman|Linear Regression|2021,2.868312772065169e-15,True,False,6.883950652956406e-13,True,False,9.157549033749347e-15,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|olcekleyici|Linear Regression|2021,0.0276726857409953,True,False,1.0,False,False,0.03776507701124064,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|rastgele_kfold|Linear Regression|2021,0.0326387553349856,True,False,1.0,False,False,0.04335223991059156,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|enkotu|Linear Regression|2021,2.9764645177153333e-08,True,False,5.327871486710447e-06,True,False,6.092997953911389e-08,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|eszaman|Polynomial Ridge|2021,6.03770010553958e-13,True,False,1.364520223851945e-10,True,False,1.7082273469331495e-12,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|olcekleyici|Polynomial Ridge|2021,0.471736987776013,False,False,1.0,False,False,0.5051214515263155,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|rastgele_kfold|Polynomial Ridge|2021,0.0034769136150176,True,False,0.3894143248819712,False,False,0.005105341510658754,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|enkotu|Polynomial Ridge|2021,9.358943637366541e-08,True,False,1.591020418352312e-05,True,False,1.819504126147238e-07,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|eszaman|Hist Gradient Boosting|2022,6.211714805921637e-17,True,False,1.559140416286331e-14,True,False,2.205792604551765e-16,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|olcekleyici|Hist Gradient Boosting|2022,0.7352968877175166,False,False,1.0,False,False,0.761557490850285,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|rastgele_kfold|Hist Gradient Boosting|2022,6.610983233572825e-06,True,False,0.0009519815856344868,True,False,1.1222547147723625e-05,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|enkotu|Hist Gradient Boosting|2022,2.1163104500696318e-10,True,False,4.296110213641353e-08,True,False,5.044356415234465e-10,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|eszaman|Linear Regression|2022,1.932437433814724e-20,True,False,5.005012953580135e-18,True,False,7.472091410750266e-20,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|olcekleyici|Linear Regression|2022,0.0318896497887305,True,False,1.0,False,False,0.042881497956428115,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|rastgele_kfold|Linear Regression|2022,0.0034215433979299,True,False,0.3866344039660787,False,False,0.005045326705422056,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|enkotu|Linear Regression|2022,2.1009859781367198e-11,True,False,4.475100133431213e-09,True,False,5.37605235582043e-11,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|eszaman|Polynomial Ridge|2022,6.037027532362907e-19,True,False,1.5454790482849042e-16,True,False,2.2590167540454748e-18,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|olcekleyici|Polynomial Ridge|2022,0.0663702164858284,False,False,1.0,False,False,0.08278435604683973,False,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|rastgele_kfold|Polynomial Ridge|2022,0.0007457589528342,True,False,0.0902368332929382,False,False,0.0011382636648522,True,False
+F2 tumu,Faz 2 tumu (348),F2|DKASC poly-Si|enkotu|Polynomial Ridge|2022,5.6487634512410745e-11,True,False,1.1862403247606256e-08,True,False,1.414222792109276e-10,True,False
 F3 ilk-iki x 7 yil,Faz 3,F3|2017|Polynomial Ridge vs Hist Gradient Boosting,0.1138,False,False,0.6828,False,False,0.3983,False,False
 F3 ilk-iki x 7 yil,Faz 3,F3|2018|Hist Gradient Boosting vs Polynomial Ridge,0.3986,False,False,1.0,False,False,0.433,False,False
 F3 ilk-iki x 7 yil,Faz 3,F3|2019|Polynomial Ridge vs Hist Gradient Boosting,0.2127,False,False,1.0,False,False,0.433,False,False

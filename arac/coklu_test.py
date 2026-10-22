@@ -12,12 +12,22 @@ p-degeri yeniden hesaplanmaz - diskteki DM ciktilari okunur.
 `arac/` statusundedir: TESHIS/SAGLAMLIK, ana akistan cagrilmaz.
 
 Aileler
-    Faz 2   kaynak x varyant (12 aile; gece sinif B, testi yok)
+    Faz 2   kaynak x varyant (20 aile; gece sinif B, testi yok)
             olcekleyici, uc kaynak birlikte (57) - iddia 19/57 diye yazildi
-            Faz 2 tumu (228)
+            Faz 2 tumu (348)
     Faz 3   yedi yil x ilk-iki farki (7)
     Faz 4   yil ici DM, 5 yil x 3 cift (15)
     Faz 4   hacim etkisi K=1 vs K=tum, esli (45)
+
+Iki DKASC dizisi daha  [SONRADAN EKLENDI - 22 Ekim 2026]
+    M15_A ("DKASC CdTe") ve M3_A ("DKASC poly-Si") Faz 2 kaynagi olarak
+    eklendi (kurallar belgesi, karar 6); her biri kendi kaynak x varyant
+    ailelerini alir (varyant basina 15 test). En genis aile 228'den 348'e
+    buyudu. M6_B'nin etiketi "DKASC" olarak BIRAKILDI (makalede "DKASC
+    mono-Si"): eski aile ve iddia satirlari metin olarak degismesin ve
+    onceki ciktiyla kiyaslanabilsin diye. "olcekleyici, uc kaynak (57)"
+    ailesi ve 19/57 iddiasi bilincli olarak ESKI UC kaynakla sinirli kalir;
+    o iddia bu uc kaynak uzerine yazildi.
 
 Yuvarlama siniri
     Faz 2 ve Faz 4 p-degerleri diskte tam hassasiyette (repr). Faz 3'unkiler
@@ -55,9 +65,16 @@ FAZ2_KAYNAK = {
     "ana": "PVGIS tam",
     "pvgis_indirgenmis": "PVGIS indirgenmis",
     "dkasc": "DKASC",
+    "dkasc_m15a": "DKASC CdTe",      # [22 Ekim 2026]
+    "dkasc_m3a": "DKASC poly-Si",    # [22 Ekim 2026]
 }
+# 19/57 olcekleyici iddiasinin yazildigi uc kaynak; yeni diziler bu aileye
+# GIRMEZ (bkz. modul basligi).
+FAZ2_ESKI_KAYNAK = ("PVGIS tam", "PVGIS indirgenmis", "DKASC")
 FAZ2_VARYANT = ("eszaman", "olcekleyici", "rastgele_kfold", "enkotu")
-FAZ2_BEKLENEN_N = {"ana": 84, "pvgis_indirgenmis": 84, "dkasc": 60}
+FAZ2_BEKLENEN_N = {"ana": 84, "pvgis_indirgenmis": 84, "dkasc": 60,
+                   "dkasc_m15a": 60, "dkasc_m3a": 60}
+FAZ2_TOPLAM = sum(FAZ2_BEKLENEN_N.values())  # 348
 
 # Diskte yuvarlanmis p-degerleri: kaynak -> ondalik sayisi. Listede olmayan
 # kaynak tam hassasiyettedir (h = 0).
@@ -113,7 +130,7 @@ def yontem_oz_testi() -> None:
 
 
 def faz2_testleri() -> pd.DataFrame:
-    """228 Faz 2 DM testi, rastgele_kfold icin bootstrap birlesimiyle."""
+    """Faz 2 DM testleri (348), rastgele_kfold icin bootstrap birlesimiyle."""
     parca = []
     for onek, etiket in FAZ2_KAYNAK.items():
         d = pd.read_csv(SONUC / f"ablasyon_belirsizlik_dm_{onek}_dm.csv")
@@ -141,8 +158,8 @@ def faz2_testleri() -> pd.DataFrame:
         d["yuvarlama"] = "tam"
         parca.append(d)
     t = pd.concat(parca, ignore_index=True)
-    if len(t) != 228:
-        raise ValueError(f"Faz 2 toplam {len(t)} test, beklenen 228")
+    if len(t) != FAZ2_TOPLAM:
+        raise ValueError(f"Faz 2 toplam {len(t)} test, beklenen {FAZ2_TOPLAM}")
     return t
 
 
@@ -234,8 +251,9 @@ def aileleri_kur() -> tuple[pd.DataFrame, dict[str, pd.DataFrame]]:
         for v in FAZ2_VARYANT:
             alt = f2[(f2["kaynak"] == etiket) & (f2["varyant"] == v)]
             aileler.append((f"F2 {etiket} / {v}", "Faz 2 kaynak x varyant", alt))
-    aileler.append(("F2 olcekleyici uc kaynak", "Faz 2 olcekleyici (57)", f2[f2["varyant"] == "olcekleyici"]))
-    aileler.append(("F2 tumu", "Faz 2 tumu (228)", f2))
+    eski_olc = f2[(f2["varyant"] == "olcekleyici") & f2["kaynak"].isin(FAZ2_ESKI_KAYNAK)]
+    aileler.append(("F2 olcekleyici uc kaynak", "Faz 2 olcekleyici (57)", eski_olc))
+    aileler.append(("F2 tumu", f"Faz 2 tumu ({FAZ2_TOPLAM})", f2))
     aileler.append(("F3 ilk-iki x 7 yil", "Faz 3", kaynak["faz3"]))
     aileler.append(("F4 yil ici 5 yil x 3 cift", "Faz 4 yil ici", kaynak["faz4y"]))
     aileler.append(("F4 hacim 45 esli", "Faz 4 hacim", kaynak["faz4h"]))
@@ -301,9 +319,9 @@ def iddialar(detay: pd.DataFrame, kaynak: dict[str, pd.DataFrame]) -> pd.DataFra
     ci0_ters = lambda ids: ci0(ids) & ters(ids)
 
     # 1) olcekleyici 19/57 - uc aile tanimi altinda
-    olc_ids = f2_id(varyant="olcekleyici")
+    olc_ids = [i for e in FAZ2_ESKI_KAYNAK for i in f2_id(e, "olcekleyici")]
     # dar aile: kaynak x varyant, uc ailenin toplami
-    dar = [detay[(detay["aile"] == f"F2 {e} / olcekleyici")] for e in FAZ2_KAYNAK.values()]
+    dar = [detay[(detay["aile"] == f"F2 {e} / olcekleyici")] for e in FAZ2_ESKI_KAYNAK]
     dar = pd.concat(dar)
     kayit = {"iddia": "olcekleyici anlamli hucre, uc kaynak", "aile": "F2 kaynak x varyant (3 aile toplami)",
              "makaledeki": "19/57"}
@@ -323,6 +341,10 @@ def iddialar(detay: pd.DataFrame, kaynak: dict[str, pd.DataFrame]) -> pd.DataFra
         "PVGIS tam": (15, 21, 10, 5, None),
         "PVGIS indirgenmis": (15, 21, 10, 5, None),
         "DKASC": (13, 15, 4, None, 2),
+        # [22 Ekim 2026] M6_B satiriyla ayni bicim: A anlamli, kaybolan,
+        # A anlamli VE isaret ters
+        "DKASC CdTe": (12, 15, 4, None, 1),
+        "DKASC poly-Si": (14, 15, 7, None, 2),
     }
     for etiket, (a_anl, payda, kayb, kayb_ters, a_ters) in beklenen.items():
         ids = f2_id(etiket, "rastgele_kfold")
@@ -334,7 +356,16 @@ def iddialar(detay: pd.DataFrame, kaynak: dict[str, pd.DataFrame]) -> pd.DataFra
                 say(f"rastgele_kfold kaybolanlarin icinde isaret ters - {etiket}",
                     kayb_ters, payda, aile, ids, ci0_ters)
             if a_ters is not None:
-                say(f"rastgele_kfold A anlamli VE isaret ters (kaybolanlardan FARKLI hucreler) - {etiket}",
+                # Parantez ICI OLCULUR, yazilmaz: M6_B'de ters hucreler
+                # kaybolanlardan farkli; M15_A ve M3_A'da kaybolanlarin
+                # ICINDE. Etiketi kopyalamak yanlis iddia yazardi.
+                f = f2.loc[ids]
+                ortusen = int((f["anlamli"].astype(bool) & f["bootstrap_sifiri_iceriyor"].astype(bool)
+                               & (f["A_model"] * f["D_manset"] < 0)).sum())
+                nerede = ("kaybolanlardan FARKLI hucreler" if ortusen == 0 else
+                          "hepsi kaybolanlarin ICINDE" if ortusen == a_ters else
+                          f"{ortusen}'i kaybolanlarin icinde")
+                say(f"rastgele_kfold A anlamli VE isaret ters ({nerede}) - {etiket}",
                     a_ters, payda, aile, ids, ters)
 
     # 3) Faz 3: 7 yilin 1'inde anlamli (2023)
