@@ -3,7 +3,8 @@
 `arac/` statusundedir: hicbir model egitmez, hicbir deney kosmaz; yalnizca
 `sonuclar/` altindaki loglari okur. Makaledeki degerler asagida, makalede
 YAZILDIKLARI hassasiyetle gomuludur (kaynak: calisma taslagi v0.16;
-tablo sayilari ACM v1.0 ile ayni). Kiyas toleranssizdir: yeniden uretilen
+tablo sayilari ACM v1.0 ile ayni; Tablo 6-7'nin "DKASC CdTe" ve "DKASC
+poly-Si" sutunlari ile Tablo 7'nin oran araligi v2.2'den, 22 Ekim 2026). Kiyas toleranssizdir: yeniden uretilen
 deger ayni ondalik sayisina yuvarlanir ve METIN olarak esit olmak zorundadir
 (`sekiller/sekil_uret.py:kontrol_et` ile ayni kural).
 
@@ -11,8 +12,10 @@ Tutmayan her deger raporlanir; en az biri tutmazsa betik 1 ile doner.
 
 Tablo -> kaynak
     5  sonuclar/ablasyon.csv                     varyant ortalamalari
-    6  ablasyon.csv, ablasyon_pvgis_indirgenmis.csv, ablasyon_dkasc.csv
-    7  ablasyon_belirsizlik_dm_{ana,pvgis_indirgenmis,dkasc}_dm.csv (A_model)
+    6  ablasyon.csv, ablasyon_pvgis_indirgenmis.csv,
+       ablasyon_dkasc{,_m15a,_m3a}.csv
+    7  ablasyon_belirsizlik_dm_{ana,pvgis_indirgenmis,dkasc,dkasc_m15a,
+       dkasc_m3a}_dm.csv (A_model)
     8  doygunluk_ozet_egri.csv                   (ozet.py, on-kayitli)
     9  doygunluk_ozet_varyans.csv                (ozet.py, on-kayitli)
 
@@ -21,7 +24,10 @@ Tanimlar (makaleyle birebir; ikisi de once dogrulandi)
               (ortalamalarin orani DEGIL - eszaman'da 0,0469 vs 0,0465)
     R2 kazanc ortalama R2_varyant - ortalama R2_temiz
     A yuzde   rastgele_kfold A_model'in test yili ortalamasi / kapasite x 100
-    Tablo 7 orani  A_yuzde(DKASC) / A_yuzde(PVGIS tam)
+    Tablo 7 orani  A_yuzde(olcum dizisi) / A_yuzde(PVGIS tam); makalede
+                   ("Ratio, measured / PVGIS full") uc DKASC dizisinin
+                   min-maks ARALIGI, 1 ondalik, "a-b" metni olarak kiyaslanir.
+                   Altyazidaki manset orani (HGB 3,82) yalnizca mono-Si.
 
 Kosma (kok dizinden):
     .venv\\Scripts\\python.exe -m arac.tablolari_uret
@@ -33,7 +39,7 @@ import sys
 
 import pandas as pd
 
-from pv10.config import DKASC_KAPASITE_W, KAPASITE_W, SONUC
+from pv10.config import DKASC_DIZILER, KAPASITE_W, SONUC
 
 VARYANT_AD = {  # makale satir adi -> log varyant adi
     "clean": "temiz",
@@ -56,19 +62,20 @@ TABLO5 = {  # varyant: (RMSE, oran, R2 kazanc)  ; "-" ve "~0" ayri ele alinir
 }
 TABLO5_REFERANS_R2 = "0.728"
 
-TABLO6 = {  # varyant: (PVGIS tam, PVGIS indirgenmis, DKASC)
-    "contemporaneous": ("0.0465", "0.0692", "0.2082"),
-    "shuffled split": ("0.9891", "0.9906", "0.9179"),
-    "night": ("0.7105", "0.7099", "0.7078"),
-    "global scaling": ("1.0004", "1.0000", "1.0016"),
-    "worst case": ("0.0331", "0.0488", "0.2170"),
+TABLO6 = {  # varyant: (PVGIS tam, PVGIS indirgenmis, DKASC mono-Si, DKASC CdTe, DKASC poly-Si)
+    "contemporaneous": ("0.0465", "0.0692", "0.2082", "0.1319", "0.1641"),
+    "shuffled split": ("0.9891", "0.9906", "0.9179", "0.8470", "0.8777"),
+    "night": ("0.7105", "0.7099", "0.7078", "0.7065", "0.7082"),
+    "global scaling": ("1.0004", "1.0000", "1.0016", "1.0004", "0.9989"),
+    "worst case": ("0.0331", "0.0488", "0.2170", "0.0836", "0.1069"),
 }
 
-TABLO7 = {  # model: (PVGIS tam, PVGIS indirgenmis, DKASC, oran)
-    "Linear Regression": ("-0.0050", "-0.0048", "-0.0527", "10.5"),
-    "Polynomial Ridge": ("-0.1088", "-0.0800", "-0.6118", "5.6"),
-    "Hist Gradient Boosting": ("-0.6309", "-0.6109", "-2.4122", "3.8"),
+TABLO7 = {  # model: (PVGIS tam, PVGIS indirgenmis, DKASC mono-Si, DKASC CdTe, DKASC poly-Si, oran araligi)
+    "Linear Regression": ("-0.0050", "-0.0048", "-0.0527", "-0.1042", "-0.0751", "10.5-20.9"),
+    "Polynomial Ridge": ("-0.1088", "-0.0800", "-0.6118", "-0.7481", "-0.6704", "5.6-6.9"),
+    "Hist Gradient Boosting": ("-0.6309", "-0.6109", "-2.4122", "-2.5445", "-2.7354", "3.8-4.3"),
 }
+OLCUM_DIZILERI = ("DKASC mono-Si", "DKASC CdTe", "DKASC poly-Si")
 TABLO7_MANSET = ("Hist Gradient Boosting", "3.82")  # tablo altyazisi
 
 TABLO8 = {  # pencere: (altornekleme, kaydirmali, marjinal kazanc)
@@ -104,9 +111,15 @@ KAYNAKLAR = {
         "ablasyon_belirsizlik_dm_pvgis_indirgenmis_dm.csv",
         KAPASITE_W,
     ),
-    "DKASC": ("ablasyon_dkasc.csv", "ablasyon_belirsizlik_dm_dkasc_dm.csv", DKASC_KAPASITE_W),
+    "DKASC mono-Si": ("ablasyon_dkasc.csv", "ablasyon_belirsizlik_dm_dkasc_dm.csv",
+                      DKASC_DIZILER["m6b"]["kapasite_w"]),
+    "DKASC CdTe": ("ablasyon_dkasc_m15a.csv", "ablasyon_belirsizlik_dm_dkasc_m15a_dm.csv",
+                   DKASC_DIZILER["m15a"]["kapasite_w"]),
+    "DKASC poly-Si": ("ablasyon_dkasc_m3a.csv", "ablasyon_belirsizlik_dm_dkasc_m3a_dm.csv",
+                      DKASC_DIZILER["m3a"]["kapasite_w"]),
 }
-BEKLENEN_HUCRE = {"PVGIS tam": 21, "PVGIS indirgenmis": 21, "DKASC": 15}
+BEKLENEN_HUCRE = {"PVGIS tam": 21, "PVGIS indirgenmis": 21, "DKASC mono-Si": 15,
+                  "DKASC CdTe": 15, "DKASC poly-Si": 15}
 
 
 # --- kiyas ------------------------------------------------------------------
@@ -129,6 +142,15 @@ def kiyasla(tablo: str, alan: str, gozlenen: float, beklenen: str) -> None:
     SONUCLAR.append({
         "tablo": tablo, "alan": alan, "makale": beklenen, "yeniden": bulunan,
         "tam_hassasiyet": repr(float(gozlenen)), "tutuyor": tutar,
+    })
+
+
+def kiyasla_metin(tablo: str, alan: str, bulunan: str, beklenen: str,
+                  tam: str) -> None:
+    """Metin olarak uretilmis bir degeri (or. aralik "a-b") makaleyle kiyaslar."""
+    SONUCLAR.append({
+        "tablo": tablo, "alan": alan, "makale": beklenen, "yeniden": bulunan,
+        "tam_hassasiyet": tam, "tutuyor": bulunan == beklenen,
     })
 
 
@@ -183,13 +205,16 @@ def tablo7() -> None:
             if len(m) != BEKLENEN_HUCRE[kaynak] // 3:
                 raise ValueError(f"{dm}/{model}: {len(m)} yil")
             a_yuzde[(kaynak, model)] = m["A_model"].mean() / kapasite * 100.0
-    for model, (*degerler, oran) in TABLO7.items():
+    for model, (*degerler, aralik) in TABLO7.items():
         for kaynak, bek in zip(KAYNAKLAR, degerler):
             kiyasla("7", f"{model} / {kaynak}", a_yuzde[(kaynak, model)], bek)
-        kiyasla("7", f"{model} oran", a_yuzde[("DKASC", model)] / a_yuzde[("PVGIS tam", model)], oran)
+        oran = [a_yuzde[(k, model)] / a_yuzde[("PVGIS tam", model)] for k in OLCUM_DIZILERI]
+        kiyasla_metin("7", f"{model} oran araligi (uc olcum dizisi)",
+                      f"{min(oran):.1f}-{max(oran):.1f}", aralik,
+                      " / ".join(repr(float(x)) for x in oran))
     model, bek = TABLO7_MANSET
-    kiyasla("7", f"manset oran (altyazi, {model})",
-            a_yuzde[("DKASC", model)] / a_yuzde[("PVGIS tam", model)], bek)
+    kiyasla("7", f"manset oran (altyazi, {model}, mono-Si)",
+            a_yuzde[("DKASC mono-Si", model)] / a_yuzde[("PVGIS tam", model)], bek)
 
 
 def tablo8() -> None:

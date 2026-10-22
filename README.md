@@ -205,7 +205,7 @@ ten-model pool, and no reported digit is affected.
 **Verifying Tables 5-9 against the manuscript.** `python -m arac.tablolari_uret` recomputes
 every value in Tables 5-9 from the CSVs above and compares it, at the precision printed
 in the manuscript, with the value in the manuscript. It lists every value that does not
-match and exits with status 1 if there is one. Current state: 65 of 65 match.
+match and exits with status 1 if there is one. Current state: 81 of 81 match (Tables 6-7 include the CdTe and poly-Si arrays; Table 7's ratio is the range over the three measured arrays).
 
 **Phase 2 uncertainty (Table 7, Section 5.1-5.3 counts).** The three ablation grids are
 re-run with prediction saving under their own labels, then the three uncertainty

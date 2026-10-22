@@ -306,7 +306,7 @@ Makale sayisi ureten betikler:
   n toplamiyla birebir (PVGIS 180.482; M6_B 19.285; M15_A 16.973;
   M3_A 19.286).
 - `tablolari_uret.py` -> yeni sayi uretmez; Tablo 5-9'u CSV'lerden yeniden
-  hesaplayip makaleyle kiyaslar (65/65).
+  hesaplayip makaleyle kiyaslar (81/81; v2.2 - Tablo 6-7'de uc DKASC dizisi).
 
 Yalnizca teshis, makale sayisi URETMEYEN: `nondeterminizm*.py` (makalede
 yalnizca Bolum 4.5 sinirlilik beyani ve S2), `oznitelik_regresyon.py`,
