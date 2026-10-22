@@ -137,6 +137,16 @@ behaviour this study criticises. It is recorded and reported as is.
 No calendar-month reference is used: a monthly reference is undefined when
 the training split never saw that month.
 
+> **Deviation — rule 8a was never implemented** `[added later — 22 Oct 2026]`.
+> The rule was pre-registered (step 13 below), but no code applies it:
+> neither the pipeline nor the per-cell training and evaluation routine
+> flags partial-fault days. **All DKASC results reported here were produced
+> without rule 8a**, for every array alike. The gap was found while counting
+> the rule for a second array; it was not found by looking at results.
+> Indicative per-fold counts (threshold from the training split; evaluation
+> population) are 3-19 flagged test days per year for M6_B and M15_A
+> (decision 6 in the rules document).
+
 *(Rule 8b — a physical `power / GTI` threshold — was evaluated and
 **rejected**, because it rests on GTI, whose plane was measured and found
 not to match the array's. It is recorded as rejected.)*
@@ -236,4 +246,5 @@ The rules are order-dependent. The order in force:
 14. Generate features. No wind (rule 4).
 
 Rule 8a arriving *after* the split matters as much as the rule itself: moved
-earlier, the leak returns.
+earlier, the leak returns. *(Step 13's rule 8a was not implemented — see the
+deviation note under rule 8a.)*

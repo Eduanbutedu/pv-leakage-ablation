@@ -172,6 +172,22 @@ DKASC_DIZILER = {
             "k5_negatif": (87, "birebir tutmali - kural 5 oncesi ham sayim"),
         },
     ),
+    # Karar 6'nin yedegi; 22 Ekim 2026 kullanici karariyla M15_A'nin YANINA
+    # ucuncu kol olarak eklendi (yerine degil): M6_B'nin bosluk profilini
+    # tasiyan c-Si kontrolu - teknoloji etkisini veri boslugu etkisinden
+    # ayirmak icin. Durma esikleri bu dizi icin de gecerli.
+    "m3a": dict(
+        konum="dkasc_m3a",
+        sutun="90_DKA_M3_A_Phase_Active_Power",
+        sistem=14, teknoloji="Kyocera KD135GX-LP, poli-Si",
+        kapasite_w=5400.0,                      # 5,4 kWp
+        veri=KOK / "veri" / "dkasc_m3a.parquet",
+        kunye="dkasc_m3a_veri_surumu.txt",
+        sha16="",
+        kesif_sayim={
+            "k5_negatif": (5872, "birebir tutmali - kural 5 oncesi ham sayim"),
+        },
+    ),
 }
 
 # Geriye uyum: tek dizili kurulumun adlari M6_B'yi gosterir. Faz 2'nin

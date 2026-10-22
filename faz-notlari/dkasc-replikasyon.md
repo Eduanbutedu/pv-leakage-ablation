@@ -955,6 +955,28 @@ farkli deneyin hucreleri ayni tabloda karisirsa ozet ortalamalari kirlenir.
     ikinci denemede acildi. pyarrow'da yasananla ayni sinif (Windows Smart
     App Control). SAC ayarina DOKUNULMADI. pyarrow 22.0.0 kullaniliyor.
 
+17. **Kural 8a HIC UYGULANMADI - on-kayit sapmasi.**  `[SONRADAN eklendi -
+    22 Ekim 2026]` Kural 8a on-kayitta var (kurallar belgesi, yururlukteki
+    sira adim 13: "bolme yapilir, bundan SONRA kural 8a"), ek S3 de onu
+    uygulanmis gibi anlatiyordu; ama `dkasc_pipeline.py`,
+    `pv10/experiment.py:hucre_kos` ve `pv10/`'un hicbir yerinde kodu yok.
+    Bu nottaki butun DKASC sayilari kural 8a OLMADAN uretildi. Ikinci
+    olcum dizisi icin kural sayimlari olculurken bulundu, sonuclara
+    bakilarak degil. Kullanici karari (22 Ekim 2026): sapma olarak
+    kaydedilir, butun diziler M6_B gibi 8a'siz kosulur, Tablo 6-7
+    DEGISMEZ; S3'e sapma notu eklendi. Kat basina gosterge sayimi:
+    kurallar belgesi, karar 6.
+
+18. **Eslesmis kontrol logunda `nRMSE_kapasite` 5250 W ile.**
+    `[SONRADAN eklendi - 22 Ekim 2026]` Kapasite oznitelik setine bagliydi;
+    `--set dkasc` ile PVGIS verisi uzerinde kosan eslesmis kontrolun
+    `ablasyon_pvgis_indirgenmis.csv` ve `ablasyon_dm_pvgis_indirgenmis.csv`
+    loglarinda `nRMSE_kapasite` 5,25 kat kucuk. Hicbir makale sayisi bu
+    sutunu okumaz (Tablo 6 RMSE oranidir; Tablo 7'nin indirgenmis kolu
+    `ablasyon_dm`'de 1000 W ile hesaplandi). Kod `2d9398d`'den beri
+    kapasiteyi veriden alir (`evaluate.kapasite_w_bul`); loglar
+    commit edildikleri haliyle birakildi.
+
 ---
 
 ## Calistirma

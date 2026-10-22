@@ -748,6 +748,27 @@ bir hafta daha siler. Bolum 4, madde 12'deki kural etkilesiminin aynisi.
 `ariza` saati sifir: M15_A'da `GHI > 200` iken saatlik `P == 0` hic yok
 (5 dk duzeyinde 31 yuva vardi, hicbiri tam saati sifirlamiyor).
 
+#### Karar 6 - kullanici kararlari  `[SONRADAN eklendi - 22 Ekim 2026]`
+
+Durma esikleri tuttuktan ve kural 8a'nin uygulanmadigi bulunduktan SONRA,
+herhangi bir M15_A/M3_A model sonucu uretilmeden once alindi:
+
+1. **M15_A kosulur, esik sapmasi kayda gecer.** Yukaridaki iki esik
+   (toplam %88,72; 2018 %71,94) tuttugu halde ablasyon kosulur. Kayip
+   dizinin kendisinden degil, 23-38 numarali sistemlerin ortak
+   kesintisinden ve `lag168`/`roll168` genislemesinden gelir. 2018 test
+   yilinda istatistiksel guc daha dusuktur; bu raporlanir.
+2. **M3_A ucuncu kol olarak eklenir** (yedek olarak degil, M15_A'nin
+   YANINA): Kyocera poli-Si, 5,4 kWp, 20°/0°, `kapasite_w = 5400`.
+   Gerekce: M6_B'nin bosluk profilini (eksik %1,53) tasiyan bir c-Si
+   kontrolu. M6_B ile M3_A arasindaki fark "ayni teknoloji ailesinde
+   baska dizi", M15_A ile M3_A arasindaki fark teknoloji + bosluk
+   profili olur. Ablasyondan once M3_A icin de pipeline kosulur ve ayni
+   durma esikleri olculur; biri tutarsa yine durulur ve sorulur.
+3. **Kural 8a icin:** sapma olarak kaydedilir. Butun diziler M6_B gibi
+   8a'siz kosulur; Tablo 6-7 degismez. Ek S3'e ve DKASC faz notuna
+   sapma notu eklendi.
+
 ---
 
 ## 3. Uygulama sirasi
