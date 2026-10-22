@@ -202,10 +202,10 @@ ten-model pool, and no reported digit is affected.
 | 8 | Learning curves | `python run_doygunluk.py` (summary written automatically; `--ozet` rewrites it from the logs) | `sonuclar/doygunluk.csv` → `sonuclar/doygunluk_ozet_egri.csv` |
 | 9 | Variance decomposition | as Table 8 | `sonuclar/doygunluk_ozet_varyans.csv` |
 
-**Verifying Tables 5-9 against the manuscript.** `python -m arac.tablolari_uret` recomputes
-every value in Tables 5-9 from the CSVs above and compares it, at the precision printed
+**Verifying Tables 2 and 5-9 against the manuscript.** `python -m arac.tablolari_uret` recomputes
+every value in Tables 2 and 5-9 from the CSVs above and compares it, at the precision printed
 in the manuscript, with the value in the manuscript. It lists every value that does not
-match and exits with status 1 if there is one. Current state: 81 of 81 match (Tables 6-7 include the CdTe and poly-Si arrays; Table 7's ratio is the range over the three measured arrays).
+match and exits with status 1 if there is one. Current state: 119 of 119 match (Table 2 descriptive statistics included; Tables 6-7 include the CdTe and poly-Si arrays; Table 7's ratio is the range over the three measured arrays).
 
 **Phase 2 uncertainty (Table 7, Section 5.1-5.3 counts).** The three ablation grids are
 re-run with prediction saving under their own labels, then the three uncertainty

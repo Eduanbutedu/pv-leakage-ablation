@@ -1,4 +1,4 @@
-"""Makale Tablo 5-9: sonuc CSV'lerinden yeniden uret, makaleyle kiyasla.
+"""Makale Tablo 2 ve 5-9: sonuc CSV'lerinden yeniden uret, makaleyle kiyasla.
 
 `arac/` statusundedir: hicbir model egitmez, hicbir deney kosmaz; yalnizca
 `sonuclar/` altindaki loglari okur. Makaledeki degerler asagida, makalede
@@ -11,6 +11,9 @@ deger ayni ondalik sayisina yuvarlanir ve METIN olarak esit olmak zorundadir
 Tutmayan her deger raporlanir; en az biri tutmazsa betik 1 ile doner.
 
 Tablo -> kaynak
+    2  tanimlayici_istatistik.csv, donem "test"  N, P_kapasite ort +- SD,
+                                              carpiklik, G_i ortalamasi
+                                              (metin olarak; v2.2)
     5  sonuclar/ablasyon.csv                     varyant ortalamalari
     6  ablasyon.csv, ablasyon_pvgis_indirgenmis.csv,
        ablasyon_dkasc{,_m15a,_m3a}.csv
@@ -27,7 +30,11 @@ Tanimlar (makaleyle birebir; ikisi de once dogrulandi)
     Tablo 7 orani  A_yuzde(olcum dizisi) / A_yuzde(PVGIS tam); makalede
                    ("Ratio, measured / PVGIS full") uc DKASC dizisinin
                    min-maks ARALIGI, 1 ondalik, "a-b" metni olarak kiyaslanir.
-                   Altyazidaki manset orani (HGB 3,82) yalnizca mono-Si.
+                   Altyazi (v2.2): "the headline range is 3.8 to 4.3, from
+                   the model with the largest effect" - HGB'nin araligi ve
+                   her olcum dizisinde |A| en buyuk modelin HGB oldugu
+                   ayrica kontrol edilir. HGB mono-Si orani Bolum 5.3
+                   metninde "3.8" olarak gecer; o da kontrol edilir.
 
 Kosma (kok dizinden):
     .venv\\Scripts\\python.exe -m arac.tablolari_uret
@@ -76,7 +83,22 @@ TABLO7 = {  # model: (PVGIS tam, PVGIS indirgenmis, DKASC mono-Si, DKASC CdTe, D
     "Hist Gradient Boosting": ("-0.6309", "-0.6109", "-2.4122", "-2.5445", "-2.7354", "3.8-4.3"),
 }
 OLCUM_DIZILERI = ("DKASC mono-Si", "DKASC CdTe", "DKASC poly-Si")
-TABLO7_MANSET = ("Hist Gradient Boosting", "3.82")  # tablo altyazisi
+TABLO7_ALTYAZI = ("Hist Gradient Boosting", "3.8 to 4.3")  # v2.2 altyazisi
+TABLO7_BOLUM53 = ("Hist Gradient Boosting", "DKASC mono-Si", "3.8")  # 5.3 metni
+
+EKSI = "\u2212"  # makalede eksi isareti U+2212
+# Tablo 2 (v2.2), test donemi: satir adi -> (CSV sahasi, N, P ort +- SD, carpiklik, G_i)
+TABLO2 = {
+    "Ouarzazate": ("ouarzazate", "30,266", "44.0 \u00b1 26.8", EKSI + "0.24", "581"),
+    "Portim\u00e3o": ("portimao", "30,113", "39.7 \u00b1 25.9", EKSI + "0.06", "514"),
+    "Konya": ("konya", "30,030", "36.9 \u00b1 26.9", "+0.11", "479"),
+    "Adana": ("adana", "30,220", "35.3 \u00b1 25.8", "+0.05", "463"),
+    "Br\u0103ila": ("braila", "30,260", "30.1 \u00b1 25.6", "+0.43", "388"),
+    "Leipzig": ("leipzig", "29,593", "25.5 \u00b1 23.4", "+0.72", "325"),
+    "DKASC mono-Si (main)": ("dkasc_m6b", "19,285", "42.9 \u00b1 27.2", EKSI + "0.23", "606"),
+    "DKASC CdTe": ("dkasc_m15a", "16,973", "46.2 \u00b1 28.4", EKSI + "0.22", "608"),
+    "DKASC poly-Si": ("dkasc_m3a", "19,286", "45.6 \u00b1 28.4", EKSI + "0.23", "606"),
+}
 
 TABLO8 = {  # pencere: (altornekleme, kaydirmali, marjinal kazanc)
     "1": ("140.3506", "141.4722", None),
@@ -177,6 +199,27 @@ def varyant_ozeti(log: str, beklenen_hucre: int) -> pd.DataFrame:
     return d
 
 
+def tablo2() -> None:
+    t = pd.read_csv(SONUC / "tanimlayici_istatistik.csv", float_precision="round_trip")
+    t = t[t["donem"] == "test"].set_index(["saha", "degisken"])
+    bekl_saha = {v[0] for v in TABLO2.values()}
+    if set(t.index.get_level_values("saha")) != bekl_saha:
+        raise ValueError(f"tanimlayici tablo sahalari beklenenden farkli: "
+                         f"{sorted(set(t.index.get_level_values('saha')))}")
+    for ad, (saha, n_bek, p_bek, c_bek, g_bek) in TABLO2.items():
+        pk, gi = t.loc[(saha, "P_kapasite")], t.loc[(saha, "G_i")]
+        if pk["N"] != gi["N"]:
+            raise ValueError(f"{saha}: P ve G_i N'si farkli")
+        kiyasla_metin("2", f"{ad} N", f"{int(pk['N']):,}", n_bek, repr(int(pk["N"])))
+        kiyasla_metin("2", f"{ad} P ort \u00b1 SD (% kapasite)",
+                      f"{pk['ortalama']:.1f} \u00b1 {pk['std']:.1f}", p_bek,
+                      f"{float(pk['ortalama'])!r} / {float(pk['std'])!r}")
+        kiyasla_metin("2", f"{ad} carpiklik", f"{pk['carpiklik']:+.2f}".replace("-", EKSI),
+                      c_bek, repr(float(pk["carpiklik"])))
+        kiyasla_metin("2", f"{ad} G_i ortalamasi", f"{gi['ortalama']:.0f}", g_bek,
+                      repr(float(gi["ortalama"])))
+
+
 def tablo5() -> None:
     d = varyant_ozeti(*KAYNAKLAR["PVGIS tam"][:1], BEKLENEN_HUCRE["PVGIS tam"])
     for ad, (rmse, oran, r2) in TABLO5.items():
@@ -212,9 +255,19 @@ def tablo7() -> None:
         kiyasla_metin("7", f"{model} oran araligi (uc olcum dizisi)",
                       f"{min(oran):.1f}-{max(oran):.1f}", aralik,
                       " / ".join(repr(float(x)) for x in oran))
-    model, bek = TABLO7_MANSET
-    kiyasla("7", f"manset oran (altyazi, {model}, mono-Si)",
-            a_yuzde[("DKASC mono-Si", model)] / a_yuzde[("PVGIS tam", model)], bek)
+    # altyazi: manset araligi en buyuk etkili modelden
+    model, bek = TABLO7_ALTYAZI
+    oran = [a_yuzde[(k, model)] / a_yuzde[("PVGIS tam", model)] for k in OLCUM_DIZILERI]
+    kiyasla_metin("7", f"altyazi manset araligi ({model})",
+                  f"{min(oran):.1f} to {max(oran):.1f}", bek,
+                  " / ".join(repr(float(x)) for x in oran))
+    en_buyuk = {k: max(TABLO7, key=lambda m: abs(a_yuzde[(k, m)])) for k in OLCUM_DIZILERI}
+    kiyasla_metin("7", "altyazi: en buyuk etkili model (uc olcum dizisinde)",
+                  ", ".join(sorted(set(en_buyuk.values()))), model,
+                  "; ".join(f"{k}: {m}" for k, m in en_buyuk.items()))
+    model, dizi, bek = TABLO7_BOLUM53
+    kiyasla("7", f"Bolum 5.3 metni: {model} {dizi} orani",
+            a_yuzde[(dizi, model)] / a_yuzde[("PVGIS tam", model)], bek)
 
 
 def tablo8() -> None:
@@ -244,7 +297,10 @@ def tablo9() -> None:
 
 
 def main() -> int:
-    for f in (tablo5, tablo6, tablo7, tablo8, tablo9):
+    # Tablo 2 metni U+2212 ve U+00B1 tasir; Windows konsolunun kod sayfasi
+    # (cp1254) U+2212'yi basamaz ve betik kiyasi bitirmeden coker.
+    sys.stdout.reconfigure(encoding="utf-8")
+    for f in (tablo2, tablo5, tablo6, tablo7, tablo8, tablo9):
         f()
     d = pd.DataFrame(SONUCLAR)
     with pd.option_context("display.width", 200, "display.max_rows", 200):

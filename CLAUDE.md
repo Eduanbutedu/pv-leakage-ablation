@@ -271,7 +271,7 @@ arac/
   ornek_gunler.py          kuralla secilen ornek gunler (--sec) ve tahmin serileri (--seri) -> sekiller/F_ornek/ [sunum]
   csv_karsilastir.py       toleranssiz tablo kiyasi: bayt + alan (round_trip) + negatif kontrol
   coklu_test.py            Holm/BH, mevcut p'ler uzerinden [on-kayit SONRASI]
-  tablolari_uret.py        Tablo 5-9'u CSV'lerden uretir, makaleyle kiyaslar
+  tablolari_uret.py        Tablo 2 ve 5-9'u CSV'lerden uretir, makaleyle kiyaslar
   tanimlayici.py           P, P_kapasite, G_i tanimlayici istatistik, saha x donem -> tanimlayici_istatistik.csv
   dizi_tarama.py           DKASC dizi kalite taramasi, ham veri -> dkasc_dizi_tarama.csv (karar 6'nin secim kaniti)
 sekiller/
@@ -305,8 +305,8 @@ Makale sayisi ureten betikler:
   disi, `H_sun > 0`, `ariza` disi. Test N'si ablasyon loglarinin `temiz`
   n toplamiyla birebir (PVGIS 180.482; M6_B 19.285; M15_A 16.973;
   M3_A 19.286).
-- `tablolari_uret.py` -> yeni sayi uretmez; Tablo 5-9'u CSV'lerden yeniden
-  hesaplayip makaleyle kiyaslar (81/81; v2.2 - Tablo 6-7'de uc DKASC dizisi).
+- `tablolari_uret.py` -> yeni sayi uretmez; Tablo 2 ve 5-9'u CSV'lerden yeniden
+  hesaplayip makaleyle kiyaslar (119/119; v2.2 - Tablo 2 dahil, Tablo 6-7'de uc DKASC dizisi).
 
 Yalnizca teshis, makale sayisi URETMEYEN: `nondeterminizm*.py` (makalede
 yalnizca Bolum 4.5 sinirlilik beyani ve S2), `oznitelik_regresyon.py`,
