@@ -143,8 +143,9 @@ tutulacak.
   (`2d9398d`). M15_A (Calyxo CdTe, 5,4 kWp, `be6dd9e1a15dcc61`) iki durma
   esigini tetikledi (hedef-gecerli %88,72; 2018 %71,94), kullanici karariyla
   kosuldu: `ablasyon_dkasc_m15a.csv`, `ablasyon_belirsizlik_dm_dkasc_m15a_*`.
-  M3_A (Kyocera poli-Si, `9c1c08bf08a9b84b`) donduruldu, k5_negatif 3,22x
-  esigi harfiyen tuttugu icin ablasyonu KOSULMADI - karar bekliyor.
+  M3_A (Kyocera poli-Si, `9c1c08bf08a9b84b`): k5_negatif 3,22x esigi
+  harfiyen tuttu, kullanici karariyla kosuldu: `ablasyon_dkasc_m3a.csv`,
+  `ablasyon_belirsizlik_dm_dkasc_m3a_*`.
   **Kural 8a hic uygulanmadi** (M6_B dahil); sapma olarak kaydedildi.
   `dkasc_pipeline.py ... --dizi m6b|m15a|m3a`; kapasite veriden secilir
   (`evaluate.kapasite_w_bul`).
