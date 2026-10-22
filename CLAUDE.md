@@ -257,6 +257,7 @@ arac/
   csv_karsilastir.py       toleranssiz tablo kiyasi: bayt + alan (round_trip) + negatif kontrol
   coklu_test.py            Holm/BH, mevcut p'ler uzerinden [on-kayit SONRASI]
   tablolari_uret.py        Tablo 5-9'u CSV'lerden uretir, makaleyle kiyaslar
+  tanimlayici.py           P, P_kapasite, G_i tanimlayici istatistik, saha x donem -> tanimlayici_istatistik.csv
 sekiller/
   sekil_uret.py            F1, F2 (sunum; gomulu kontrol tutmazsa cizmez)
   f1_veri.py               F1 cizim verisi -> sekiller/F1_veri/*.csv
@@ -281,6 +282,11 @@ Makale sayisi ureten betikler:
   birebir.
 - `coklu_test.py` -> `coklu_test_{ozet,iddialar,detay}.csv`: coklu test
   duzeltmesi alt bolumu [on-kayit SONRASI].
+- `tanimlayici.py` -> `tanimlayici_istatistik.csv`: tanimlayici istatistik
+  tablosu (N, min, maks, ortalama, std, carpiklik, CV; 7 saha x 3 donem x
+  P / P_kapasite / G_i). Populasyon degerlendirme kumesidir: uretim
+  oznitelik tablosu, `kismi` disi, `H_sun > 0`, `ariza` disi. Test N'si
+  ablasyon loglarinin `temiz` n toplamiyla birebir (180.482 / 19.285).
 - `tablolari_uret.py` -> yeni sayi uretmez; Tablo 5-9'u CSV'lerden yeniden
   hesaplayip makaleyle kiyaslar (65/65).
 

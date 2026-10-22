@@ -20,6 +20,11 @@ SONUC.mkdir(parents=True, exist_ok=True)
 BASLANGIC_YIL, BITIS_YIL = 2014, 2023
 KAPASITE_W = 1000.0  # 1 kWp -> kapasiteye gore nRMSE icin
 
+# Faz 2/3 test yillari. run_ablasyon.py ve run_siralama.py'de `--yillar`
+# varsayilani olarak ayrica yazili; bu sabit onlari DEGISTIRMEZ, yalnizca
+# arac/tanimlayici.py'nin donem sinirlarini buradan okumasi icin var.
+PVGIS_TEST_YILLARI = (2017, 2018, 2019, 2020, 2021, 2022, 2023)
+
 # Dondurulmus veri surumu: sha256(parquet baytlari)[:16], pvgis_pipeline.py
 # ile ayni sekilde hesaplanir. Butun deney sonuclari BU surume bagli; ozet
 # kunyesi calisilan dosyanin hash'ini buna karsi kontrol eder.
