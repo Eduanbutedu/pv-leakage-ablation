@@ -670,6 +670,84 @@ biri gerceklesirse ablasyon KOSULMAZ, kullaniciya sorulur:
 **Kapasite:** `kapasite_w = 5400`. `nRMSE_kapasite` ve
 `fark_kapasite_yuzde` bu paydayla hesaplanir.
 
+#### Karar 6 - uretim sayimlari ve durma esikleri  `[SONRADAN eklendi - 22 Ekim 2026]`
+
+Pipeline `--dizi m15a` ile kosuldu, veri donduruldu:
+**`be6dd9e1a15dcc61`** (`veri/dkasc_m15a.parquet`, 52.584 saat). Model
+EGITILMEDI. Kurallar ve esikler degistirilmedi.
+
+**Kapilar:** transpozisyon kapisi GECTI (n 254.740, en iyi egim 18°,
+RMSE %7,288, MBE +%0,577, R2 0,98231); negatif kontrol (0°) KIRMIZI
+yandi (RMSE %15,113, MBE -%5,982) - beklenen. Sema kapisi GECTI. Hava
+kanallarinin butun sayimlari (k1, k2, k3, k6, k9, transpozisyon kapisi,
+`saat_tam_GHI/DHI/T2m`) M6_B kosusuyla BIREBIR ayni; farkli cikan yalnizca
+guc kanalina bagli satirlar. Ortak istasyon icin beklenen budur.
+
+**Dizi bagimli kural sayimlari:**
+
+| sayim | M6_B | M15_A | M15_A / M6_B |
+|---|---|---|---|
+| k5_negatif (kesif ile) | 1.825 (= 1.825) | 87 (= 87) | 0,048 |
+| k5_eksige_cevrilen | 0 | 0 | - |
+| k5_sifirlanan | 331.226 | 328.987 | 0,993 |
+| k7_ariza_saat | 6 | **0** | 0 |
+| saat_tam_P | 51.742 | 50.307 | 0,972 |
+| saat_kati_12_12 | 50.375 | 48.946 | 0,972 |
+| saat_kismi_girdi | 1.145 | 1.148 | 1,003 |
+| saat_bos | 1.036 | 2.419 | 2,335 |
+
+Kural 8a, kat basina, esik = 0,3 x EGITIM bolmesinin gunduz medyani;
+populasyon degerlendirme populasyonu (`kismi` disi, `H_sun > 0`, `ariza`
+disi), gun yerel takvim gunu:
+
+| test yili | M6_B esik W | bayrakli egitim / test gunu | M15_A esik W | bayrakli egitim / test gunu |
+|---|---|---|---|---|
+| 2018 | 728,51 | 9/343 · 11/357 | 842,66 | 7/313 · 8/262 |
+| 2019 | 745,60 | 20/699 · 3/332 | 851,11 | 15/575 · 3/312 |
+| 2020 | 768,41 | 24/1030 · 8/331 | 864,30 | 18/886 · 13/298 |
+| 2021 | 764,77 | 32/1360 · 12/315 | 853,81 | 31/1183 · 17/304 |
+| 2022 | 762,58 | 43/1674 · 15/336 | 845,85 | 47/1486 · 19/314 |
+
+**Kural 8a UYGULANMIYOR - M6_B dahil.** Bu olcum sirasinda goruldu:
+bolum 3'teki yururlukteki sira kural 8a'yi adim 13'e ("bolme yapilir,
+bundan SONRA") koyuyor, ek S3 de onu uygulanmis gibi anlatiyor; ama
+`dkasc_pipeline.py`, `pv10/experiment.py:hucre_kos` ve `pv10/`'un
+hicbir yerinde kural 8a kodu YOK. M6_B'nin butun DKASC sonuclari kural
+8a OLMADAN uretildi. Bu bir on-kayit sapmasidir ve M15_A'dan bagimsizdir;
+karari kullaniciya birakildi.
+
+**Oznitelik duzeyinde hedef-gecerli satir** (`oznitelik_uret`, DKASC
+seti, `kismi` disi; yil `time_utc`):
+
+| yil | M6_B | M15_A | oran |
+|---|---|---|---|
+| 2017 | 7.986 | 7.244 | 0,9071 |
+| **2018** | 8.337 | **5.998** | **0,7194** |
+| 2019 | 7.691 | 7.167 | 0,9319 |
+| 2020 | 7.705 | 6.834 | 0,8870 |
+| 2021 | 7.310 | 7.049 | 0,9643 |
+| 2022 | 7.828 | 7.279 | 0,9299 |
+| **toplam** | 46.857 | **41.571** | **0,8872** |
+
+**Durma esikleri - SONUC: IKI ESIK TUTTU, ABLASYON KOSULMADI.**
+
+| esik | olculen | sonuc |
+|---|---|---|
+| toplam hedef-gecerli >= 42.171 (M6_B'nin %90'i) | 41.571 (%88,72) | **TUTTU** |
+| her test yili >= M6_B'nin %85'i | 2018: %71,94; digerleri %88,70-%96,43 | **TUTTU (2018)** |
+| kural 5/7/8a sayimi <= M6_B x 3 | k5 0,048x; k7 0; 8a en fazla 1,63x (2020 test 13/8) | gecmedi |
+| kapi kirmizi | hepsi yesil | gecmedi |
+
+**Kayip nereden** (M15_A 2018): `P` dolu 7.998 saat -> 12/12 sonrasi
+7.810 (-188) -> oznitelik tablosu 5.998 (-1.812). Kaybin ~%90'i 12/12
+sartindan DEGIL, oznitelik katmanindan geliyor: `lag168` ve
+`roll168_*` tam bir 168 saatlik gecmis ister ve Ocak 2018 kesintisi
+(yerel Ocak'ta 545 eksik saat; 23-38 numarali sistemlerin ortak
+kesintisi, site notu "Aralik 2017 - Ocak 2018") her boslugun ardindan
+bir hafta daha siler. Bolum 4, madde 12'deki kural etkilesiminin aynisi.
+`ariza` saati sifir: M15_A'da `GHI > 200` iken saatlik `P == 0` hic yok
+(5 dk duzeyinde 31 yuva vardi, hicbiri tam saati sifirlamiyor).
+
 ---
 
 ## 3. Uygulama sirasi

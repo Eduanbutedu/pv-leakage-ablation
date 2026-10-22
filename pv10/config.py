@@ -164,7 +164,9 @@ DKASC_DIZILER = {
         kapasite_w=5400.0,                      # 5,4 kWp
         veri=KOK / "veri" / "dkasc_m15a.parquet",
         kunye="dkasc_m15a_veri_surumu.txt",
-        sha16="",
+        sha16="be6dd9e1a15dcc61",               # 22 Ekim 2026; karar 6 ek
+                                                # bolumu: iki durma esigi
+                                                # TUTTU, ablasyon kosulmadi
         kesif_sayim={
             # arac/dizi_tarama.py, ham veri - M6_B'nin 1825'i ile ayni yontem
             "k5_negatif": (87, "birebir tutmali - kural 5 oncesi ham sayim"),
