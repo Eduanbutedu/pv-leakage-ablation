@@ -769,6 +769,33 @@ herhangi bir M15_A/M3_A model sonucu uretilmeden once alindi:
    8a'siz kosulur; Tablo 6-7 degismez. Ek S3'e ve DKASC faz notuna
    sapma notu eklendi.
 
+#### Karar 6 - M3_A uretim sayimlari ve durma esikleri  `[SONRADAN eklendi - 22 Ekim 2026]`
+
+`--dizi m3a`, dondurulan surum **`9c1c08bf08a9b84b`** (52.584 saat; ikinci
+kosu ayni hash). Model EGITILMEDI. Kapilar M15_A ile birebir (transpozisyon
+kapisi diziden bagimsizdir); hava sayimlari M6_B ile birebir.
+
+| sayim | M6_B | M3_A | M3_A / M6_B |
+|---|---|---|---|
+| k5_negatif (kesif ile) | 1.825 (= 1.825) | **5.872** (= 5.872) | **3,22** |
+| k5_eksige_cevrilen | 0 | 0 | - |
+| k5_sifirlanan | 331.226 | 333.618 | 1,007 |
+| k7_ariza_saat | 6 | 3 | 0,50 |
+| saat_kati_12_12 | 50.375 | 50.375 | 1,000 |
+| oznitelik hedef-gecerli | 46.857 | 46.857 | 1,000 (her yil 1,000) |
+
+Kural 8a kat basina (egitim / test bayrakli gun): 2018 8/343 · 12/357;
+2019 20/699 · 3/332; 2020 25/1030 · 11/331; 2021 36/1360 · 16/315;
+2022 51/1674 · 19/336. M6_B'ye oran en fazla 1,375 (2020 test 11/8).
+
+**Durma esigi - SONUC: BIR ESIK HARFIYEN TUTTU, M3_A ABLASYONU KOSULMADI.**
+Satir sayisi esiklerinin ikisi de gecer (%100). Ama `k5_negatif` M6_B'nin
+3,22 kati ve esik "kural 5, 7 veya 8a'nin uretimdeki sayimi M6_B'nin 3
+katini asiyor" diyor. Icerikte zararsiz gorunuyor: negatiflerin hepsi
++-0,05 kW olu bolgesinde (sifirlanir), eksige cevrilen 0 - kuralin
+ETKISI (`k5_sifirlanan`) M6_B'nin 1,007 kati. Esik sayimi mi etkiyi mi
+kastettigi on-kayitta yazmiyor; harfiyen okundu ve kullaniciya soruldu.
+
 ---
 
 ## 3. Uygulama sirasi

@@ -183,7 +183,7 @@ DKASC_DIZILER = {
         kapasite_w=5400.0,                      # 5,4 kWp
         veri=KOK / "veri" / "dkasc_m3a.parquet",
         kunye="dkasc_m3a_veri_surumu.txt",
-        sha16="",
+        sha16="9c1c08bf08a9b84b",               # 22 Ekim 2026
         kesif_sayim={
             "k5_negatif": (5872, "birebir tutmali - kural 5 oncesi ham sayim"),
         },
