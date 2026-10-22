@@ -36,7 +36,7 @@ KOK = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(KOK))
 
 from pv10.config import SEED, SONUC  # noqa: E402
-from pv10.evaluate import diebold_mariano, metrikler  # noqa: E402
+from pv10.evaluate import diebold_mariano, kapasite_w_bul, metrikler  # noqa: E402
 
 SINIF = {
     "eszaman": "A", "olcekleyici": "A",
@@ -228,7 +228,10 @@ def main() -> int:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--etiket", required=True, help="tahmin dizini adi")
     ap.add_argument("--log", required=True, help="izgara logu (csv)")
-    ap.add_argument("--kapasite", type=float, default=1000.0)
+    ap.add_argument("--kapasite", type=float, default=None,
+                    help="verilmezse tahminlerin `konum`undan secilir "
+                         "(evaluate.kapasite_w_bul); verilirse onunla AYNI "
+                         "olmak zorunda, degilse hata")
     ap.add_argument("--cikti-onek", default=None,
                     help="varsayilan: --etiket degeri")
     a = ap.parse_args()
@@ -239,6 +242,17 @@ def main() -> int:
     modeller = sorted(log["model"].unique())
     yillar = sorted(log["test_yil"].unique())
     pd.set_option("display.width", 250, "display.max_columns", 40)
+
+    # Payda veriden secilir. Elle verilen deger yalnizca bir KONTROLDUR:
+    # eskiden varsayilan 1000 idi ve DKASC'de `--kapasite 5250` unutulursa
+    # `fark_kapasite_yuzde` sessizce 5,25 kat buyuk cikardi.
+    ilk = oku(dizin, "temiz", modeller[0], yillar[0])
+    kapasite = kapasite_w_bul(ilk["konum"].unique())
+    if a.kapasite is not None and a.kapasite != kapasite:
+        raise SystemExit(f"--kapasite {a.kapasite} verildi ama veri "
+                         f"{kapasite} diyor - hangisi dogru?")
+    a.kapasite = kapasite
+    print(f"kapasite paydasi: {kapasite:.0f} W")
 
     dm_satir, boot_satir, ozd_satir = [], [], []
     for yil in yillar:

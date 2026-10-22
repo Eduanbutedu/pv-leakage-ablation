@@ -122,16 +122,66 @@ INVARYANT_TOLERANS = 1e-6
 # etkiledigi satir sayisi yazili.
 # ----------------------------------------------------------------------------
 DKASC_HAM = KOK / "ham" / "dkasc"
-DKASC_VERI = KOK / "veri" / "dkasc_m6b.parquet"
 
-# Dondurulmus DKASC surumu; `dkasc_pipeline.py duzenle` her kosuda bunu
-# uretilen dosyanin hash'iyle kiyaslar ve uymazsa yuksek sesle soyler.
-DKASC_VERI_SHA16 = "f7f644df5e0d1618"
+# ----------------------------------------------------------------------------
+# Olcum dizileri (karar 3: M6_B; karar 6: M15_A). Diziye BAGLI olan her sey
+# burada, TEK yerde: ham sutun, kapasite, dondurulmus veri ve hash'i, kunye
+# dosyasi, dizi bagimli kesif sayimlari (kural 5). Hava kanallari, kurallar
+# ve esikler dizilerden BAGIMSIZDIR (ortak istasyon) ve asagida tek kez
+# tanimlidir.
+#
+# `sha16`: dondurulmus surum; `dkasc_pipeline.py duzenle --dizi <ad>` her
+# kosuda uretilen dosyanin hash'ini buna karsi kiyaslar. Bos dize: henuz
+# dondurulmadi.
+#
+# `kapasite_w`: `nRMSE_kapasite` ve `fark_kapasite_yuzde`nin paydasi.
+# `evaluate.kapasite_w_bul` bunu VERININ `konum` sutunundan secer; ozniteligi
+# setinden ya da elle verilen bir bayraktan DEGIL. (Eski kurulumda kapasite
+# oznitelik setine bagliydi ve `--set dkasc` ile PVGIS verisi uzerinde kosan
+# eslesmis kontrol 5250 W ile normalize ediliyordu - bkz. faz notu.)
+# ----------------------------------------------------------------------------
+DKASC_DIZILER = {
+    "m6b": dict(
+        konum="dkasc_m6b",
+        sutun="92_DKA_M6_B_Phase_Active_Power",
+        sistem=13, teknoloji="Trina TSM-175DC01, mono-Si",
+        kapasite_w=5250.0,                      # 5,25 kWp
+        veri=KOK / "veri" / "dkasc_m6b.parquet",
+        kunye="dkasc_veri_surumu.txt",
+        sha16="f7f644df5e0d1618",
+        kesif_sayim={
+            "k5_negatif": (1825, "birebir tutmali - kural 5 oncesi ham sayim"),
+        },
+    ),
+    # Karar 6. Secim yalnizca veri kalitesine dayanir; M6_B sonuclari
+    # GORULDUKTEN sonra yapildi (belgede acikca yazili). Yedek M3_A
+    # (`90_DKA_M3_A_Phase_Active_Power`, Kyocera poli-Si, 5,4 kWp) yalnizca
+    # durma esiklerinden biri tutarsa VE kullaniciya sorulduktan sonra.
+    "m15a": dict(
+        konum="dkasc_m15a",
+        sutun="61_DKA_M15_A_Phase_Active_Power",
+        sistem=23, teknoloji="Calyxo CX-50, CdTe ince film",
+        kapasite_w=5400.0,                      # 5,4 kWp
+        veri=KOK / "veri" / "dkasc_m15a.parquet",
+        kunye="dkasc_m15a_veri_surumu.txt",
+        sha16="",
+        kesif_sayim={
+            # arac/dizi_tarama.py, ham veri - M6_B'nin 1825'i ile ayni yontem
+            "k5_negatif": (87, "birebir tutmali - kural 5 oncesi ham sayim"),
+        },
+    ),
+}
+
+# Geriye uyum: tek dizili kurulumun adlari M6_B'yi gosterir. Faz 2'nin
+# DKASC kolu, Tablo 6-7 ve F2 bu adlarla okur; anlamlari DEGISMEDI.
+_M6B = DKASC_DIZILER["m6b"]
+DKASC_VERI = _M6B["veri"]
+DKASC_VERI_SHA16 = _M6B["sha16"]
 
 DKASC_BASLANGIC_YIL, DKASC_BITIS_YIL = 2017, 2022
 DKASC_TEST_YILLARI = (2018, 2019, 2020, 2021, 2022)  # 2017 yalnizca egitim
 
-DKASC_KONUM = "dkasc_m6b"
+DKASC_KONUM = _M6B["konum"]
 # Koordinat DIS KAYNAKLA dogrulandi: 23 46' G / 133 52' D / 558 m,
 # Theoretical and Applied Climatology (2022), doi:10.1007/s00704-022-04166-6.
 # Ondalik karsiligi -23,7667 / 133,8667; asagidaki degerle fark enlemde
@@ -141,11 +191,11 @@ DKASC_LAT, DKASC_LON = -23.7621, 133.8744
 DKASC_KOORDINAT_KAYNAK = ("Theoret. Appl. Climatol. (2022) "
                           "doi:10.1007/s00704-022-04166-6; 23 46' S, 133 52' E, 558 m")
 DKASC_UTC_OFSET = 9.5          # ACST, yaz saati YOK
-DKASC_KAPASITE_W = 5250.0      # M6_B = 5,25 kWp (PVGIS kolunda 1 kWp)
+DKASC_KAPASITE_W = _M6B["kapasite_w"]   # M6_B = 5,25 kWp (PVGIS kolunda 1 kWp)
 
 # Hedef dizi ve yedegi (karar 3). Yedek uretimde kullanilmaz; kalite
 # kiyasi ve olasi bir yeniden secim icin adi burada durur.
-DKASC_HEDEF_DIZI = "92_DKA_M6_B_Phase_Active_Power"     # sistem 13, Trina
+DKASC_HEDEF_DIZI = _M6B["sutun"]                         # sistem 13, Trina
 DKASC_YEDEK_DIZI = "71_DKA_M2_C_Phase_Active_Power"     # sistem 18, SunPower
 
 _W = "101_DKA_WeatherStation_"
@@ -218,7 +268,10 @@ DKASC_ESZAMAN = ("G_i", "T2m")
 # konumunu etiket + 2,5 dk'dan hesaplar. Bu yuzden bazi sayilar birebir
 # TUTMAZ; tutmamalari da beklenir ve sebebi her satirda yazilidir. Kiyas
 # yine de yapilir: buyuk bir sapma kural sirasinin bozuldugunu gosterir.
-DKASC_KESIF_SAYIM = {
+#
+# Hava kanallarinin sayimlari dizilerden bagimsizdir (ortak istasyon); dizi
+# bagimli olanlar (kural 5) `DKASC_DIZILER[...]["kesif_sayim"]`dadir.
+DKASC_HAVA_KESIF_SAYIM = {
     "k2_kirpilan": (5054, "birebir tutmali - kural 1 RH'ye dokunmaz"),
     "k2_bayrak": (5, "birebir tutmali"),
     "k3_duzeltilen": (6146, "DUSMELI - kural 1 gece GHI/DHI'yi sifirladi"),
@@ -226,5 +279,5 @@ DKASC_KESIF_SAYIM = {
     "k6_eksige_cevrilen": (1126, "yakin - gece esigi ve 2,5 dk kaymasi"),
     "k9_t_eksige_cevrilen": (3046, "birebir tutmali - sicaklik kanali bagimsiz"),
     "k9_rh_eksige_cevrilen": (1649, "birebir tutmali"),
-    "k5_negatif": (1825, "birebir tutmali - kural 5 oncesi ham sayim"),
 }
+DKASC_KESIF_SAYIM = {**DKASC_HAVA_KESIF_SAYIM, **_M6B["kesif_sayim"]}  # geriye uyum

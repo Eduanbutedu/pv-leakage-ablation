@@ -20,8 +20,13 @@ Cikti semasi `pv10/` katmaninin bekledigi semayla ayni:
 beyan edilir.
 
 Kullanim:
-    python dkasc_pipeline.py dogrula ham/dkasc
-    python dkasc_pipeline.py duzenle ham/dkasc
+    python dkasc_pipeline.py dogrula ham/dkasc [--dizi m6b]
+    python dkasc_pipeline.py duzenle ham/dkasc [--dizi m6b]
+
+`--dizi` hedef olcum dizisini secer (`config.DKASC_DIZILER`; varsayilan
+`m6b`, karar 3). Diziye bagli her sey - ham sutun, kapasite, cikti yolu,
+kunye dosyasi, hash, kural 5 kesif sayimi - oradan okunur. Kurallar,
+esikler ve hava kanallari dizilerden bagimsizdir.
 """
 
 from __future__ import annotations
@@ -39,26 +44,31 @@ from pv10.config import (DKASC_ALBEDO, DKASC_ARIZA_GHI, DKASC_BASLANGIC_YIL,
                          DKASC_DTI, DKASC_EGIM, DKASC_EGIM_TARAMA, DKASC_G0_CARPAN,
                          DKASC_GHI, DKASC_GIRDI_YUVA, DKASC_GTI,
                          DKASC_GUC_OLU_BOLGE,
-                         DKASC_GUNES_SABITI, DKASC_HEDEF_DIZI,
+                         DKASC_DIZILER, DKASC_GUNES_SABITI,
+                         DKASC_HAVA_KESIF_SAYIM,
                          DKASC_KAPI_EGIM_ARALIK, DKASC_KAPI_GHI,
                          DKASC_KAPI_MBE_YUZDE, DKASC_KAPI_RMSE_YUZDE,
-                         DKASC_KAPI_SIN_H, DKASC_KESIF_SAYIM,
-                         DKASC_KOORDINAT_KAYNAK, DKASC_KONUM,
+                         DKASC_KAPI_SIN_H,
+                         DKASC_KOORDINAT_KAYNAK,
                          DKASC_LAT, DKASC_LON, DKASC_RB_TABAN, DKASC_RH,
                          DKASC_RH_BAYRAK, DKASC_RH_UST, DKASC_SAAT_YUVA,
                          DKASC_SUTUN_SAYISI, DKASC_T, DKASC_T_ALT, DKASC_T_RAY,
-                         DKASC_T_UST, DKASC_UTC_OFSET, DKASC_VERI,
-                         DKASC_VERI_SHA16,
+                         DKASC_T_UST, DKASC_UTC_OFSET,
                          DKASC_YUVA_DK, DKASC_ETIKET_ORTA_DK)
 from pv10.features import gunes_yuksekligi_sin
 from pv10.transpozisyon import olculene_karsi, transpoze
 
-OKUNAN = ["timestamp", DKASC_GHI, DKASC_DHI, DKASC_GTI, DKASC_DTI,
-          DKASC_T, DKASC_RH, DKASC_HEDEF_DIZI]
+HAVA_OKUNAN = ["timestamp", DKASC_GHI, DKASC_DHI, DKASC_GTI, DKASC_DTI,
+               DKASC_T, DKASC_RH]
 ISINIM = [DKASC_GHI, DKASC_DHI, DKASC_GTI, DKASC_DTI]
 ACST = pd.Timedelta(hours=DKASC_UTC_OFSET)
 YUVA = pd.Timedelta(minutes=DKASC_YUVA_DK)
 ORTA = pd.Timedelta(minutes=DKASC_ETIKET_ORTA_DK)
+
+
+def okunan(sutun: str) -> list[str]:
+    """Okunacak sutunlar: zaman, hava kanallari, hedef dizinin guc kanali."""
+    return HAVA_OKUNAN + [sutun]
 
 
 def _yol(klasor: Path, yil: int) -> Path:
@@ -72,7 +82,7 @@ def _basliklar(yol: Path) -> list[str]:
 # --------------------------------------------------------------------------- #
 # 1) dogrula
 # --------------------------------------------------------------------------- #
-def dogrula_klasor(klasor: Path) -> bool:
+def dogrula_klasor(klasor: Path, sutun: str) -> bool:
     """Ham dosyalarin semasini ve zaman eksenini kontrol eder.
 
     VERIYI degil KURGUYU dogrular: sutun kumesi alti yilda ayni mi, zaman
@@ -100,7 +110,7 @@ def dogrula_klasor(klasor: Path) -> bool:
             fark = set(basliklar) ^ set(referans)
             sorunlar.append(f"sutun semasi {DKASC_BASLANGIC_YIL} ile ayni degil "
                             f"(simetrik fark {len(fark)}: {sorted(fark)[:5]})")
-        for c in OKUNAN[1:]:
+        for c in okunan(sutun)[1:]:
             if c not in basliklar:
                 sorunlar.append(f"zorunlu sutun yok: {c}")
 
@@ -124,11 +134,11 @@ def dogrula_klasor(klasor: Path) -> bool:
 # --------------------------------------------------------------------------- #
 # 2) duzenle - adim adim, her adimda satir sayisi basilir
 # --------------------------------------------------------------------------- #
-def oku_birlestir(klasor: Path) -> pd.DataFrame:
+def oku_birlestir(klasor: Path, sutun: str) -> pd.DataFrame:
     """Adim 1-2: alti dosyayi oku, takvim disi kirp, tam 5 dk izgarasina otur."""
     parcalar = []
     for y in range(DKASC_BASLANGIC_YIL, DKASC_BITIS_YIL + 1):
-        x = pd.read_csv(_yol(klasor, y), usecols=OKUNAN,
+        x = pd.read_csv(_yol(klasor, y), usecols=okunan(sutun),
                         parse_dates=["timestamp"])
         ic = x[x["timestamp"].dt.year == y]
         print(f"  {y}: {len(x):,} satir okundu, takvim disi {len(x)-len(ic):,} "
@@ -159,7 +169,7 @@ def oku_birlestir(klasor: Path) -> pd.DataFrame:
     return d
 
 
-def kurallar_5dk(d: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
+def kurallar_5dk(d: pd.DataFrame, sutun: str) -> tuple[pd.DataFrame, dict]:
     """Adim 3-5: kural 1, 2, 3, 6, 9, 5. Hepsi 5 dakika cozunurlugunde."""
     say = {}
     # gozlem ani: etiket + 2,5 dk (karar 5), UTC'ye cevrilir
@@ -207,14 +217,13 @@ def kurallar_5dk(d: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
     d[DKASC_RH] = np.where(ray, np.nan, d[DKASC_RH])
 
     # --- Kural 5: negatif guc (kW cinsinden, donusum sonra) ---
-    p = d[DKASC_HEDEF_DIZI]
+    p = d[sutun]
     buyuk_negatif = p < -DKASC_GUC_OLU_BOLGE
     olu = p.abs() <= DKASC_GUC_OLU_BOLGE
     say["k5_negatif"] = int((p < 0).sum())
     say["k5_eksige_cevrilen"] = int(buyuk_negatif.sum())
     say["k5_sifirlanan"] = int(olu.sum())
-    d[DKASC_HEDEF_DIZI] = np.where(buyuk_negatif, np.nan,
-                                   np.where(olu, 0.0, p))
+    d[sutun] = np.where(buyuk_negatif, np.nan, np.where(olu, 0.0, p))
     return d, say
 
 
@@ -254,7 +263,7 @@ def transpozisyon_kapisi(d: pd.DataFrame, zorla_egim: float | None = None
     return olcut["gecti"], olcut, t
 
 
-def saatlige_topla(d: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
+def saatlige_topla(d: pd.DataFrame, sutun: str) -> tuple[pd.DataFrame, dict]:
     """Adim 6-8: 5 dk'da transpozisyon, sonra kural 10, sonra tam izgara."""
     say = {}
     # --- Adim 6: transpozisyon 5 DAKIKA cozunurlugunde (karar 4) ---
@@ -282,15 +291,15 @@ def saatlige_topla(d: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
     # G_i duser ve `.mean()` her sutunu FARKLI kumeden alir - G_i artik
     # bilesenlerin toplamina esit olmaz. Sema kapisi bunu yakaladi.
     tam5 = (d[DKASC_GHI].notna() & d[DKASC_DHI].notna()
-            & d[DKASC_T].notna() & d[DKASC_HEDEF_DIZI].notna())
+            & d[DKASC_T].notna() & d[sutun].notna())
     # kanal bazinda tamlik, MASKELEMEDEN ONCE olculur - hangi kanalin
     # bagladigini gostermesi icin; maskelemeden sonra hepsi esitlenir
     for ad, c in (("GHI", DKASC_GHI), ("DHI", DKASC_DHI),
-                  ("T2m", DKASC_T), ("P", DKASC_HEDEF_DIZI)):
+                  ("T2m", DKASC_T), ("P", sutun)):
         say[f"saat_tam_{ad}"] = int(
             (d[c].groupby(pd.Grouper(freq="h")).count() == DKASC_SAAT_YUVA).sum())
 
-    ortalanacak = [DKASC_GHI, DKASC_DHI, DKASC_T, DKASC_RH, DKASC_HEDEF_DIZI,
+    ortalanacak = [DKASC_GHI, DKASC_DHI, DKASC_T, DKASC_RH, sutun,
                    "Gb_i", "Gd_i", "Gr_i", "G_i"]
     d.loc[~tam5, ortalanacak] = np.nan
     d["_tam"] = tam5
@@ -336,7 +345,7 @@ def saatlige_topla(d: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
     return s, say
 
 
-def semaya_donustur(s: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
+def semaya_donustur(s: pd.DataFrame, dizi: dict) -> tuple[pd.DataFrame, dict]:
     """Adim 9-10: kural 7 (saatlik) + sema + birim donusumu."""
     say = {}
     s = s.reset_index()
@@ -348,15 +357,15 @@ def semaya_donustur(s: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
 
     # --- Kural 7: gunduz sifir uretim; DEGERLENDIRMEDEN cikarilir, egitimden ASLA ---
     s["ariza"] = ((s[DKASC_GHI] > DKASC_ARIZA_GHI)
-                  & (s[DKASC_HEDEF_DIZI] == 0.0)).fillna(False)
+                  & (s[dizi["sutun"]] == 0.0)).fillna(False)
     say["k7_ariza_saat"] = int(s["ariza"].sum())
 
     # --- birim: DKASC kW -> sema W (PVGIS W kullaniyor). YON: x1000 ---
-    s["P"] = s[DKASC_HEDEF_DIZI] * 1000.0
+    s["P"] = s[dizi["sutun"]] * 1000.0
 
     s = s.rename(columns={DKASC_T: "T2m", DKASC_GHI: "GHI",
                           DKASC_DHI: "DHI", DKASC_RH: "RH"})
-    s["konum"] = DKASC_KONUM
+    s["konum"] = dizi["konum"]
     s["lat"], s["lon"] = DKASC_LAT, DKASC_LON
     s["utc_ofset"] = DKASC_UTC_OFSET
 
@@ -434,14 +443,18 @@ def sema_kapisi(s: pd.DataFrame) -> None:
           f"-> kismi satirlar gecikme KAYNAGI, hedef ve degerlendirme DISI")
 
 
-def duzenle(klasor: Path, cikti: Path) -> pd.DataFrame:
+def duzenle(klasor: Path, cikti: Path, dizi_ad: str = "m6b") -> pd.DataFrame:
+    dizi = DKASC_DIZILER[dizi_ad]
+    sutun, kapasite_w = dizi["sutun"], dizi["kapasite_w"]
+    kesif = {**DKASC_HAVA_KESIF_SAYIM, **dizi["kesif_sayim"]}
+
     print("\n[1-2] okuma ve 5 dk izgarasi")
-    d = oku_birlestir(klasor)
+    d = oku_birlestir(klasor, sutun)
 
     print("\n[3-5] kalite kurallari (5 dk cozunurluk)")
-    d, say5 = kurallar_5dk(d)
+    d, say5 = kurallar_5dk(d, sutun)
     for k, v in say5.items():
-        ref = DKASC_KESIF_SAYIM.get(k)
+        ref = kesif.get(k)
         if ref is None:
             print(f"  {k:26s} {v:>9,}")
         else:
@@ -471,12 +484,12 @@ def duzenle(klasor: Path, cikti: Path) -> pd.DataFrame:
                          "islevsizdir; esikler yeniden dusunulmeli.")
 
     print("\n[6-8] transpozisyon (5 dk) -> saatlige topla -> tam izgara")
-    s, sayS = saatlige_topla(d)
+    s, sayS = saatlige_topla(d, sutun)
     for k, v in sayS.items():
         print(f"  {k:26s} {v:>9,}")
 
     print("\n[9-10] kural 7 + sema")
-    s, say7 = semaya_donustur(s)
+    s, say7 = semaya_donustur(s, dizi)
     for k, v in say7.items():
         print(f"  {k:26s} {v:>9,}")
 
@@ -507,9 +520,9 @@ def duzenle(klasor: Path, cikti: Path) -> pd.DataFrame:
         f"degerlendirme 12/12. `kismi` bayrakli satirlar gecikme KAYNAGIDIR; "
         f"egitim hedefi ve test gozlemi OLAMAZ - dislama bolme asamasinda "
         f"bayrakla yapilir (kural 7'nin `ariza` deseniyle ayni).",
-        f"konum: {DKASC_KONUM}",
+        f"konum: {dizi['konum']}",
         f"aralik: {DKASC_BASLANGIC_YIL}-{DKASC_BITIS_YIL} (yerel ACST saat izgarasi)",
-        f"kapasite_W: 5250.0",
+        f"kapasite_W: {kapasite_w}",
         f"koordinat: {DKASC_LAT}, {DKASC_LON} - DIS KAYNAKLA DOGRULANDI",
         f"koordinat_kaynak: {DKASC_KOORDINAT_KAYNAK}",
         f"etiket_varsayimi: 5 dk etiketi aralik BASI; gozlem ani = etiket "
@@ -530,26 +543,30 @@ def duzenle(klasor: Path, cikti: Path) -> pd.DataFrame:
         f"artik geometriden bagimsiz DEGIL (bolum 4, madde 8)",
         f"kurallar: dokumanlar/dkasc-kalite-kurallari.md",
     ])
-    (cikti.parent / "dkasc_veri_surumu.txt").write_text(kunye + "\n",
-                                                        encoding="utf-8")
+    (cikti.parent / dizi["kunye"]).write_text(kunye + "\n", encoding="utf-8")
     print(f"\n{'=' * 68}")
     print(f"Kaydedildi: {cikti.resolve()}")
     print(f"Veri surumu (sha256_16): {h}")
-    if not DKASC_VERI_SHA16:
-        print(f"config.DKASC_VERI_SHA16 = \"{h}\"  <- buraya yazin (henuz bos)")
-    elif h == DKASC_VERI_SHA16:
-        print(f"config.DKASC_VERI_SHA16 ile UYUYOR ({DKASC_VERI_SHA16})")
+    beklenen = dizi["sha16"]
+    if not beklenen:
+        print(f"config.DKASC_DIZILER[\"{dizi_ad}\"][\"sha16\"] = \"{h}\"  "
+              f"<- buraya yazin (henuz bos)")
+    elif h == beklenen:
+        print(f"config.DKASC_DIZILER[\"{dizi_ad}\"][\"sha16\"] ile UYUYOR "
+              f"({beklenen})")
     else:
-        print(f"  !! UYUSMUYOR: config {DKASC_VERI_SHA16}, uretilen {h}")
+        print(f"  !! UYUSMUYOR: config {beklenen}, uretilen {h}")
         print("  !! Veri veya kod degismis. Butun DKASC sonuclari bu surume "
               "bagliydi; devam etmeden once neyin degistigini bulun.")
     gunduz = s[(s["H_sun"] > 0) & s["P"].notna()]
     print(f"\nGunduz ortalama uretim: {gunduz['P'].mean():.2f} W "
-          f"(kapasite 5250 W, kapasite faktoru "
-          f"%{100*gunduz['P'].mean()/5250:.2f})")
+          f"(kapasite {kapasite_w:.0f} W, kapasite faktoru "
+          f"%{100*gunduz['P'].mean()/kapasite_w:.2f})")
     print(f"Yillik toplam (dolu saatler): "
           f"{s['P'].sum()/1000/(DKASC_BITIS_YIL-DKASC_BASLANGIC_YIL+1):.1f} "
-          f"kWh/yil, {s['P'].sum()/1000/5.25/6:.1f} kWh/kWp/yil")
+          f"kWh/yil, "
+          f"{s['P'].sum()/kapasite_w/(DKASC_BITIS_YIL-DKASC_BASLANGIC_YIL+1):.1f} "
+          f"kWh/kWp/yil")
     return s
 
 
@@ -560,16 +577,21 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("adim", choices=["dogrula", "duzenle"])
     ap.add_argument("klasor", nargs="?", default="ham/dkasc")
-    ap.add_argument("--cikti", default=str(DKASC_VERI))
+    ap.add_argument("--dizi", default="m6b", choices=sorted(DKASC_DIZILER))
+    ap.add_argument("--cikti", default=None,
+                    help="varsayilan: config.DKASC_DIZILER[dizi]['veri']")
     a = ap.parse_args()
+    dizi = DKASC_DIZILER[a.dizi]
+    print(f"dizi: {a.dizi} = {dizi['sutun']} (sistem {dizi['sistem']}, "
+          f"{dizi['teknoloji']}, {dizi['kapasite_w']:.0f} W)")
 
     klasor = Path(a.klasor)
     if not klasor.is_dir():
         sys.exit(f"{klasor} bulunamadi")
 
     if a.adim == "dogrula":
-        sys.exit(0 if dogrula_klasor(klasor) else 1)
-    duzenle(klasor, Path(a.cikti))
+        sys.exit(0 if dogrula_klasor(klasor, dizi["sutun"]) else 1)
+    duzenle(klasor, Path(a.cikti or dizi["veri"]), a.dizi)
 
 
 if __name__ == "__main__":

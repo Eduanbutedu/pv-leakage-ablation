@@ -11,6 +11,8 @@ Kullanim:
 DKASC kolu ve eslesmis kontrol kosusu:
     python run_ablasyon.py --set dkasc --veri veri/dkasc_m6b.parquet \\
         --yillar 2018,2019,2020,2021,2022 --etiket dkasc
+    python run_ablasyon.py --set dkasc --veri veri/dkasc_m15a.parquet \\
+        --yillar 2018,2019,2020,2021,2022 --etiket dkasc_m15a
     python run_ablasyon.py --set dkasc --etiket pvgis_indirgenmis
 
 Ikinci komut ESLESMIS KONTROLDUR: ayni PVGIS verisi, ayni kod, yalnizca
@@ -21,6 +23,12 @@ H_sun geometriden turetildigi icin sizinti tasimiyor (bolum 4, madde 8).
 --etiket VERILMEZSE kosu ana ablasyon.csv'ye yazar. Farkli oznitelik seti
 veya farkli veri ile kosarken --etiket ZORUNLU sayilmali; aksi halde iki
 farkli deneyin hucreleri ayni tabloda karisir ve ozet ortalamalari kirlenir.
+
+Kapasite (`nRMSE_kapasite` paydasi) VERIDEN secilir - `evaluate.kapasite_w_bul`,
+verinin `konum` sutunu: PVGIS 1000 W, DKASC dizisi kendi `kapasite_w`'si.
+22 Ekim 2026'ya kadar oznitelik setine bagliydi ve `--set dkasc` ile PVGIS
+verisi uzerinde kosan eslesmis kontrol 5250 W ile normalize ediliyordu
+(yalnizca loglanan `nRMSE_kapasite` sutunu; Tablo 6-7 etkilenmez).
 
 Kosu kesilirse ayni komutu tekrar verin: tamamlanmis hucreler atlanir.
 """
@@ -33,17 +41,17 @@ from pathlib import Path
 
 import pandas as pd
 
-from pv10.config import (DKASC_ESZAMAN, DKASC_GECIKMELI, DKASC_KAPASITE_W,
-                         ESZAMAN_DEGISKEN, GECIKMELI_DEGISKEN, KAPASITE_W,
-                         SIZINTI_VARYANTLARI, SONUC, VERI)
+from pv10.config import (DKASC_ESZAMAN, DKASC_GECIKMELI, ESZAMAN_DEGISKEN,
+                         GECIKMELI_DEGISKEN, SIZINTI_VARYANTLARI, SONUC, VERI)
+from pv10.evaluate import kapasite_w_bul
 from pv10.experiment import enflasyon_tablosu, izgara_kos
 from pv10.models import ABLASYON_ALTKUMESI, HIZLI_ALTKUME, modeller
 
 # Beyan edilen oznitelik setleri. Yeni bir set eklemek buraya bir satirdir;
 # kod yoluna bayrak eklemek DEGILDIR.
 OZNITELIK_SETLERI = {
-    "gufbd": (GECIKMELI_DEGISKEN, ESZAMAN_DEGISKEN, KAPASITE_W),
-    "dkasc": (DKASC_GECIKMELI, DKASC_ESZAMAN, DKASC_KAPASITE_W),
+    "gufbd": (GECIKMELI_DEGISKEN, ESZAMAN_DEGISKEN),
+    "dkasc": (DKASC_GECIKMELI, DKASC_ESZAMAN),
 }
 
 
@@ -102,7 +110,7 @@ def main():
     a = ap.parse_args()
 
     LOG = log_yolu(a.etiket)
-    gecikmeli, eszaman_degisken, kapasite_w = OZNITELIK_SETLERI[a.set_ad]
+    gecikmeli, eszaman_degisken = OZNITELIK_SETLERI[a.set_ad]
 
     if a.ozet:
         if not LOG.exists():
@@ -130,6 +138,9 @@ def main():
                     "tumu": havuz}[a.modeller]
     yillar = [int(y) for y in a.yillar.split(",")]
 
+    ham = pd.read_parquet(a.veri)
+    kapasite_w = kapasite_w_bul(ham["konum"].unique())
+
     hucre = len(varyantlar) * len(model_adlari) * len(yillar)
     print(f"Izgara: {len(varyantlar)} varyant x {len(model_adlari)} model "
           f"x {len(yillar)} yil = {hucre} hucre")
@@ -142,7 +153,6 @@ def main():
 
     if a.tahmin:
         print("\nMaliyet tahmini icin tek hucre olculuyor...")
-        ham = pd.read_parquet(a.veri)
         from pv10.experiment import OznitelikOnbellegi, hucre_kos
         ob = OznitelikOnbellegi(ham, gecikmeli, eszaman_degisken)
         t0 = time.time()
@@ -157,7 +167,6 @@ def main():
         return
 
     print(f"\nLog: {LOG}")
-    ham = pd.read_parquet(a.veri)
     print(f"Veri: {len(ham):,} satir, {ham.konum.nunique()} konum\n")
 
     tahmin_dizin = None

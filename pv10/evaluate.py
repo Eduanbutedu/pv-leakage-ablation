@@ -11,7 +11,27 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from .config import KAPASITE_W, SEED
+from .config import DKASC_DIZILER, KAPASITE_W, SEED
+
+
+def kapasite_w_bul(konumlar) -> float:
+    """`nRMSE_kapasite` paydasini VERININ konumlarindan secer.
+
+    DKASC dizisinin konumu -> o dizinin `kapasite_w`'si; geri kalan her konum
+    PVGIS'tir -> `KAPASITE_W`. DKASC konumu baska konumlarla karisiksa ya da
+    iki DKASC dizisi bir aradaysa tek bir payda yoktur: hata firlatir.
+
+    Neden veriden: kapasite eskiden oznitelik SETINE bagliydi ve `--set
+    dkasc` ile PVGIS verisi uzerinde kosan eslesmis kontrol 5250 W ile
+    normalize ediliyordu. Payda verinin ozelligidir, oznitelik setinin degil.
+    """
+    konumlar = set(konumlar)
+    dkasc = {ad: d for ad, d in DKASC_DIZILER.items() if d["konum"] in konumlar}
+    if not dkasc:
+        return KAPASITE_W
+    if len(dkasc) > 1 or len(konumlar) > 1:
+        raise ValueError(f"tek bir kapasite paydasi yok: konumlar {sorted(konumlar)}")
+    return next(iter(dkasc.values()))["kapasite_w"]
 
 
 def gunduz_maskesi(o: pd.DataFrame, gece_dahil: bool = False) -> np.ndarray:
