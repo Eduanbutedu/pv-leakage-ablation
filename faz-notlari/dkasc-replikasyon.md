@@ -977,6 +977,19 @@ farkli deneyin hucreleri ayni tabloda karisirsa ozet ortalamalari kirlenir.
     kapasiteyi veriden alir (`evaluate.kapasite_w_bul`); loglar
     commit edildikleri haliyle birakildi.
 
+    **DUZELTILDI - 22 Ekim 2026.** Iki izgara yeniden kosuldu (1000 W;
+    10,2 + 10,2 dk, paralel) ve loglar yerine kondu. Kiyas: 126 hucrenin
+    hepsinde `nRMSE_kapasite` disindaki sekiz alan birebir;
+    `nRMSE_kapasite` eskisinin tam 5,25 kati ve `100 * RMSE / 1000` ile
+    birebir. Yeniden uretilen tahminlerden `ablasyon_dm` uc tabloyu bayt
+    duzeyinde ayni verdi; `coklu_test` ciktilari degismedi;
+    `tablolari_uret` 65/65. Tahmin dosyalari eskilerden yalnizca sema
+    olarak farkli: eski PVGIS tahminleri `ariza` sutunu eklenmeden once
+    yazilmisti, yenilerde sutun var ve 126 dosyanin hepsinde tamamen
+    False; ortak sutunlar 126/126 birebir. Eski klasor
+    `sonuclar/tahminler/ablasyon/dm_pvgis_indirgenmis_eski/` olarak
+    yerinde birakildi (`.gitignore` kapsaminda).
+
 ---
 
 ## On-kayit SONRASI duyarlilik analizi: kural 8a  `[SONRADAN eklendi - 22 Ekim 2026]`
