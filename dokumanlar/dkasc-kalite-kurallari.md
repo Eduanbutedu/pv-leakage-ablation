@@ -796,6 +796,12 @@ katini asiyor" diyor. Icerikte zararsiz gorunuyor: negatiflerin hepsi
 ETKISI (`k5_sifirlanan`) M6_B'nin 1,007 kati. Esik sayimi mi etkiyi mi
 kastettigi on-kayitta yazmiyor; harfiyen okundu ve kullaniciya soruldu.
 
+**Kullanici karari (22 Ekim 2026, M3_A model sonucu uretilmeden once):**
+M3_A kosulur. Esigin ham sayimi mi kuralin etkisini mi kastettigi on-kayitta
+belirsizdi; harfiyen okundugunda tuttu, kullanici kosturmaya karar verdi.
+Sonraki esikler icin ders: esik "sayim" degil "etkilenen satir" olarak
+yazilmaliydi.
+
 ---
 
 ## 3. Uygulama sirasi
