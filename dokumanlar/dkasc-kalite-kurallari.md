@@ -564,6 +564,112 @@ belirsizlik ise 0,6°'dir.
   degismez. Zararsizdir ama PVGIS ile kiyaslayan okuyucu `:00` bekler,
   bu yuzden kunyeye yazilir.
 
+### Karar 6 - Ikinci olcum dizisi M15_A (sistem 23, Calyxo CdTe); yedek M3_A  `[SONRADAN eklendi - 22 Ekim 2026]`
+
+**Bu secim M6_B'nin SONUCLARI GORULDUKTEN SONRA yapildi.** M6_B
+ablasyonu (`2a0036f`), belirsizlik olcumu (`690f03a`) ve faz notu
+(`c24f908`) bu karardan once yazildi ve okundu. Dolayisiyla bu karar
+karar 1-5 ile ayni anlamda on-kayit DEGILDIR. Asagidaki ayrim
+yapilir ve korunur:
+
+- **Secim olcutu yalnizca VERI KALITESIDIR.** Hicbir aday dizide model
+  egitilmedi, hicbir aday dizinin ablasyon veya tahmin sonucu
+  uretilmedi ya da okunmadi. Secimin kaniti `arac/dizi_tarama.py` ->
+  `sonuclar/dkasc_dizi_tarama.csv`; ham veri, kural uygulanmadan,
+  karar 3 tablosunun olcutleriyle. Kontrol: M6_B satiri karar 3'u
+  birebir verir (eksik %1,5318, gunduz medyan 2,6351 kW, maks
+  5,5590, kural 8a gostergesi 70 gun; tek fark gun paydasi 2163'e
+  karsi 2164).
+- **Kurallar 1-10 ve karar 1-5 DEGISMEZ.** M15_A icin yeni kural
+  yazilmaz, esik oynatilmaz. Kural 5, 7, 8a dizi bagimlidir; sayimlari
+  yeniden olculur ve bu bolume `[SONRADAN eklendi]` diye eklenir,
+  esikleri degil.
+- **Ablasyon M6_B ile AYNI izgarayla kosulur**: ayni varyantlar, ayni
+  uc model, ayni test yillari (2018-2022), ayni oznitelik seti
+  (`DKASC_GECIKMELI`, `DKASC_ESZAMAN`).
+
+**Soru:** Replikasyonun bulgusu (simulasyon `eszaman`'i abartiyor,
+`rastgele_kfold`'u kucumsuyor) tek bir mono-Si diziye mi ozgu?
+Bunu yalnizca farkli teknolojide ikinci bir olcum dizisi sinayabilir.
+
+**Secim olcutu (sirayla uygulanir):**
+
+1. Panel teknolojisi M6_B'den (mono-Si) FARKLI.
+2. Ayni duzlem: sabit montaj, egim 20°, azimut 0° (kuzey). Boylece
+   `G_i` (karar 2, 4) birebir ayni kalir ve iki dizi arasinda degisen
+   TEK sey hedef `P` olur. GHI, DHI ve sicaklik zaten ortak hava
+   istasyonundandir (`101_DKA_WeatherStation_*`), dizilere ait degil.
+3. 2017-2022'nin alti yilinin HER BIRINDE calisir durumda: yillik
+   gunduz medyani cokmemis (asagidaki tabloda "bozuk" diye isaretli
+   yil yok), sistem sokulmemis, uretici/site "kiyas icin kullanmayin"
+   notu yok.
+4. Bunlari gecen adaylar arasinda en dusuk ariza imzasi (gunduz sifir
+   orani, `GHI > 200` iken `P == 0`).
+
+**Aday tablosu** (`sonuclar/dkasc_dizi_tarama.csv`, `yil == "tum"`;
+teknoloji, kapasite ve duzlem sitenin detay sayfasindan, 22 Ekim 2026):
+
+| metre (sistem) | teknoloji | kWp | eksik % | gunduz sifir % | negatif | GHI>200, P=0 | olcut 3 |
+|---|---|---|---|---|---|---|---|
+| M6_B (13) - mevcut | mono-Si | 5,25 | 1,5318 | 0,1969 | 1.825 | 108 | gecer |
+| **M15_A (23) Calyxo CX-50** | **CdTe ince film** | **5,4** | 4,1738 | 0,7415 | 87 | 31 | **gecer** |
+| M3_A (14) Kyocera KD135GX-LP | poli-Si | 5,4 | 1,5317 | 0,3777 | 5.872 | 110 | gecer |
+| M5_C (11) BP 3165N | poli-Si | 4,95 | 1,5323 | 0,6098 | 7.107 | 108 | gecer |
+| M20_B (29) CSUN 250-60P | poli-Si | 6,0 | 4,1732 | 0,1133 | 1.285 | 31 | gecer |
+| M17_C (36) NovoPolymers | poli-Si, mikroinvertor | 5,2 | 4,1732 | 0,0402 | 0 | 31 | gecer |
+| M4_A (8) Kaneka G-EA060 | a-Si ince film | 6,0 | 1,5322 | 1,3660 | 10.391 | 140 | KALMAZ: 2021 ve 2022 gunduz medyani 1,1693 / 0,9845 kW (diger yillar 2,80-3,08); invertor 29 Nisan 2022'de degisti |
+| M4_B (17) Sanyo HIP-210NKHE5 | HIT | 6,3 | 1,5322 | 1,0196 | 1.260 | 254 | KALMAZ: 2019 gunduz medyani 1,6106 kW (diger yillar 3,19-3,47); site "Aralik 2018'den beri dusuk uretim", invertor Mayis 2019'da degisti |
+| M16_B Hanergy/Solibro SL1-85 | CIGS ince film | 5,61 | 4,1740 | 5,3193 | 253 | 87 | KALMAZ: 2019-2022 maks 0,09-0,12 kW - dizi fiilen olu |
+| M6_A (7) First Solar FS-272 | CdTe (prototip) | 6,96 | 1,5314 | 6,8937 | 268.955 | 15.995 | KALMAZ: site "prototip, kiyas icin kullanilmamali"; 2018 gunduz sifir %39,79 |
+| M18_A (28) First Solar FS-387 | CdTe | 5,6 | 4,1736 | 4,1281 | 856 | 481 | KALMAZ: Mayis 2020'de sokuldu; 2021-2022 maks 0,06-0,10 kW |
+
+M3_B ve M3_C (Kyocera poli-Si) olcut 3'te kalir (2021 gunduz medyani
+0,0870 kW; 2019 1,2379 kW). M9_B / M9_A_C (Trina mono-Si, cift eksen
+izleyici) olcut 1 ve 2'de, M11 (eco-Kinetics mono-Si) olcut 1'de,
+M10 (SolFocus CPV, izleyici) olcut 2'de kalir. Sistem 9A (Solibro
+SL2-130, CIGS, 5,2 kWp) 20 Ekim 2017'de kuruldu, 2017'yi kapsamaz;
+olcut 3'te kalir (site metre eslemesini vermiyor).
+
+**Tablonun kapsami:** ince film ve HIT adaylarinin HEPSI tabloda. Diger
+c-Si dizileri (BP, Q CELLS, REC, Winaico, Tindo, Elkem, Canadian Solar,
+TDG, Sungrid, Solco ...) teknoloji acisindan tek tek incelenmedi;
+hepsi c-Si ailesindedir ve olcut 1 icin M15_A'dan zayif adaydir.
+Tabloya alinan dort poli-Si dizi yedek secimi icin ornek alindi,
+c-Si'nin tam taramasi DEGILDIR.
+
+**Secilen:** `61_DKA_M15_A_Phase_Active_Power` = sistem 23, Calyxo
+CX-50, **CdTe ince film, 5,4 kWp, sabit, egim 20° / azimut 0°**,
+kurulum 1 Mart 2010. Olcut 1-3'u gecen TEK c-Si disi aday; tabloda
+olcutleri gecen diger dort aday poli-Si, yani c-Si ailesinde kalir.
+
+**Yedek:** `90_DKA_M3_A_Phase_Active_Power` = sistem 14, Kyocera
+KD135GX-LP, poli-Si, 5,4 kWp, sabit, 20° / 0°. Tabloda olcut 2-3'u
+gecen poli-Si adaylari icinde eksik orani en dusuk olan. Yalnizca M15_A
+asagidaki durma esiklerinden birine takilir VE kullaniciya
+sorulduktan sonra devreye girer.
+
+**Bilinen zayiflik:** M15_A'nin eksik orani M6_B'nin 2,7 kati (%4,1738;
+2018'de %8,4209). Sebep 23-38 numarali sistemlerin ortak kesintileri
+(site notlari: Aralik 2016, Aralik 2017 - Ocak 2018, Temmuz 2018,
+Agustos 2021 sayac arizasi). Kural 10'un 12/12 sartiyla etkilesimi
+(bolum 4, madde 12) bu tabloda OLCULMEDI; uretimde olculecek.
+
+**Durma esikleri - pipeline kosmadan ONCE sabitlendi.** Asagidakilerden
+biri gerceklesirse ablasyon KOSULMAZ, kullaniciya sorulur:
+
+- M15_A'nin hedef-gecerli saat sayisi M6_B'ninkinin (46.857) %90'inin
+  altinda (< 42.171), ya da herhangi bir test yilinda M6_B'nin ayni
+  yilinin %85'inin altinda.
+- Kural 5, 7 veya 8a'nin uretimdeki sayimi M6_B'nin ayni sayiminin 3
+  katini asiyor.
+- Sema kapisi, transpozisyon kapisi ya da herhangi bir invaryant
+  kirmizi.
+- Dizi kanalinda M6_B'de gorulmeyen yeni bir hata sinifi (ornegin
+  sabit deger platosu, birim degisimi) gorunuyor.
+
+**Kapasite:** `kapasite_w = 5400`. `nRMSE_kapasite` ve
+`fark_kapasite_yuzde` bu paydayla hesaplanir.
+
 ---
 
 ## 3. Uygulama sirasi

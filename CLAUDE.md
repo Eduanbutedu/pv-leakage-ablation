@@ -258,6 +258,7 @@ arac/
   coklu_test.py            Holm/BH, mevcut p'ler uzerinden [on-kayit SONRASI]
   tablolari_uret.py        Tablo 5-9'u CSV'lerden uretir, makaleyle kiyaslar
   tanimlayici.py           P, P_kapasite, G_i tanimlayici istatistik, saha x donem -> tanimlayici_istatistik.csv
+  dizi_tarama.py           DKASC dizi kalite taramasi, ham veri -> dkasc_dizi_tarama.csv (karar 6'nin secim kaniti)
 sekiller/
   sekil_uret.py            F1, F2 (sunum; gomulu kontrol tutmazsa cizmez)
   f1_veri.py               F1 cizim verisi -> sekiller/F1_veri/*.csv
@@ -292,7 +293,8 @@ Makale sayisi ureten betikler:
 
 Yalnizca teshis, makale sayisi URETMEYEN: `nondeterminizm*.py` (makalede
 yalnizca Bolum 4.5 sinirlilik beyani ve S2), `oznitelik_regresyon.py`,
-`regresyon_kiyas.py`, `csv_karsilastir.py`. Faz notunda hangi dosyanin
+`regresyon_kiyas.py`, `csv_karsilastir.py`,
+`dizi_tarama.py` (ikinci DKASC dizisinin secim kaniti; karar 6). Faz notunda hangi dosyanin
 makale sayisi urettigi bu listeden okunur.
 
 `ozet.py` ile `ozet_sonrasi.py` ayri tutulur; sebep kayit duzenidir. `ozet.py`
