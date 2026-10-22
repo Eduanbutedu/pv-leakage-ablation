@@ -138,6 +138,16 @@ tutulacak.
   setinden, 0,1390'i veriden.
   **Temel RMSE'ler KIYASLANAMAZ** (554 W vs 138 W; kapasite 5250 vs 1000,
   tek berrak saha vs alti havuzlanmis saha). Yalnizca ORANLAR kiyaslanir.
+- **Ikinci ve ucuncu DKASC dizisi (karar 6, 22 Ekim 2026).** Dizi basina
+  parametreleme `config.DKASC_DIZILER`; M6_B bayt duzeyinde yeniden uretildi
+  (`2d9398d`). M15_A (Calyxo CdTe, 5,4 kWp, `be6dd9e1a15dcc61`) iki durma
+  esigini tetikledi (hedef-gecerli %88,72; 2018 %71,94), kullanici karariyla
+  kosuldu: `ablasyon_dkasc_m15a.csv`, `ablasyon_belirsizlik_dm_dkasc_m15a_*`.
+  M3_A (Kyocera poli-Si, `9c1c08bf08a9b84b`) donduruldu, k5_negatif 3,22x
+  esigi harfiyen tuttugu icin ablasyonu KOSULMADI - karar bekliyor.
+  **Kural 8a hic uygulanmadi** (M6_B dahil); sapma olarak kaydedildi.
+  `dkasc_pipeline.py ... --dizi m6b|m15a|m3a`; kapasite veriden secilir
+  (`evaluate.kapasite_w_bul`).
 - Kalan:
   1. Faz 3'un DKASC esdegeri (siralama kararliligi) kosulmadi.
   2. `ranking.py` ve `doygunluk.py` hala `KAPASITE_W = 1000` kullaniyor;
