@@ -299,10 +299,12 @@ Makale sayisi ureten betikler:
 - `coklu_test.py` -> `coklu_test_{ozet,iddialar,detay}.csv`: coklu test
   duzeltmesi alt bolumu [on-kayit SONRASI].
 - `tanimlayici.py` -> `tanimlayici_istatistik.csv`: tanimlayici istatistik
-  tablosu (N, min, maks, ortalama, std, carpiklik, CV; 7 saha x 3 donem x
-  P / P_kapasite / G_i). Populasyon degerlendirme kumesidir: uretim
-  oznitelik tablosu, `kismi` disi, `H_sun > 0`, `ariza` disi. Test N'si
-  ablasyon loglarinin `temiz` n toplamiyla birebir (180.482 / 19.285).
+  tablosu (N, min, maks, ortalama, std, carpiklik, CV; 9 saha - 6 PVGIS +
+  M6_B, M15_A, M3_A - x 3 donem x P / P_kapasite / G_i = 81 satir).
+  Populasyon degerlendirme kumesidir: uretim oznitelik tablosu, `kismi`
+  disi, `H_sun > 0`, `ariza` disi. Test N'si ablasyon loglarinin `temiz`
+  n toplamiyla birebir (PVGIS 180.482; M6_B 19.285; M15_A 16.973;
+  M3_A 19.286).
 - `tablolari_uret.py` -> yeni sayi uretmez; Tablo 5-9'u CSV'lerden yeniden
   hesaplayip makaleyle kiyaslar (65/65).
 

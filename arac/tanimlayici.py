@@ -18,6 +18,13 @@ POPULASYON - modellerin GERCEKTEN degerlendirildigi kume:
   degerlendirme populasyonunu tarif eder, egitim havuzunu degil.
   Donem yili `time_utc`'nin yilidir; `bolme_indeksleri` ile ayni.
 
+SAHALAR  [22 Ekim 2026: M15_A ve M3_A eklendi]
+  alti PVGIS sahasi + uc DKASC dizisi (`config.DKASC_DIZILER`: M6_B mono-Si,
+  M15_A CdTe, M3_A poli-Si). Uc dizi ayni hava istasyonunu paylasir, `G_i`
+  satirlari ayni transpozisyondan gelir; populasyonlari dizinin kendi `P`
+  bosluklarina gore farklidir. M6_B satirlari eklemeden once uretilenle
+  birebir aynidir.
+
 DONEMLER:
   tum           : PVGIS 2014-2023, DKASC 2017-2022
   ilk_egitim    : ilk test yilindan onceki her sey (PVGIS 2014-2016,
@@ -62,35 +69,43 @@ import numpy as np
 import pandas as pd
 
 from pv10.config import (BASLANGIC_YIL, BITIS_YIL, DKASC_BASLANGIC_YIL,
-                         DKASC_BITIS_YIL, DKASC_ESZAMAN, DKASC_GECIKMELI,
-                         DKASC_KAPASITE_W, DKASC_TEST_YILLARI, DKASC_VERI,
-                         DKASC_VERI_SHA16, ESZAMAN_DEGISKEN,
-                         GECIKMELI_DEGISKEN, KAPASITE_W, PVGIS_TEST_YILLARI,
-                         SONUC, VERI, VERI_SHA16)
+                         DKASC_BITIS_YIL, DKASC_DIZILER, DKASC_ESZAMAN,
+                         DKASC_GECIKMELI, DKASC_TEST_YILLARI,
+                         ESZAMAN_DEGISKEN, GECIKMELI_DEGISKEN, KAPASITE_W,
+                         PVGIS_TEST_YILLARI, SONUC, VERI, VERI_SHA16)
 from pv10.evaluate import gunduz_maskesi
 from pv10.features import oznitelik_uret
 
 CIKTI = SONUC / "tanimlayici_istatistik.csv"
 
+# Anahtar tekil bir girdi adidir; ciktidaki `kaynak` sutunu "pvgis" ya da
+# "dkasc". M6_B'nin anahtari "dkasc" olarak kaldi.
 KAYNAKLAR = {
     "pvgis": dict(
+        kaynak="pvgis",
         yol=VERI, sha=VERI_SHA16, gecikmeli=GECIKMELI_DEGISKEN,
         eszaman=ESZAMAN_DEGISKEN, kapasite_w=KAPASITE_W,
         yillar=(BASLANGIC_YIL, BITIS_YIL), ilk_test=min(PVGIS_TEST_YILLARI),
         not_P="PVGIS-SARAH3 simule, 1 kWp c-Si",
         not_G="PVGIS G(i) = Gb_i + Gd_i + Gr_i (components=1 bilesenlerinden)",
     ),
-    "dkasc": dict(
-        yol=DKASC_VERI, sha=DKASC_VERI_SHA16, gecikmeli=DKASC_GECIKMELI,
-        eszaman=DKASC_ESZAMAN, kapasite_w=DKASC_KAPASITE_W,
+}
+_NOT_G_DKASC = ("TURETILDI: GHI + DHI'den izotropik (Liu-Jordan) "
+                "transpozisyon, 20 derece / kuzey; olculen GTI kullanilmadi "
+                "(karar 2, 4)")
+for _ad, _d in DKASC_DIZILER.items():
+    _kwp = f"{_d['kapasite_w'] / 1000:.3g}".replace(".", ",")
+    _teknoloji = _d["teknoloji"].split(", ")[-1]
+    KAYNAKLAR["dkasc" if _ad == "m6b" else f"dkasc_{_ad}"] = dict(
+        kaynak="dkasc",
+        yol=_d["veri"], sha=_d["sha16"], gecikmeli=DKASC_GECIKMELI,
+        eszaman=DKASC_ESZAMAN, kapasite_w=_d["kapasite_w"],
         yillar=(DKASC_BASLANGIC_YIL, DKASC_BITIS_YIL),
         ilk_test=min(DKASC_TEST_YILLARI),
-        not_P="olculen AC aktif guc, M6_B (sistem 13), 5,25 kWp mono-Si",
-        not_G=("TURETILDI: GHI + DHI'den izotropik (Liu-Jordan) "
-               "transpozisyon, 20 derece / kuzey; olculen GTI kullanilmadi "
-               "(karar 2, 4)"),
-    ),
-}
+        not_P=(f"olculen AC aktif guc, {_d['sutun'].split('_DKA_')[1].rsplit('_Phase', 1)[0]} "
+               f"(sistem {_d['sistem']}), {_kwp} kWp {_teknoloji}"),
+        not_G=_NOT_G_DKASC,
+    )
 
 
 def _hash_kontrol(yol: Path, beklenen: str) -> None:
@@ -148,8 +163,9 @@ def istatistik(x: pd.Series) -> dict:
 
 def tablo() -> pd.DataFrame:
     satir = []
-    for kaynak, k in KAYNAKLAR.items():
-        d = degerlendirme_populasyonu(kaynak)
+    for girdi, k in KAYNAKLAR.items():
+        d = degerlendirme_populasyonu(girdi)
+        kaynak = k["kaynak"]
         bas, son = k["yillar"]
         donemler = [("tum", bas, son),
                     ("ilk_egitim", bas, k["ilk_test"] - 1),
