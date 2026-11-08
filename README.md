@@ -59,6 +59,8 @@ Not pre-registration documents, listed so that the distinction is explicit:
 - `dokumanlar/arastirma-baglami.md` (first commit `240677460052adb94173963ebe0c1f540d5be559`)
   was the research-context note. It and `CLAUDE.md` (local working notes) are no
   longer tracked from `v1.0-submission` on; both remain readable in the history.
+  Some phase notes and pre-registration documents refer to these two files; read them
+  from the history, e.g. `git show 6851c93:CLAUDE.md`.
 - `faz-notlari/faz-2.md` and `faz-3.md` were compiled retrospectively and carry no
   pre-registration claim. Phases 1-3 were committed together with their results, so
   there is no file-level evidence that their setup was fixed before results were seen;
