@@ -1,12 +1,70 @@
-# Leakage-Aware Day-Ahead PV Power Forecasting: A Ten-Year Multi-Site Ablation Study
+# Evaluation choices outweigh algorithm choice in day-ahead photovoltaic power forecasting: a ten-year, six-site leakage ablation with measured-data replication
 
-Code and experiment harness for a ten-year, six-site study quantifying how common
-evaluation choices inflate reported skill in machine-learning photovoltaic power
-forecasting.
+**Hasan Canbaz, Elif Parlar, Shahaboddin Daneshvar** — Hasan Kalyoncu University
 
-This repository extends an earlier single-year study (see *Related work* below) from
-one year to ten, from four sites to six, and adds a controlled leakage ablation and a
-model-ranking stability analysis.
+*Manuscript submitted to Solar (MDPI), 2026.*
+
+Code, pre-registration documents and results for a ten-year (2014-2023), six-site
+study quantifying how common evaluation choices inflate reported skill in
+machine-learning photovoltaic power forecasting, replicated on measured data from
+three arrays at the DKA Solar Centre, Alice Springs. The aim is not a new forecasting
+model: it is to measure how much leakage, splitting strategy, test-year choice and
+training volume move reported performance, relative to the choice of algorithm.
+
+This repository extends an earlier single-year, four-site study by the same authors
+(see *Related work* below) from one year to ten and from four sites to six, and adds a
+controlled leakage ablation, a model-ranking stability analysis, a training-volume
+saturation analysis and a measured-data replication.
+
+The state submitted with the manuscript is tagged `v1.0-submission`.
+
+## Contents
+
+| Path | What it holds |
+|---|---|
+| `pv10/` | experiment package: constants (`config.py`, the only place constants are defined), features, models, metrics, split logic, grids, experiment invariants, Phase 4 summaries |
+| `pvgis_pipeline.py`, `dkasc_pipeline.py` | regenerate the PVGIS and DKASC datasets and verify them against the frozen hashes |
+| `run_smoke.py` | single-split sanity run over the full feature pipeline |
+| `run_ablasyon.py` | leakage ablation grid (Phase 2 and its DKASC replication) |
+| `run_siralama.py` | ranking stability across test years (Phase 3) |
+| `run_doygunluk.py` | training-volume saturation (Phase 4), invariant gate, summaries |
+| `arac/` | post-processing and diagnostic scripts. They train no model and run no experiment: they read saved predictions or result CSVs. Some of them do produce manuscript numbers (`ablasyon_dm.py`, `dm_yil.py`, `uc_dm.py`, `dm_matris.py`, `coklu_test.py`, `tanimlayici.py`); the others are diagnostics only (`nondeterminizm*.py`, `regresyon_kiyas.py`, `csv_karsilastir.py`, `oznitelik_regresyon.py`, `dizi_tarama.py`). `tablolari_uret.py` checks the manuscript tables against the CSVs |
+| `sekiller/` | figure scripts, figures and the plotted data |
+| `dokumanlar/` | pre-registration and rule documents (see below) |
+| `ek/` | supplementary material S1-S6 |
+| `faz-notlari/` | phase handover notes: commit hashes, run statistics, gate results |
+| `sonuclar/*.csv` | every experiment log and summary table (committed); saved prediction vectors under `sonuclar/tahminler/` are not committed |
+
+Code identifiers, comments and the phase notes are in Turkish; this README and the
+supplementary material are in English.
+
+## Pre-registration documents
+
+The documents below fixed rules or readings before the data or results they govern
+existed. The first commit of each is the evidence; `git log -- <file>` shows every
+later change, and each later change is marked as such inside the document and listed
+in supplementary S6 (deviations from the pre-registered plan).
+
+| Document | Fixes | First commit | Date (UTC+3) | Before |
+|---|---|---|---|---|
+| `dokumanlar/dkasc-kalite-kurallari.md` | DKASC quality-control rules and stop thresholds | `6da9109649b83075bd1eeed2988ab8dfd10b1fec` | 2026-08-07 07:42 | `dkasc_pipeline.py` (first commit `1cb311c`, 2026-08-08 01:47) |
+| `dokumanlar/varyant-dm-yorum-kurali.md` | how the Phase 2 uncertainty measurement (paired DM, bootstrap, night identity) is read | `397e3628c9a68a2e94278a3479a502c9949cb69c` | 2026-08-08 21:41 | first uncertainty tables (`690f03a`, 2026-08-08 23:12) |
+| `pv10/ozet.py` | Phase 4 summary tables and metrics | `13c6ee84f6eb7a83319de0f8f61f9caeb94fbf93` | 2026-07-31 06:05 | Phase 4 grid results (`0c8614b`, 2026-08-02 01:52); file unchanged since |
+| `arac/ornek_gunler.py` | example-day selection rule | `568221d7e7b17f0c56203eddce563079a0080149` | 2026-10-17 21:19 | selected days (`cdce2c9`) and series (`58d95eb`) |
+
+Not pre-registration documents, listed so that the distinction is explicit:
+
+- `dokumanlar/varyant-test-taksonomisi.md` (first commit `690f03a6c383b6cee97c2b37b5bea382d06e3ade`)
+  was committed together with the first uncertainty results it discusses.
+- `dokumanlar/arastirma-baglami.md` (first commit `240677460052adb94173963ebe0c1f540d5be559`)
+  was the research-context note. It and `CLAUDE.md` (local working notes) are no
+  longer tracked from `v1.0-submission` on; both remain readable in the history.
+- `faz-notlari/faz-2.md` and `faz-3.md` were compiled retrospectively and carry no
+  pre-registration claim. Phases 1-3 were committed together with their results, so
+  there is no file-level evidence that their setup was fixed before results were seen;
+  this gap is the reason for the pre-registration discipline of the DKASC arm.
+- Analyses added after the results were seen are marked as such: `pv10/ozet_sonrasi.py`,
+  `arac/dm_matris.py`, `arac/coklu_test.py`, and the rule 8a sensitivity run.
 
 ## Research questions
 
@@ -19,9 +77,20 @@ model-ranking stability analysis.
    recomputed across rolling annual origins and tested with Diebold-Mariano,
    reporting effect size alongside statistical significance.
 3. **How much training history is actually needed?** Learning curves are computed
-   over 1, 2, 3, 5 and 10 years of history.
+   over 1, 2, 3 and 5 years and all available history. A ten-year window is not
+   possible: with the test year held out, at most nine years remain.
+4. **Does the simulated-data result replicate on measured data?** The ablation is
+   repeated on three measured arrays at DKASC, Alice Springs, with quality-control
+   rules fixed before the data were processed.
 
 ## Data
+
+Neither dataset is redistributed. Both are regenerated from the original sources by
+the pipelines in this repository and verified against a frozen hash
+(`sha256` of the Parquet bytes, first 16 hex digits). A mismatch means the dataset
+differs and results will not reproduce exactly.
+
+### PVGIS-SARAH3 (simulated)
 
 Hourly data are obtained from the **PVGIS** hourly radiation tool
 (PVGIS-SARAH3 radiation database) for identically configured 1 kWp crystalline-silicon
@@ -37,46 +106,81 @@ systems: 30° tilt, 0° azimuth (south-facing), 14% system losses, free-standing
 | Leipzig | Germany | 51.34 °N | 1069.9 |
 
 Period: 1 January 2014 – 31 December 2023 (87,648 hourly observations per site;
-525,888 in total).
+525,888 in total). Frozen version: `sha256_16 = f722a717bac502c2`.
 
 **PVGIS output is simulated, not measured.** PV power is computed by PVGIS from
 irradiance and meteorological inputs using a module performance model. This study
 therefore treats the dataset as a controlled, internally consistent simulation
 environment rather than ground truth — which is what a controlled ablation requires,
-since the underlying generating process is known.
+since the underlying generating process is known. The measured-data replication below
+tests whether the leakage effects it shows carry over.
 
-### Reproducing the dataset
+### DKASC Alice Springs (measured)
 
-Raw data are **not** committed. Regenerate them exactly:
+Six yearly files, 2017-2022 ("All Individual Technologies (yearly data set with
+weather data)", 5-minute resolution) from the DKA Solar Centre,
+<https://dkasolarcentre.com.au/>. Files accessed on 4 August 2026 (2018, 2020, 2022)
+and 7 August 2026 (2017, 2019, 2021), as recorded in
+`dokumanlar/dkasc-kalite-kurallari.md`. 2017 is used for training only; test years
+are 2018-2022. Three arrays are used:
 
-```bash
-pip install -r requirements.txt
-python pvgis_pipeline.py hepsi
-```
+| Array (`--dizi`) | System | Technology | Capacity | Frozen `sha256_16` |
+|---|---|---|---|---|
+| `m6b` (main) | 13 | Trina TSM-175DC01, mono-Si | 5.25 kWp | `f7f644df5e0d1618` |
+| `m15a` | 23 | Calyxo CX-50, CdTe thin film | 5.4 kWp | `be6dd9e1a15dcc61` |
+| `m3a` | 14 | Kyocera KD135GX-LP, poly-Si | 5.4 kWp | `9c1c08bf08a9b84b` |
 
-Verify you obtained the identical dataset by checking the frozen version hash written
-to `veri/veri_surumu.txt`:
+The second and third arrays were chosen on data quality alone, after the M6_B results
+had been seen (decision 6 in the rules document; screening evidence in
+`sonuclar/dkasc_dizi_tarama.csv`). M15_A and M3_A tripped stop thresholds of the
+pre-registered rules and were run by the authors' recorded decision; see the rules
+document and supplementary S3/S6.
 
-```
-sha256_16: f722a717bac502c2
-```
+The expected hashes are in `pv10/config.py` (`VERI_SHA16`, `DKASC_DIZILER[...]["sha16"]`).
+Regeneration commands are under *Reproducing the paper*, step 2.
 
-Any mismatch means the dataset differs and results will not reproduce exactly.
+## Environment
 
-## Repository layout
+Results were produced on Windows 11 with Python 3.14.6 and the pinned versions in
+`requirements.txt`:
 
-```
-pvgis_pipeline.py    download, verify and assemble the dataset
-run_smoke.py         single-split sanity run over the full feature pipeline
-run_ablasyon.py      leakage ablation grid (variant x model x test year)
-pv10/
-  config.py          all constants: lags, seed, paths, leakage variant registry
-  features.py        solar geometry and feature construction
-  models.py          eleven regression algorithms with fixed hyperparameters
-  evaluate.py        metrics, day-block bootstrap, Diebold-Mariano
-  experiment.py      grid execution, resumable, per-cell logging
-sonuclar/            experiment logs (committed)
-```
+| Package | Version |
+|---|---|
+| pandas | 3.0.5 |
+| numpy | 2.5.1 |
+| scikit-learn | 1.9.0 |
+| scipy | 1.18.0 |
+| pyarrow | 22.0.0 |
+| matplotlib | 3.11.2 |
+| requests | 2.34.2 |
+
+- **Threads.** `OMP_NUM_THREADS = OPENBLAS_NUM_THREADS = MKL_NUM_THREADS = 8` is set at
+  the start of every run (`config.OMP_THREAD_SAYISI`). Hist Gradient Boosting uses
+  OpenMP; a different thread count changes the summation order and loses bit-level
+  reproducibility.
+- **Seeds.** Model seed 42; Phase 4 subsampling seeds 11, 22 and 33. Hyperparameters
+  are fixed a priori in `pv10/models.py` and never tuned on validation or test
+  partitions.
+- **Measured nondeterminism in Random Forest and Extra Trees.** Repeated fits of the
+  same cell give different prediction vectors (within-process parallel tree
+  aggregation; measured in `sonuclar/nondeterminizm_olcum.csv` and confirmed in
+  `nondeterminizm_olcum_dogrulama.csv`, with Neural Network as a deterministic
+  control). The effect on logged metrics is a relative difference below 1.5e-15: 1-2
+  units in the last place for directly computed metrics, up to 8 for the derived
+  `skill` field. No reported digit is affected. Everything downstream of the fitted
+  predictions (DM tests, summaries) is deterministic.
+- **pyarrow 22.0.0** rather than the latest release, because Windows Smart App
+  Control blocks the `arrow.dll` shipped with 25.0.0 on the machine used for the runs.
+  The pin affects only Parquet I/O. The frozen dataset is byte-identical under both
+  versions, the five experiment invariants pass 18/18 checks under 22.0.0, and the
+  reference metrics they compare against reproduce to the same digits as under 25.0.0.
+  The Phase 4 main grid, wide run and 2022 run were produced with 25.0.0; later runs
+  with 22.0.0.
+
+## Licence
+
+Code in this repository is released under the MIT Licence (`LICENSE`). PVGIS and DKASC
+data are subject to their providers' terms and are not redistributed here.
 
 ## Forecasting design
 
@@ -106,20 +210,6 @@ python run_ablasyon.py --ozet           # summarise the existing log
 Interrupted runs resume automatically: completed cells are read from
 `sonuclar/ablasyon.csv` and skipped.
 
-## Reproducibility
-
-Random seed 42 throughout. Hyperparameters are fixed a priori and never tuned on
-validation or test partitions. Pinned dependency versions are in `requirements.txt`;
-results were produced with Python 3.14, pandas 3.0.5, NumPy 2.5.1,
-scikit-learn 1.9.0 and pyarrow 22.0.0.
-
-pyarrow is pinned to 22.0.0 rather than the latest release because Windows Smart App
-Control blocks the `arrow.dll` shipped with 25.0.0 on the machine used for the runs.
-The pin affects only Parquet I/O. The frozen dataset is byte-identical under both
-versions (`sha256_16 = f722a717bac502c2`), the five experiment invariants pass 18/18
-checks under 22.0.0, and the reference metrics they compare against reproduce to the
-same digits as under 25.0.0.
-
 ## Reproducing the paper
 
 This section maps every table and figure in the manuscript to the command that
@@ -148,10 +238,12 @@ a mismatch means the results will not reproduce exactly.
 | Dataset | Command | Output | Hash file | Expected `sha256_16` |
 |---|---|---|---|---|
 | PVGIS, 6 sites, 2014-2023 | `python pvgis_pipeline.py hepsi` | `veri/pvgis_10yil.parquet` | `veri/veri_surumu.txt` | `f722a717bac502c2` |
-| DKASC Alice Springs, array 13, 2017-2022 | `python dkasc_pipeline.py dogrula ham/dkasc` then `python dkasc_pipeline.py duzenle ham/dkasc` | `veri/dkasc_m6b.parquet` | `veri/dkasc_veri_surumu.txt` | `f7f644df5e0d1618` |
+| DKASC Alice Springs, M6_B (system 13), 2017-2022 | `python dkasc_pipeline.py dogrula ham/dkasc` then `python dkasc_pipeline.py duzenle ham/dkasc --dizi m6b` | `veri/dkasc_m6b.parquet` | `veri/dkasc_veri_surumu.txt` | `f7f644df5e0d1618` |
+| DKASC Alice Springs, M15_A (system 23), 2017-2022 | `python dkasc_pipeline.py duzenle ham/dkasc --dizi m15a` | `veri/dkasc_m15a.parquet` | `veri/dkasc_m15a_veri_surumu.txt` | `be6dd9e1a15dcc61` |
+| DKASC Alice Springs, M3_A (system 14), 2017-2022 | `python dkasc_pipeline.py duzenle ham/dkasc --dizi m3a` | `veri/dkasc_m3a.parquet` | `veri/dkasc_m3a_veri_surumu.txt` | `9c1c08bf08a9b84b` |
 
-The DKASC raw files are not downloadable by script. Obtain the six yearly Alice
-Springs files from <https://dkasolarcentre.com.au/> and place them as
+The DKASC raw files are not downloadable by script; the same six files serve all
+three arrays. Obtain the six yearly Alice Springs files from <https://dkasolarcentre.com.au/> and place them as
 `ham/dkasc/Alice_Springs_2017.csv` … `Alice_Springs_2022.csv` (about 1.2 GB in
 total). The quality-control rules applied to them were fixed before any row was
 processed: `dokumanlar/dkasc-kalite-kurallari.md`.
@@ -162,7 +254,7 @@ To check a hash independently of the pipelines:
 python -c "import hashlib,sys; print(hashlib.sha256(open(sys.argv[1],'rb').read()).hexdigest()[:16])" veri/pvgis_10yil.parquet
 ```
 
-The expected values are also in `pv10/config.py` (`VERI_SHA16`, `DKASC_VERI_SHA16`).
+The expected values are also in `pv10/config.py` (`VERI_SHA16`, `DKASC_DIZILER[...]["sha16"]`).
 
 ### 3. Gates before any grid
 
@@ -183,22 +275,22 @@ python -m arac.regresyon_kiyas --referans <moved-aside copy> --yeni sonuclar/abl
     --anahtar varyant,model,test_yil --nondet ""
 ```
 
-Random Forest and Extra Trees differ in the last one or two units in the last place
-between runs (within-process parallel summation, measured in
-`sonuclar/nondeterminizm_olcum.csv`). No reported figure uses them except the
-ten-model pool, and no reported digit is affected.
+Random Forest and Extra Trees differ between runs by a relative difference
+below 1.5e-15 (1-2 units in the last place, up to 8 for the derived `skill` field; see
+*Environment*). No reported figure uses them except the ten-model pool, and no
+reported digit is affected.
 
 ### 5. Tables
 
 | Table | Content | Command | Source file(s) |
 |---|---|---|---|
 | 1 | Literature audit, 27 studies | none: manual coding | Supplementary S7 (not in this repository) |
-| 2 | Sites and mean annual specific yield | `python pvgis_pipeline.py duzenle ham/` (printed at the end) | `veri/pvgis_10yil.parquet` |
+| 2 | Descriptive statistics of the evaluated population (N, P/capacity mean ± SD, skewness, mean G(i)) | `python -m arac.tanimlayici` | `sonuclar/tanimlayici_istatistik.csv` |
 | 3 | The six configurations | none: definitions | leakage variant registry in `pv10/config.py` |
 | 4 | Mapping to the Kapoor and Narayanan (2023) taxonomy | none: descriptive | — |
 | 5 | Ablation, simulated data | `python run_ablasyon.py` | `sonuclar/ablasyon.csv` |
-| 6 | Inflation ratios, three runs | `python run_ablasyon.py` · `python run_ablasyon.py --set dkasc --etiket pvgis_indirgenmis` · `python run_ablasyon.py --set dkasc --veri veri/dkasc_m6b.parquet --yillar 2018,2019,2020,2021,2022 --etiket dkasc` | `sonuclar/ablasyon.csv`, `ablasyon_pvgis_indirgenmis.csv`, `ablasyon_dkasc.csv` |
-| 7 | Population-free effect A of shuffled splitting | see *Phase 2 uncertainty* below | `sonuclar/ablasyon_belirsizlik_dm_{ana,pvgis_indirgenmis,dkasc}_dm.csv` (`A_model`) |
+| 6 | Inflation ratios: PVGIS full, PVGIS reduced, three DKASC arrays | `python run_ablasyon.py` · `python run_ablasyon.py --set dkasc --etiket pvgis_indirgenmis` · `python run_ablasyon.py --set dkasc --veri veri/dkasc_<array>.parquet --yillar 2018,2019,2020,2021,2022 --etiket dkasc` (M6_B; `dkasc_m15a`, `dkasc_m3a` for the others) | `sonuclar/ablasyon.csv`, `ablasyon_pvgis_indirgenmis.csv`, `ablasyon_dkasc.csv`, `ablasyon_dkasc_m15a.csv`, `ablasyon_dkasc_m3a.csv` |
+| 7 | Population-free effect A of shuffled splitting | see *Phase 2 uncertainty* below | `sonuclar/ablasyon_belirsizlik_dm_{ana,pvgis_indirgenmis,dkasc,dkasc_m15a,dkasc_m3a}_dm.csv` (`A_model`) |
 | 8 | Learning curves | `python run_doygunluk.py` (summary written automatically; `--ozet` rewrites it from the logs) | `sonuclar/doygunluk.csv` → `sonuclar/doygunluk_ozet_egri.csv` |
 | 9 | Variance decomposition | as Table 8 | `sonuclar/doygunluk_ozet_varyans.csv` |
 
@@ -222,6 +314,13 @@ python -m arac.ablasyon_dm --etiket dm_pvgis_indirgenmis --log sonuclar/ablasyon
 python -m arac.ablasyon_dm --etiket dm_dkasc --log sonuclar/ablasyon_dm_dkasc.csv --kapasite 5250
 ```
 
+M15_A and M3_A follow the M6_B pattern with `--veri veri/dkasc_m15a.parquet` /
+`veri/dkasc_m3a.parquet`, labels `dkasc_m15a`, `dm_dkasc_m15a`, `dkasc_m3a`,
+`dm_dkasc_m3a`, and `--kapasite 5400` (the capacity is taken from the data;
+`--kapasite` only checks it). The post-registration rule 8a sensitivity run on M6_B
+adds `--kural-8a` under the labels `dkasc_k8a` and `dm_dkasc_k8a`; the main results are
+without rule 8a.
+
 The three labels and what each one writes:
 
 | Label | Data / features | Grid log | Saved predictions | Uncertainty tables |
@@ -231,7 +330,8 @@ The three labels and what each one writes:
 | `dm_dkasc` | DKASC, reduced feature set, 2018-2022 | `sonuclar/ablasyon_dm_dkasc.csv` | `sonuclar/tahminler/ablasyon/dm_dkasc/` | `sonuclar/ablasyon_belirsizlik_dm_dkasc_*.csv` |
 
 `*` is `dm`, `bootstrap` and `gece_ozdeslik`. The re-run grid logs reproduce
-`ablasyon.csv`, `ablasyon_pvgis_indirgenmis.csv` and `ablasyon_dkasc.csv` exactly. The interpretation rules were fixed
+`ablasyon.csv`, `ablasyon_pvgis_indirgenmis.csv` and `ablasyon_dkasc.csv` exactly
+(likewise `ablasyon_dkasc_m15a.csv` and `ablasyon_dkasc_m3a.csv`, 810/810 fields). The interpretation rules were fixed
 before the first test statistic existed: `dokumanlar/varyant-dm-yorum-kurali.md`.
 
 **Phase 3 (Section 5.4, ranking across seven test years).**
@@ -339,12 +439,17 @@ retrospectively and make no pre-registration claim.
 ## Related work
 
 This study builds on a previous single-year, four-site comparison of eleven machine
-learning algorithms by the same authors. Preliminary findings were reported there; the
-multi-year leakage ablation and ranking-stability analysis are new to this work.
+learning algorithms by the same authors (accepted for publication, in press), whose
+single test year was 2023. The multi-year leakage ablation, ranking-stability,
+training-volume and measured-data analyses are new to this work.
 
-## Data source and licence
+## Data sources
 
-Radiation and PV data: **Photovoltaic Geographical Information System (PVGIS)**,
-European Commission Joint Research Centre — <https://re.jrc.ec.europa.eu/pvg_tools/en/>
+- Radiation and PV data: **Photovoltaic Geographical Information System (PVGIS)**,
+  European Commission Joint Research Centre — <https://re.jrc.ec.europa.eu/pvg_tools/en/>
+- Measured PV and weather data: **DKA Solar Centre**, Alice Springs —
+  <https://dkasolarcentre.com.au/>
 
-Code in this repository is released under the MIT Licence.
+## Citation
+
+See `CITATION.cff`.

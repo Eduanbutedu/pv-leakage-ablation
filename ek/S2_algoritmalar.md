@@ -148,8 +148,7 @@ Consequences, all measured:
 - **No reported number is affected.** The fast 3 are unaffected, and all
   Phase 2/3/4 headline numbers come from them.
 
-Diagnostic code lives in `arac/`, is never called from the main flow, and
-produces no manuscript number.
+The nondeterminism diagnostics live in `arac/`, are never called from the main flow, and produce no manuscript number. Other scripts in `arac/` do produce manuscript numbers (`ablasyon_dm.py`, `dm_yil.py`, `uc_dm.py`, `dm_matris.py`, `coklu_test.py`); the repository README maps each to the table or section it feeds.
 
 ---
 

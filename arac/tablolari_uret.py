@@ -4,7 +4,8 @@
 `sonuclar/` altindaki loglari okur. Makaledeki degerler asagida, makalede
 YAZILDIKLARI hassasiyetle gomuludur (kaynak: calisma taslagi v0.16;
 tablo sayilari ACM v1.0 ile ayni; Tablo 6-7'nin "DKASC CdTe" ve "DKASC
-poly-Si" sutunlari ile Tablo 7'nin oran araligi v2.2'den, 22 Ekim 2026). Kiyas toleranssizdir: yeniden uretilen
+poly-Si" sutunlari ile Tablo 7'nin oran araligi v2.2'den, 22 Ekim 2026;
+Tablo 8-9 v2.6'daki yuvarlanmis haliyle, 8 Kasim 2026). Kiyas toleranssizdir: yeniden uretilen
 deger ayni ondalik sayisina yuvarlanir ve METIN olarak esit olmak zorundadir
 (`sekiller/sekil_uret.py:kontrol_et` ile ayni kural).
 
@@ -101,19 +102,19 @@ TABLO2 = {
 }
 
 TABLO8 = {  # pencere: (altornekleme, kaydirmali, marjinal kazanc)
-    "1": ("140.3506", "141.4722", None),
-    "2": ("139.2749", "139.6685", "1.0757"),
-    "3": ("138.7122", "138.8771", "0.5627"),
-    "5": ("138.3580", "138.3765", "0.3542"),
-    "tum": ("138.1457", "138.1457", "0.2124"),
+    "1": ("140.35", "141.47", None),
+    "2": ("139.27", "139.67", "1.08"),
+    "3": ("138.71", "138.88", "0.56"),
+    "5": ("138.36", "138.38", "0.35"),
+    "tum": ("138.15", "138.15", "0.21"),
 }
 
 TABLO9 = {  # kaynak satiri -> deger; "Remaining" uc etkilesimin toplami
-    "Test year": "48.4868",
-    "Algorithm": "25.2170",
-    "Training volume": "15.2722",
-    "Volume x algorithm": "9.7175",
-    "Remaining interactions": "1.3064",
+    "Test year": "48.5",
+    "Algorithm": "25.2",
+    "Training volume": "15.3",
+    "Volume x algorithm": "9.7",
+    "Remaining interactions": "1.3",
 }
 TABLO9_KAYNAK = {
     "Test year": ["test_yil (yil)"],

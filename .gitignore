@@ -15,3 +15,6 @@ __pycache__/
 # sonuclar/ klasorunu yok saymiyoruz; yalnizca gecici ciktilar haric
 sonuclar/*.tmp
 sonuclar/*.log
+# local working notes, not part of the public release
+CLAUDE.md
+dokumanlar/arastirma-baglami.md

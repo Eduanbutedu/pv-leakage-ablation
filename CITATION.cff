@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this code or these results, please cite them as below."
+title: "Evaluation choices outweigh algorithm choice in day-ahead photovoltaic power forecasting: a ten-year, six-site leakage ablation with measured-data replication"
+type: software
+authors:
+  - family-names: Canbaz
+    given-names: Hasan
+    affiliation: Hasan Kalyoncu University
+    orcid: "https://orcid.org/0009-0001-0123-4859"
+  - family-names: Parlar
+    given-names: Elif
+    affiliation: Hasan Kalyoncu University
+  - family-names: Daneshvar
+    given-names: Shahaboddin
+    affiliation: Hasan Kalyoncu University
+    orcid: "https://orcid.org/0000-0002-0917-7254"
+repository-code: "https://github.com/Eduanbutedu/pv-leakage-ablation"
+license: MIT
+version: v1.0-submission
